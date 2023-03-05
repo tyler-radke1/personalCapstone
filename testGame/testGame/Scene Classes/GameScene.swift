@@ -30,7 +30,6 @@ class GameScene: SKScene, BattleSceneDelegate {
         self.scaleMode = .aspectFill
         self.camera = cameraNode
         configureNodes()
-        
         player.directionFacing = .down
         player.run(Animations.idleDown)
         
@@ -41,7 +40,6 @@ class GameScene: SKScene, BattleSceneDelegate {
         // Called before each frame is rendered
         
         detectCollision(type: BuildingNode())
-        detectCollision(type: EnemyNode())
         
         player.movePlayer()
         
@@ -140,13 +138,27 @@ class GameScene: SKScene, BattleSceneDelegate {
                 case is BuildingNode:
                     self.player.isColliding = true
                     
-                    if let scene = (node as! BuildingNode).questTrigger() {
-                        self.presentNewScene(player: self.player, ofFileName: "Desert Quest", andType: scene)
-                    }
+                    if let _ = (node as! BuildingNode).questTrigger() {
+                        
+                    //    let randomNumber  = Int.random(in: 1...15)
+
+                        var quest = Quest.initiateQuest()
+
+                        player.playerQuest = quest
+                        
+                        quest.generateRooms(1)
+                        
+                        if let fileName = quest.roomPlayerIsIn?.name {
+                            self.presentNewScene(player: player, ofFileName: "\(fileName)", andType: RoomScene())
+                            print(fileName)
+                        }
+                        
+                   }
                     
                 case is EnemyNode:
                     EnemyNode.enemyForBattle = node as! EnemyNode
                     self.player.prepareForScene()
+                    PlayerNode.player.lastPosition = self.player.position
                     self.presentNewScene(player: self.player, ofFileName: "Battle", andType: BattleScene())
                 default:
                     print("hello world")
@@ -161,7 +173,7 @@ class GameScene: SKScene, BattleSceneDelegate {
     }
     
     func presentNewScene<T>(player: PlayerNode, ofFileName file: String, andType _: T) where T: GameScene  {
-    
+       
         let newScene = T(fileNamed: file)
         newScene!.player = player
         

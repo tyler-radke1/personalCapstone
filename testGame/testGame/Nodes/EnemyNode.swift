@@ -30,12 +30,14 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
     
     //Generates 1 enemy and appends it into the enemy Array
     static func generateEnemies(player: PlayerNode) {
+        guard EnemyNode.enemies.count == 0 else { return }
+        
         for _ in 1...5 {
             let enemy: EnemyNode = EnemyNode()
             enemy.configureEnemy()
             EnemyNode.enemies.append(enemy)
         }
-       
+        
         
     }
     
@@ -62,8 +64,11 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
     
     
     static func addEnemies(scene: SKScene) {
+        
+        
+        
         /* First removes all children of type EnemyNode
-        Then loops through enemies array, and if it is a defeated enemyForBattle, skips over it
+         Then loops through enemies array, and if it is a defeated enemyForBattle, skips over it
          any other enemy gets rerendered on the screen.
          */
         for child in scene.children {
@@ -72,24 +77,21 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
             }
         }
         
-        for enemy in enemies {
-            guard enemy.enemyID != EnemyNode.enemyForBattle.enemyID else {
-                if !EnemyNode.enemyForBattle.isAlive {
-                    return
-                } else {
-                    scene.addChild(enemy)
-                }
-                return
-            }
+        for (index, enemy) in enemies.enumerated() {
+            if enemy == EnemyNode.enemyForBattle && EnemyNode.enemyForBattle.isAlive == false {
+                EnemyNode.enemies.remove(at: index)
+                continue
+            } else {
                 scene.addChild(enemy)
+            }
         }
     }
+    
     
     func prepareToChangeScene() {
         self.removeFromParent()
         self.removeAllChildren()
     }
+    
 }
-
-
 

@@ -13,9 +13,9 @@ class BuildingNode: SKSpriteNode {
     
     var isQuestTrigger = false
     
-    func questTrigger() -> DesertQuest? {
+    func questTrigger() -> RoomScene? {
         if self.name == "questTrigger" {
-            return DesertQuest(fileNamed: "Desert Quest")!
+            return RoomScene()
         } 
         return nil
     }

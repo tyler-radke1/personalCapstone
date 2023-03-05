@@ -24,7 +24,6 @@ enum ActionDoing {
   //  case attacking
 }
 
-
 class PlayerNode: SKSpriteNode, BattleProtocol {
     
     var directionFacing: DirectionFacing = .other {
@@ -51,6 +50,9 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     var playerSpeed: CGFloat = 15
     var isColliding = false
     var health = 100
+    var lastPosition: CGPoint = CGPoint(x: 0, y: -300)
+    
+    var playerQuest: Quest? = nil
     
     //For if you're colliding with something, it is the direction opposite to the building
     //ShouldbeFacing is the direction you need to be facing to walk away from a collided building
@@ -67,14 +69,12 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
         //Whole function will be skipped if the player isn't walking (or running in future)
         guard self.actionDoing == .walking else { return }
        
-    
         self.playerSpeed = self.isColliding ? 0 : 15
         
         //If player is collidng with a building, this will get run if they're facing away from the building so they can walk away from it.
         //TODO; make it so walking up and down the building is allowed
         if self.directionFacing == directionShouldBeFacingIf {
             self.playerSpeed = 15
-           
         }
         
         //if player is colliding and not going approved direction, sets direction to other
@@ -100,31 +100,24 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
             self.position = self.position
         }
         
-        
         self.isColliding = false
         
     }
 
-    
     func configurePlayer() {
-        
         self.size = CGSize(width: 330, height: 330)
         self.name = "player"
         self.texture = SKTexture(imageNamed: "frontWalk00")
         self.zPosition = 2
         self.alpha = 1
-        self.position = CGPoint(x: 0, y: -300)
+        self.position = self.lastPosition
     }
     
     func prepareForScene() {
+        PlayerNode.player = self
         self.removeAllActions()
         self.removeFromParent()
         self.actionDoing = .idling
         self.removeAllChildren()
-        
-        
     }
-    
-    
-
 }

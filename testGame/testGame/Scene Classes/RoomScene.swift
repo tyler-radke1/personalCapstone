@@ -7,24 +7,25 @@
 
 import UIKit
 import SpriteKit
+enum enterAndExitDirections {
+    case left, right, top, bottom
+}
 
-class DesertQuest: GameScene {
+class RoomScene: GameScene {
+    
+    var enters: enterAndExitDirections = .left
+    var exits: enterAndExitDirections = .right
     
     override func didMove(to view: SKView) {
-        self.camera = cameraNode
-        configureNodes()
-        
-        
+        super.didMove(to: view)
+        player.inputView?.bringSubviewToFront(view)
         EnemyNode.generateEnemies(player: player)
-        
-        
-        EnemyNode.addEnemies(scene: self)
-        
     }
-    
     
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
+        
+        
         
     }
     
