@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "Preview_desert_2D_desert_RPG_desert_Desert_desert_Tileset.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
