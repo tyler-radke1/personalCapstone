@@ -45,13 +45,16 @@ class GameScene: SKScene, BattleSceneDelegate {
             let questInstance = Quest()
             questInstance.createGraph()
 
-            let rooms = questInstance.quest
+            let quest = questInstance.quest
 
-            let firstRoom = rooms.adjacencies.keys.first?.data
-            player.currentQuest = rooms
-            player.currentRoom = rooms.adjacencies.keys.first
+            player.currentQuest = quest
+            player.currentRoom = quest.adjacencies.keys.first
+            
+            if let name = player.currentRoom?.data.name {
+                self.presentNewScene(player: self.player, ofFileName: name, andType: RoomScene())
+            }
 
-            self.presentNewScene(player: self.player, ofFileName: ("Room1"), andType: RoomScene())
+            
         }
         
         player.movePlayer()

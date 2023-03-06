@@ -23,9 +23,14 @@ class RoomScene: GameScene {
         super.didMove(to: view)
         player.inputView?.bringSubviewToFront(view)
         EnemyNode.generateEnemies(player: player)
-        print(player.currentQuest?.edges(from: player.currentRoom!) as Any)
         self.roomType = configureRoomType()
+        print(player.currentRoom)
         
+        for child in self.children {
+            if child is ExitNode {
+                print(child.userData)
+            }
+        }
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -56,15 +61,19 @@ class RoomScene: GameScene {
 }
     
     func configureRoomExit() {
-        
-        let potentialEdges = player.currentQuest?.edges(from: player.currentRoom!)
+        guard let currentRoom = player.currentRoom else { return }
+        let potentialEdges = player.currentQuest?.edges(from: currentRoom)
         let roomExits = self.children.filter { $0 is ExitNode }
         
         let rightExit = self.childNode(withName: "rightExit")
-        let rightRect = CGRect(origin: rightExit?.position, size: rightExit?.frame.size)
+        let rightRect = CGRect(origin: rightExit!.position, size: (rightExit?.frame.size)!)
        
 //        switch self.roomType {
 //            .case .upperLeft:
+//            print("ehl")
+//            
+//        default:
+//            print("hello world")
 //            
 //        }
         
