@@ -39,3 +39,19 @@ struct Quest {
     
 }
 
+
+class Node<T> {
+    var value: T
+    
+    var children: [T] = []
+    
+    weak var parent: T?
+    
+    init(value: T) {
+        self.value = value
+    }
+    
+    func add(child: Node) {
+        self.children.append(child)
+    }
+}
