@@ -52,7 +52,9 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     var health = 100
     var lastPosition: CGPoint = CGPoint(x: 0, y: -300)
     
-    var playerQuest: Quest? = nil
+    var currentQuest: AdjacencyList<RoomScene>? = nil
+    var currentRoom: Vertex<RoomScene>? = nil
+   
     
     //For if you're colliding with something, it is the direction opposite to the building
     //ShouldbeFacing is the direction you need to be facing to walk away from a collided building

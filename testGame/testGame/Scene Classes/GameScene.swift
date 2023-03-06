@@ -39,7 +39,20 @@ class GameScene: SKScene, BattleSceneDelegate {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         
-        detectCollision(type: BuildingNode())
+        if playerCollidesWith(type: BuildingNode()) {
+            self.player.isColliding = true
+
+            let questInstance = Quest()
+            questInstance.createGraph()
+
+            let rooms = questInstance.quest
+
+            let firstRoom = rooms.adjacencies.keys.first?.data
+            player.currentQuest = rooms
+            player.currentRoom = rooms.adjacencies.keys.first
+
+            self.presentNewScene(player: self.player, ofFileName: ("Room1"), andType: RoomScene())
+        }
         
         player.movePlayer()
         
@@ -112,64 +125,25 @@ class GameScene: SKScene, BattleSceneDelegate {
     
     //This function checks if the player has collided with a node of type T.
     //Sets the isColliding value of the player to true if it is.
-    func detectCollision<T: SKSpriteNode>(type: T) {
-        var arrayOfNodes: [T] = []
-        
-        self.children.forEach({
-            if $0 is T {
-                arrayOfNodes.append($0 as! T)
-            }
-        })
-        
+    func playerCollidesWith<T: SKSpriteNode>(type: T) -> Bool {
+        let arrayOfNodes: [SKNode] = self.children.filter { $0 is T }
+       
         for node in arrayOfNodes {
             let playerX = PlayerNode.player.position.x
             let playerY = PlayerNode.player.position.y
             
             let rect = CGRect(x: playerX, y: playerY, width: 0, height: 0)
-            
-            let intersect = CGRectIntersectsRect(node.frame, rect)
-
-            if intersect {
-
-                //Switches over the nodes type, runs appropriate code.
-                //Can't figure out how to get it to run code outside the function based on the results.
-                switch node {
-                    
-                case is BuildingNode:
-                    self.player.isColliding = true
-                    
-                    if let _ = (node as! BuildingNode).questTrigger() {
-                        
-                    //    let randomNumber  = Int.random(in: 1...15)
-
-                        var quest = Quest.initiateQuest()
-
-                        player.playerQuest = quest
-                        
-                        quest.generateRooms(1)
-                        
-                        if let fileName = quest.roomPlayerIsIn?.name {
-                            self.presentNewScene(player: player, ofFileName: "\(fileName)", andType: RoomScene())
-                            print(fileName)
-                        }
-                        
-                   }
-                    
-                case is EnemyNode:
-                    EnemyNode.enemyForBattle = node as! EnemyNode
-                    self.player.prepareForScene()
-                    PlayerNode.player.lastPosition = self.player.position
-                    self.presentNewScene(player: self.player, ofFileName: "Battle", andType: BattleScene())
-                default:
-                    print("hello world")
-                    
-                    
-                }
-                
+        
+            if rect.intersects(node.frame) {
+                return true
             }
-        
+            
+//                    EnemyNode.enemyForBattle = node as! EnemyNode
+//                    self.player.prepareForScene()
+//                    PlayerNode.player.lastPosition = self.player.position
+//                    self.presentNewScene(player: self.player, ofFileName: "Battle", andType: BattleScene())
         }
-        
+        return false
     }
     
     func presentNewScene<T>(player: PlayerNode, ofFileName file: String, andType _: T) where T: GameScene  {

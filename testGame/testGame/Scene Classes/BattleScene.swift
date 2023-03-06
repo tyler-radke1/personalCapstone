@@ -48,7 +48,6 @@ class BattleScene: GameScene {
         configureNodes()
         configureBattle()
         configureHealthBars(beings: [player, enemy])
-
     }
     
     override func update(_ currentTime: TimeInterval) {

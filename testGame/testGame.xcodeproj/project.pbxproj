@@ -13,12 +13,14 @@
 		9F4B124C299BEEFB0039B218 /* Tilesets.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F4B124A299BEEFB0039B218 /* Tilesets.sks */; };
 		9F4B124D299BEEFB0039B218 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F4B124B299BEEFB0039B218 /* Assets.xcassets */; };
 		9F5D76A4299D764D00E363CD /* BuildingNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5D76A3299D764D00E363CD /* BuildingNode.swift */; };
-		9F75C3D229B25476003EE629 /* QuestObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F75C3D129B25476003EE629 /* QuestObject.swift */; };
+		9F75C3D229B25476003EE629 /* AdjacencyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F75C3D129B25476003EE629 /* AdjacencyList.swift */; };
 		9F75C3D829B30D25003EE629 /* Room2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F75C3D329B30D25003EE629 /* Room2.sks */; };
 		9F75C3D929B30D25003EE629 /* Room4.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F75C3D429B30D25003EE629 /* Room4.sks */; };
 		9F75C3DA29B30D25003EE629 /* Room3.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F75C3D529B30D25003EE629 /* Room3.sks */; };
 		9F75C3DB29B30D25003EE629 /* Room5.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F75C3D629B30D25003EE629 /* Room5.sks */; };
 		9F75C3DC29B30D25003EE629 /* Room6.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F75C3D729B30D25003EE629 /* Room6.sks */; };
+		9F75C3FB29B63766003EE629 /* QuestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F75C3FA29B63766003EE629 /* QuestList.swift */; };
+		9F75C3FD29B64F2E003EE629 /* ExitNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F75C3FC29B64F2E003EE629 /* ExitNode.swift */; };
 		9F8F2BA929A6BF6B00B79595 /* Enemy Animations.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F8F2BA829A6BF6B00B79595 /* Enemy Animations.sks */; };
 		9F8F2BAF29A6BFE500B79595 /* EnemyAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F2BAE29A6BFE500B79595 /* EnemyAnimations.swift */; };
 		9F8F2BB929A6CE2F00B79595 /* ScoriponNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F2BB829A6CE2F00B79595 /* ScoriponNode.swift */; };
@@ -50,12 +52,14 @@
 		9F4B124A299BEEFB0039B218 /* Tilesets.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tilesets.sks; sourceTree = "<group>"; };
 		9F4B124B299BEEFB0039B218 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F5D76A3299D764D00E363CD /* BuildingNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingNode.swift; sourceTree = "<group>"; };
-		9F75C3D129B25476003EE629 /* QuestObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestObject.swift; sourceTree = "<group>"; };
+		9F75C3D129B25476003EE629 /* AdjacencyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjacencyList.swift; sourceTree = "<group>"; };
 		9F75C3D329B30D25003EE629 /* Room2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Room2.sks; sourceTree = "<group>"; };
 		9F75C3D429B30D25003EE629 /* Room4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Room4.sks; sourceTree = "<group>"; };
 		9F75C3D529B30D25003EE629 /* Room3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Room3.sks; sourceTree = "<group>"; };
 		9F75C3D629B30D25003EE629 /* Room5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Room5.sks; sourceTree = "<group>"; };
 		9F75C3D729B30D25003EE629 /* Room6.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Room6.sks; sourceTree = "<group>"; };
+		9F75C3FA29B63766003EE629 /* QuestList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestList.swift; sourceTree = "<group>"; };
+		9F75C3FC29B64F2E003EE629 /* ExitNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExitNode.swift; path = testGame/Nodes/ExitNode.swift; sourceTree = SOURCE_ROOT; };
 		9F8F2BA829A6BF6B00B79595 /* Enemy Animations.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = "Enemy Animations.sks"; sourceTree = "<group>"; };
 		9F8F2BAE29A6BFE500B79595 /* EnemyAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyAnimations.swift; sourceTree = "<group>"; };
 		9F8F2BB829A6CE2F00B79595 /* ScoriponNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoriponNode.swift; sourceTree = "<group>"; };
@@ -95,7 +99,6 @@
 		9F75C3B429B25147003EE629 /* QuestRooms */ = {
 			isa = PBXGroup;
 			children = (
-				9F75C3D129B25476003EE629 /* QuestObject.swift */,
 				9FD8165B29AC6CA20058D103 /* Room1.sks */,
 				9F75C3D329B30D25003EE629 /* Room2.sks */,
 				9F75C3D529B30D25003EE629 /* Room3.sks */,
@@ -104,6 +107,15 @@
 				9F75C3D729B30D25003EE629 /* Room6.sks */,
 			);
 			path = QuestRooms;
+			sourceTree = "<group>";
+		};
+		9F75C3F929B6374F003EE629 /* Adjacency */ = {
+			isa = PBXGroup;
+			children = (
+				9F75C3D129B25476003EE629 /* AdjacencyList.swift */,
+				9F75C3FA29B63766003EE629 /* QuestList.swift */,
+			);
+			path = Adjacency;
 			sourceTree = "<group>";
 		};
 		9F8F2BAD29A6BFC600B79595 /* EnemyAnimations */ = {
@@ -154,6 +166,7 @@
 			children = (
 				9FD6AF76299B43EB00E1A5A8 /* AppDelegate.swift */,
 				9FD8165529A91D2B0058D103 /* Skills.swift */,
+				9F75C3F929B6374F003EE629 /* Adjacency */,
 				9FD6AF96299BDC4000E1A5A8 /* Scene Classes */,
 				9FD6AF91299B4CDE00E1A5A8 /* Scene Files */,
 				9FD6AF8F299B4A5700E1A5A8 /* Animations */,
@@ -177,6 +190,7 @@
 		9FD6AF90299B4CD400E1A5A8 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				9F75C3FC29B64F2E003EE629 /* ExitNode.swift */,
 				9FD6AF8D299B49A300E1A5A8 /* PlayerNode.swift */,
 				9FBBC047299FCC2800A12EC5 /* EnemyNode.swift */,
 				9FAB8373299EB04600459A92 /* SkillIconNode.swift */,
@@ -298,6 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FD6AF93299BDC1800E1A5A8 /* GameScene Extensions.swift in Sources */,
+				9F75C3FD29B64F2E003EE629 /* ExitNode.swift in Sources */,
 				9FAB8374299EB04600459A92 /* SkillIconNode.swift in Sources */,
 				9F5D76A4299D764D00E363CD /* BuildingNode.swift in Sources */,
 				9FD6AF7D299B43EB00E1A5A8 /* GameScene.swift in Sources */,
@@ -306,7 +321,7 @@
 				9FBBC04F29A13C9000A12EC5 /* BattleScene.swift in Sources */,
 				9FD6AF7F299B43EB00E1A5A8 /* GameViewController.swift in Sources */,
 				9FD6AF8E299B49A300E1A5A8 /* PlayerNode.swift in Sources */,
-				9F75C3D229B25476003EE629 /* QuestObject.swift in Sources */,
+				9F75C3D229B25476003EE629 /* AdjacencyList.swift in Sources */,
 				9FAB8370299EAD8F00459A92 /* CameraNode Extension.swift in Sources */,
 				9FD8165629A91D2B0058D103 /* Skills.swift in Sources */,
 				9FD8165E29AC76BE0058D103 /* RoomScene.swift in Sources */,
@@ -314,6 +329,7 @@
 				9F8F2BAF29A6BFE500B79595 /* EnemyAnimations.swift in Sources */,
 				9FD6AF77299B43EB00E1A5A8 /* AppDelegate.swift in Sources */,
 				9FBBC048299FCC2800A12EC5 /* EnemyNode.swift in Sources */,
+				9F75C3FB29B63766003EE629 /* QuestList.swift in Sources */,
 				9F36CEDE299C5ABF0024340F /* ControlsNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
