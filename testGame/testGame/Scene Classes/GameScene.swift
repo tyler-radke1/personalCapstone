@@ -16,7 +16,7 @@ import GameplayKit
 class GameScene: SKScene, BattleSceneDelegate {
     
     var player: PlayerNode = PlayerNode.player
-
+    
     var leftArrow: ArrowNode = ArrowNode()
     var rightArrow: ArrowNode = ArrowNode()
     var downArrow: ArrowNode = ArrowNode()
@@ -40,21 +40,24 @@ class GameScene: SKScene, BattleSceneDelegate {
         // Called before each frame is rendered
         
         if playerCollidesWith(type: BuildingNode()) {
+            
             self.player.isColliding = true
-
-            let questInstance = Quest()
-            questInstance.createGraph()
-
-            let quest = questInstance.quest
-
-            player.currentQuest = quest
-            player.currentRoom = quest.adjacencies.keys.first
             
-            if let name = player.currentRoom?.data.name {
-                self.presentNewScene(player: self.player, ofFileName: name, andType: RoomScene())
+            if let node = self.childNode(withName: "questTrigger") {
+                if player.intersects(node) {
+                    let questInstance = Quest()
+                    questInstance.createGraph()
+                    
+                    let quest = questInstance.quest
+                    
+                    player.currentQuest = quest
+                    player.currentRoom = quest.adjacencies.keys.first
+                    
+                    if let name = player.currentRoom?.data.name {
+                        self.presentNewScene(player: self.player, ofFileName: name, andType: RoomScene())
+                    }
+                }
             }
-
-            
         }
         
         player.movePlayer()
@@ -120,37 +123,40 @@ class GameScene: SKScene, BattleSceneDelegate {
         
     }
     
+   
+    
     func configureButtons() {
         let arrows = [self.rightArrow, self.leftArrow, self.upArrow, self.downArrow]
-
+        
         ArrowNode.configureArrows(arrows: arrows, player: player)
     }
     
     //This function checks if the player has collided with a node of type T.
     //Sets the isColliding value of the player to true if it is.
-    func playerCollidesWith<T: SKSpriteNode>(type: T) -> Bool {
+    func playerCollidesWith<T: SKSpriteNode>(type: T) -> Bool{
         let arrayOfNodes: [SKNode] = self.children.filter { $0 is T }
-       
+        
         for node in arrayOfNodes {
             let playerX = PlayerNode.player.position.x
             let playerY = PlayerNode.player.position.y
             
             let rect = CGRect(x: playerX, y: playerY, width: 0, height: 0)
-        
+            
             if rect.intersects(node.frame) {
                 return true
             }
             
-//                    EnemyNode.enemyForBattle = node as! EnemyNode
-//                    self.player.prepareForScene()
-//                    PlayerNode.player.lastPosition = self.player.position
-//                    self.presentNewScene(player: self.player, ofFileName: "Battle", andType: BattleScene())
+            //                    EnemyNode.enemyForBattle = node as! EnemyNode
+            //                    self.player.prepareForScene()
+            //                    PlayerNode.player.lastPosition = self.player.position
+            //                    self.presentNewScene(player: self.player, ofFileName: "Battle", andType: BattleScene())
         }
         return false
     }
     
+    
     func presentNewScene<T>(player: PlayerNode, ofFileName file: String, andType _: T) where T: GameScene  {
-       
+        
         let newScene = T(fileNamed: file)
         newScene!.player = player
         

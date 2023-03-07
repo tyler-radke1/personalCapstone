@@ -14,7 +14,7 @@ class BuildingNode: SKSpriteNode {
     var isQuestTrigger = false
     
     func questTrigger() -> RoomScene? {
-        if self.name == "questTrigger" {
+        if self.userData?["questTrigger"] as? Bool ?? false {
             return RoomScene()
         } 
         return nil

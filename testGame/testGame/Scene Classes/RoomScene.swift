@@ -24,7 +24,7 @@ class RoomScene: GameScene {
         player.inputView?.bringSubviewToFront(view)
         EnemyNode.generateEnemies(player: player)
         self.roomType = configureRoomType()
-        print(player.currentRoom)
+        print(player.currentQuest?.description)
         
         for child in self.children {
             if child is ExitNode {
@@ -37,7 +37,7 @@ class RoomScene: GameScene {
         super.update(currentTime)
         
         if playerCollidesWith(type: ExitNode()) {
-           configureRoomExit()
+            configureRoomExit()
         }
     }
     
@@ -58,27 +58,36 @@ class RoomScene: GameScene {
         default:
             return .upperLeft
         }
-}
+    }
     
     func configureRoomExit() {
         guard let currentRoom = player.currentRoom else { return }
-        let potentialEdges = player.currentQuest?.edges(from: currentRoom)
+        
+        
         let roomExits = self.children.filter { $0 is ExitNode }
         
-        let rightExit = self.childNode(withName: "rightExit")
-        let rightRect = CGRect(origin: rightExit!.position, size: (rightExit?.frame.size)!)
-       
-//        switch self.roomType {
-//            .case .upperLeft:
-//            print("ehl")
-//            
-//        default:
-//            print("hello world")
-//            
-//        }
         
         
-        self.presentNewScene(player: player, ofFileName: (player.currentRoom?.data.name)!, andType: RoomScene())
+        for roomExit in roomExits {
+            guard player.intersects(roomExit) else { return }
+            let type = roomExit.userData?["exitType"]
+            switch type as? String {
+            case "right":
+                goRight()
+            case "left":
+                print("go left")
+            case "top":
+                print("go up")
+            case "bottom":
+                print("go down")
+            default:
+                print("oof")
+            }
+        }
     }
-
+    
+    func goRight() {
+        let potentialEdges = player.currentQuest?.edges(from: player.currentRoom!)
+    }
+    
 }

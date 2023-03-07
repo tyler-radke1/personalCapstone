@@ -7,7 +7,17 @@
 
 import UIKit
 import SpriteKit
+enum ExitDirection {
+    case left,right,top, bottom
+}
+
 
 class ExitNode: SKSpriteNode {
     
+//    var exitDirection: ExitDirection {
+//        switch self.userData {
+//        default:
+//            return .bottom
+//        }
+//    }
 }
