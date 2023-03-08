@@ -87,7 +87,7 @@ class RoomScene: GameScene {
     }
     
     func goRight() {
-        let potentialEdges = player.currentQuest?.edges(from: player.currentRoom!)
+        let potentialEdges = player.currentQuest?.edges(from: player.currentRoom!)  
     }
     
 }

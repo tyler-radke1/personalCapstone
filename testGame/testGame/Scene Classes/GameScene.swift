@@ -33,7 +33,6 @@ class GameScene: SKScene, BattleSceneDelegate {
         player.directionFacing = .down
         player.run(Animations.idleDown)
         
-        
     }
     
     override func update(_ currentTime: TimeInterval) {
