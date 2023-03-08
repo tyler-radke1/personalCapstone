@@ -29,7 +29,6 @@ struct Attack: SkillProtocol {
     
 }
 
-
 struct BigAttack: SkillProtocol {
     static var description = "Does 50-60 damage to enemy. For testing."
     

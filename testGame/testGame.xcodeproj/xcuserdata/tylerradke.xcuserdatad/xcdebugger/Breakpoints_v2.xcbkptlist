@@ -62,8 +62,8 @@
             filePath = "testGame/Scene Classes/GameScene Extensions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
             landmarkName = "configureNodes()"
             landmarkType = "7">
          </BreakpointContent>
@@ -97,22 +97,6 @@
             startingLineNumber = "174"
             endingLineNumber = "174"
             landmarkName = "configureBattle()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "134D7688-8422-4E45-93E1-B297A1F4485A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "testGame/Scene Classes/GameScene.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
-            landmarkName = "presentNewScene(player:ofFileName:andType:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -206,8 +190,8 @@
             filePath = "testGame/Nodes/EnemyNode.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
             landmarkName = "addEnemies(scene:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -286,8 +270,8 @@
             filePath = "testGame/Scene Classes/RoomScene.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
             landmarkName = "didMove(to:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -318,8 +302,8 @@
             filePath = "testGame/Scene Classes/GameScene Extensions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "15"
-            endingLineNumber = "15"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
             landmarkName = "configureNodes()"
             landmarkType = "7">
          </BreakpointContent>
@@ -327,65 +311,33 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4903134D-E5D7-4709-8646-B8FE58DBAF3F"
+            uuid = "DF26CE9A-2B7B-4C06-9614-11891D353FA5"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "testGame/Scene Classes/RoomScene.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "configureRoomExit()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "4903134D-E5D7-4709-8646-B8FE58DBAF3F - 11de0dd2fd2d0d6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "testGame.RoomScene.configureRoomExit() -&gt; ()"
-                  moduleName = "testGame"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tylerradke/Desktop/projects-endOfYear/personalCapstone/testGame/testGame/Scene%20Classes/RoomScene.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "67"
-                  endingLineNumber = "67"
-                  offsetFromSymbolStart = "256">
-               </Location>
-               <Location
-                  uuid = "4903134D-E5D7-4709-8646-B8FE58DBAF3F - c61f9c034f63773f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.SKNode) -&gt; Swift.Bool in testGame.RoomScene.configureRoomExit() -&gt; ()"
-                  moduleName = "testGame"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tylerradke/Desktop/projects-endOfYear/personalCapstone/testGame/testGame/Scene%20Classes/RoomScene.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "67"
-                  endingLineNumber = "67"
-                  offsetFromSymbolStart = "32">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CDC70C24-9EFE-4149-8088-7AD8255946D8"
+            uuid = "1F8199AF-C28D-4B6A-A3F0-B1BCFA00202B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "testGame/Adjacency/QuestList.swift"
+            filePath = "testGame/Scene Classes/RoomScene.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
-            landmarkName = "Quest"
-            landmarkType = "3">
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "configureRoomExit()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

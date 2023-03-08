@@ -28,9 +28,9 @@ struct Animations {
     
     
     //Attacking Animations
-    static let attackDown = SKAction.repeat(SKAction(named: "attackFront", duration: 0.5)!, count: 1)
-    static let attackUp = SKAction.repeat(SKAction(named: "attackUp", duration: 0.5)!, count: 1)
-    static let attackLeft = SKAction.repeat(SKAction(named: "attackLeft", duration: 0.5)!, count: 1)
+//    static let attackDown = SKAction.repeat(SKAction(named: "attackFront", duration: 0.5)!, count: 1)
+//    static let attackUp = SKAction.repeat(SKAction(named: "attackUp", duration: 0.5)!, count: 1)
+//    static let attackLeft = SKAction.repeat(SKAction(named: "attackLeft", duration: 0.5)!, count: 1)
     static let attackRight = SKAction.repeat(SKAction(named: "attackRight", duration: 0.5)!, count: 1)
     
     
@@ -85,8 +85,4 @@ extension Animations {
         
         return Animations.walkDown
     }
-    
-    
-    
-    
 }

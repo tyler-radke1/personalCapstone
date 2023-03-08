@@ -62,11 +62,7 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
         self.size = CGSize(width: 350, height: 350)
     }
     
-    
     static func addEnemies(scene: SKScene) {
-        
-        
-        
         /* First removes all children of type EnemyNode
          Then loops through enemies array, and if it is a defeated enemyForBattle, skips over it
          any other enemy gets rerendered on the screen.

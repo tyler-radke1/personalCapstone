@@ -13,7 +13,4 @@ extension SKCameraNode {
         self.position.x = PlayerNode.player.position.x
         self.position.y = PlayerNode.player.position.y + 350
     }
-    
-    
-    
 }

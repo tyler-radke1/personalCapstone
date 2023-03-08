@@ -15,7 +15,7 @@ import GameplayKit
 
 class GameScene: SKScene, BattleSceneDelegate {
     
-    var player: PlayerNode = PlayerNode.player
+    weak var player: PlayerNode? = PlayerNode.player
     
     var leftArrow: ArrowNode = ArrowNode()
     var rightArrow: ArrowNode = ArrowNode()
@@ -30,8 +30,8 @@ class GameScene: SKScene, BattleSceneDelegate {
         self.scaleMode = .aspectFill
         self.camera = cameraNode
         configureNodes()
-        player.directionFacing = .down
-        player.run(Animations.idleDown)
+        player?.directionFacing = .down
+        player?.run(Animations.idleDown)
         
     }
     
@@ -40,7 +40,7 @@ class GameScene: SKScene, BattleSceneDelegate {
         
         if playerCollidesWith(type: BuildingNode()) {
             
-            self.player.isColliding = true
+            self.player?.isColliding = true
             
             if let node = self.childNode(withName: "questTrigger") {
                 if player.intersects(node) {
@@ -122,8 +122,6 @@ class GameScene: SKScene, BattleSceneDelegate {
         
     }
     
-   
-    
     func configureButtons() {
         let arrows = [self.rightArrow, self.leftArrow, self.upArrow, self.downArrow]
         
@@ -144,36 +142,32 @@ class GameScene: SKScene, BattleSceneDelegate {
             if rect.intersects(node.frame) {
                 return true
             }
-            
-            //                    EnemyNode.enemyForBattle = node as! EnemyNode
-            //                    self.player.prepareForScene()
-            //                    PlayerNode.player.lastPosition = self.player.position
-            //                    self.presentNewScene(player: self.player, ofFileName: "Battle", andType: BattleScene())
         }
         return false
     }
-    
-    
+
     func presentNewScene<T>(player: PlayerNode, ofFileName file: String, andType _: T) where T: GameScene  {
-        
-        let newScene = T(fileNamed: file)
-        newScene!.player = player
-        
-        if let newScene = newScene as? BattleScene {
-            newScene.sceneToReturnTo = self
-        }
-        
-        newScene?.scaleMode = .aspectFit
-        
-        player.prepareForScene()
-        EnemyNode.enemyForBattle.prepareToChangeScene()
-        
-        for child in self.children {
-            if child is EnemyNode {
-                child.removeFromParent()
+        let loadQueue = DispatchQueue(label: "loadingQueue")
+        loadQueue.sync {
+            let newScene = T(fileNamed: file)
+            newScene!.player = player
+            
+            if let newScene = newScene as? BattleScene {
+                newScene.sceneToReturnTo = self
             }
+            
+            newScene?.scaleMode = .aspectFit
+            
+            player.prepareForScene()
+            EnemyNode.enemyForBattle.prepareToChangeScene()
+            
+            for child in self.children {
+                if child is EnemyNode {
+                    child.removeFromParent()
+                }
+            }
+            
+            self.scene?.view?.presentScene(newScene!, transition: .moveIn(with: .up, duration: 0.5))
         }
-        
-        self.scene?.view?.presentScene(newScene!, transition: .moveIn(with: .up, duration: 0.5))
     }
 }

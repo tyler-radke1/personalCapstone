@@ -11,14 +11,15 @@ import GameplayKit
 
 extension GameScene {
     func configureNodes() {
-    
         upArrow = self.childNode(withName: "upArrow")! as! ArrowNode
         downArrow = self.childNode(withName: "downArrow")! as! ArrowNode
         leftArrow = self.childNode(withName: "leftArrow")! as! ArrowNode
         rightArrow = self.childNode(withName: "rightArrow")! as! ArrowNode
     
-        player.configurePlayer()
-        self.addChild(player)
+        player?.configurePlayer()
+        if let player = player {
+            self.addChild(player)
+        }
 
         for child in self.children {
             if let child = child as? EnemyNode {
@@ -27,12 +28,4 @@ extension GameScene {
             }
         }
     }
-    
-    
-    
-    
-    
 }
-
-
-
