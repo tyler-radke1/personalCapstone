@@ -20,7 +20,7 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
     var attackAnimation = EnemyAnimations.scorpionAttack
     
     
-    static var enemies: [EnemyNode] = []
+    static private var enemies: [EnemyNode] = []
     static var enemyForBattle: EnemyNode = EnemyNode()
     
     func skill() -> Int {

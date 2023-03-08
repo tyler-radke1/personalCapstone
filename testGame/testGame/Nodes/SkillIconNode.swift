@@ -17,8 +17,6 @@ class SkillIconNode: SKSpriteNode {
         let playerY = player.position.y + 300
         
         icons[0].position = CGPoint(x: playerX + 700, y: playerY - 230)
-        
-        
     }
     
     //Blank skill, to be edited later

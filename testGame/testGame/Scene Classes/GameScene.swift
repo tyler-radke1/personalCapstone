@@ -17,12 +17,12 @@ class GameScene: SKScene, BattleSceneDelegate {
     
     weak var player: PlayerNode? = PlayerNode.player
     
-    var leftArrow: ArrowNode = ArrowNode()
-    var rightArrow: ArrowNode = ArrowNode()
-    var downArrow: ArrowNode = ArrowNode()
-    var upArrow: ArrowNode = ArrowNode()
+    weak var leftArrow: ArrowNode? = ArrowNode()
+    weak var rightArrow: ArrowNode? = ArrowNode()
+    weak var downArrow: ArrowNode? = ArrowNode()
+    weak var upArrow: ArrowNode? = ArrowNode()
     
-    var enemyToDelete: EnemyNode?
+    weak var enemyToDelete: EnemyNode?
     var willDelete = false
     let cameraNode = SKCameraNode()
     // var enemy: EnemyNode = EnemyNode(imageNamed: "scorpion_idle_000")
@@ -37,7 +37,7 @@ class GameScene: SKScene, BattleSceneDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        
+        guard let player = self.player else { return }
         if playerCollidesWith(type: BuildingNode()) {
             
             self.player?.isColliding = true
@@ -53,7 +53,7 @@ class GameScene: SKScene, BattleSceneDelegate {
                     player.currentRoom = quest.adjacencies.keys.first
                     
                     if let name = player.currentRoom?.data.name {
-                        self.presentNewScene(player: self.player, ofFileName: name, andType: RoomScene())
+                        self.presentNewScene(player: player, ofFileName: name, andType: RoomScene())
                     }
                 }
             }
@@ -67,7 +67,7 @@ class GameScene: SKScene, BattleSceneDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
+        guard let touch = touches.first, let player = self.player else { return }
         
         
         let location = touch.location(in: self)
@@ -75,6 +75,8 @@ class GameScene: SKScene, BattleSceneDelegate {
         
         //If user selects an arrow, sets direction according and sets to walking
         for (index, arrow) in arrows.enumerated() {
+            guard let arrow = arrow else { return }
+            
             if arrow.contains(location) {
                 player.directionFacing = DirectionFacing(rawValue: index)!
                 player.actionDoing = .walking
@@ -106,6 +108,7 @@ class GameScene: SKScene, BattleSceneDelegate {
     //
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let player = self.player else { return }
         //Halts the player if they're walking. Allows for other inputs such as attacks to persist.
         
         player.actionDoing = .idling
@@ -123,6 +126,7 @@ class GameScene: SKScene, BattleSceneDelegate {
     }
     
     func configureButtons() {
+        guard let player = self.player else { return }
         let arrows = [self.rightArrow, self.leftArrow, self.upArrow, self.downArrow]
         
         ArrowNode.configureArrows(arrows: arrows, player: player)
@@ -168,6 +172,7 @@ class GameScene: SKScene, BattleSceneDelegate {
             }
             
             self.scene?.view?.presentScene(newScene!, transition: .moveIn(with: .up, duration: 0.5))
+            self.removeAllChildren()
         }
     }
 }

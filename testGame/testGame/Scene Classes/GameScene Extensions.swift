@@ -11,10 +11,10 @@ import GameplayKit
 
 extension GameScene {
     func configureNodes() {
-        upArrow = self.childNode(withName: "upArrow")! as! ArrowNode
-        downArrow = self.childNode(withName: "downArrow")! as! ArrowNode
-        leftArrow = self.childNode(withName: "leftArrow")! as! ArrowNode
-        rightArrow = self.childNode(withName: "rightArrow")! as! ArrowNode
+        upArrow = self.childNode(withName: "upArrow")! as? ArrowNode
+        downArrow = self.childNode(withName: "downArrow")! as? ArrowNode
+        leftArrow = self.childNode(withName: "leftArrow")! as? ArrowNode
+        rightArrow = self.childNode(withName: "rightArrow")! as? ArrowNode
     
         player?.configurePlayer()
         if let player = player {
@@ -24,7 +24,7 @@ extension GameScene {
         for child in self.children {
             if let child = child as? EnemyNode {
                 child.run(child.idleAnimation)
-                
+
             }
         }
     }

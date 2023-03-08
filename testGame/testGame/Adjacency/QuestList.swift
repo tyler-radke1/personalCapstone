@@ -37,35 +37,6 @@ class Quest {
         let vertex = self.quest.createVertex(data: firstRoom!)
         }
         
-        
-        /*
-         let vertex1: Vertex<RoomScene> = quest.createVertex(data: room1!)
-         let vertex2: Vertex<RoomScene> = quest.createVertex(data: room2!)
-         let vertex3: Vertex<RoomScene> = quest.createVertex(data: room3!)
-         let vertex4: Vertex<RoomScene> = quest.createVertex(data: room4!)
-         let vertex5: Vertex<RoomScene> = quest.createVertex(data: room5!)
-         let vertex6: Vertex<RoomScene> = quest.createVertex(data: room6!)
-         
-         //Connections for Room 1. All connections ordered right, down, left, up
-         quest.addUndirectedEdge(between: vertex1, and: vertex2)
-         quest.addUndirectedEdge(between: vertex1, and: vertex4)
-         
-         //Room 2
-         quest.addUndirectedEdge(between: vertex2, and: vertex3)
-         quest.addUndirectedEdge(between: vertex2, and: vertex5)
-         
-         
-         //Room 3
-         quest.addUndirectedEdge(between: vertex3, and: vertex6)
-         
-         
-         //Room 4
-         quest.addUndirectedEdge(between: vertex4, and: vertex5)
-         
-         
-         //Room 5
-         quest.addUndirectedEdge(between: vertex5, and: vertex6)
-         //Room 6
-         */
     }
+
 

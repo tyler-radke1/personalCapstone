@@ -42,6 +42,7 @@ class BattleScene: GameScene {
 
     var theCamera = SKCameraNode()
     override func didMove(to view: SKView) {
+        guard let player = self.player else { return }
         theCamera.position = CGPoint(x: 0, y: 0)
         self.camera = theCamera
         //Configure universal nodes and nodes specifically for battle
@@ -51,6 +52,7 @@ class BattleScene: GameScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        guard let player = self.player else { return }
         super.update(currentTime)
         configureHealthBars(beings: [player, enemy])
         
@@ -77,10 +79,6 @@ class BattleScene: GameScene {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: returnToGameScene)
         }
         
-        if player.contains(location) {
-            player.health += 100
-        }
-        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -98,6 +96,7 @@ class BattleScene: GameScene {
     }
     
     func playerTurn() {
+        guard let player = self.player else { return }
         self.view?.isUserInteractionEnabled = false
         isAttacking = false
         guard enemy.health >= 0 else {
@@ -112,7 +111,7 @@ class BattleScene: GameScene {
             return
         }
         
-        self.player.run(Animations.attackRight) {
+        player.run(Animations.attackRight) {
             self.enemy.run(EnemyAnimations.scorpionHurt)
         }
         
@@ -125,14 +124,15 @@ class BattleScene: GameScene {
     }
     
     func enemyTurn() {
+        guard let player = self.player else { return }
         enemy.run(EnemyAnimations.scorpionAttack) {
-            self.player.run(Animations.hurtRight) {
+            player.run(Animations.hurtRight) {
                 self.view?.isUserInteractionEnabled = true
             }
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.player.health -= (self.enemy.skill())
+            player.health -= (self.enemy.skill())
             self.isPlayersTurn = true
             
         }
@@ -164,6 +164,7 @@ class BattleScene: GameScene {
     }
     
     func configureBattle() {
+        guard let player = self.player else { return }
         enemy = EnemyNode.enemyForBattle
         enemy.configureEnemy()
         
@@ -194,14 +195,12 @@ class BattleScene: GameScene {
     
     ///TODO: Refactor this to just return back to previous screen, rather than specifically the GameScene
     func returnToGameScene() {
-        guard let scene = sceneToReturnTo else { return }
+        guard let scene = sceneToReturnTo, let player = self.player else { return }
         scene.player = player
         scene.scaleMode = .aspectFit
         EnemyNode.enemyForBattle.prepareToChangeScene()
         enemy.prepareToChangeScene()
         player.prepareForScene()
         self.scene?.view?.presentScene(scene, transition: .moveIn(with: .up, duration: 0.5))
-        
     }
-    
 }
