@@ -41,9 +41,9 @@ class GameScene: SKScene {
         guard let player = self.player else { return }
         
         if playerCollidesWith(type: BuildingNode()) {
-
+            
             self.player?.isColliding = true
-
+            
             if let node = self.childNode(withName: "questTrigger") {
                 if player.intersects(node) {
                     createQuest()
@@ -105,7 +105,7 @@ class GameScene: SKScene {
         player.actionDoing = .idling
         
         let action = Animations.configureAnimation(action: player.actionDoing, direction: player.directionFacing)
-
+        
         player.run(action)
         
         
@@ -135,14 +135,14 @@ class GameScene: SKScene {
         }
         return false
     }
-
+    
     func createQuest() {
         guard let player = self.player else { return }
         let newQuest = Quest()
         newQuest.createGraph()
         PlayerNode.player.currentQuest = newQuest.quest
         PlayerNode.player.currentRoom = newQuest.quest.adjacencies.first?.key
-
+        
         presentNewScene(player: player, ofFileName: (player.currentRoom?.data.name)!, andType: RoomScene())
     }
     
@@ -168,7 +168,31 @@ class GameScene: SKScene {
             }
             
             self.scene?.view?.presentScene(newScene!, transition: .moveIn(with: .up, duration: 0.5))
+        }
+    }
+    
+    func presentNewRoom(player: PlayerNode, scene: RoomScene) {
+        let loadQueue = DispatchQueue(label: "loadingQueue")
+        loadQueue.sync {
             
+            scene.player = player
+            
+            if let newScene = scene as? BattleScene {
+                newScene.sceneToReturnTo = self
+            }
+            
+            scene.scaleMode = .aspectFit
+            
+            player.prepareForScene()
+            EnemyNode.enemyForBattle.prepareToChangeScene()
+            
+            for child in self.children {
+                if child is EnemyNode {
+                    child.removeFromParent()
+                }
+            }
+            
+            self.scene?.view?.presentScene(scene, transition: .moveIn(with: .up, duration: 0.5))
         }
     }
 }

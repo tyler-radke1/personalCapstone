@@ -24,7 +24,7 @@ class RoomScene: GameScene {
         super.didMove(to: view)
         self.roomType = configureRoomType()
         print(self.roomType)
-        player?.currentRoom?.addEnemies(scene: self)
+      //  player?.currentRoom?.addEnemies(scene: self)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -110,21 +110,23 @@ class RoomScene: GameScene {
         let potentialEdges = player.currentQuest?.edges(from: player.currentRoom!)
         //Loops through edges, and if it finds an existing edge in the direction, brings it up
         //Otherwise, generates a new random room and edge
+        
+      
         for edge in potentialEdges! {
+            print(edge.destination.data.name)
             if roomsToCheckFor.contains(edge.destination.data) {
                 player.currentRoom = edge.destination
                 self.presentNewScene(player: player, ofFileName: edge.destination.data.name!, andType: RoomScene())
                 return
             }
         }
-        
+
         if let randomRoom = roomsToCheckFor.randomElement() {
-            //Generates enemies for a new room
             var newVertex = player.currentQuest?.createVertex(data: randomRoom!)
-            newVertex?.generateEnemies(player: player)
-            player.currentQuest?.addUndirectedEdge(between: newVertex!, and: player.currentRoom!)
+         //   newVertex?.generateEnemies(player: player)
+            player.currentQuest?.addUndirectedEdge(between: player.currentRoom!, and: newVertex!)
             player.currentRoom = newVertex
-            self.presentNewScene(player: player, ofFileName: (newVertex?.data.name)!, andType: RoomScene())
+            self.presentNewRoom(player: player, scene: newVertex!.data)
         }
     }
 }
