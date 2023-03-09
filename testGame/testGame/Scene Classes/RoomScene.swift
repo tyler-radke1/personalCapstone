@@ -23,8 +23,8 @@ class RoomScene: GameScene {
     override func didMove(to view: SKView) {
         guard let player = player else { return }
         super.didMove(to: view)
-//        EnemyNode.generateEnemies(player: player)
-//        EnemyNode.addEnemies(scene: self)
+        EnemyNode.generateEnemies(player: player)
+        EnemyNode.addEnemies(scene: self)
         self.roomType = configureRoomType()
     }
     

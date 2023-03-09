@@ -30,9 +30,11 @@ class GameScene: SKScene, BattleSceneDelegate {
         self.scaleMode = .aspectFill
         self.camera = cameraNode
         configureNodes()
-        player?.directionFacing = .down
-        player?.run(Animations.idleDown)
         
+    }
+    
+    override func sceneDidLoad() {
+       
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -172,7 +174,7 @@ class GameScene: SKScene, BattleSceneDelegate {
             }
             
             self.scene?.view?.presentScene(newScene!, transition: .moveIn(with: .up, duration: 0.5))
-            self.removeAllChildren()
+            
         }
     }
 }

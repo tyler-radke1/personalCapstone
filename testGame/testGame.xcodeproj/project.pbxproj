@@ -10,7 +10,6 @@
 		9F36CEDC299C218B0024340F /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F36CEDB299C218B0024340F /* GameScene.sks */; };
 		9F4B1249299BEBB70039B218 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4B1248299BEBB70039B218 /* Animations.swift */; };
 		9F4B124C299BEEFB0039B218 /* Tilesets.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F4B124A299BEEFB0039B218 /* Tilesets.sks */; };
-		9F4B124D299BEEFB0039B218 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F4B124B299BEEFB0039B218 /* Assets.xcassets */; };
 		9F5D76A4299D764D00E363CD /* BuildingNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5D76A3299D764D00E363CD /* BuildingNode.swift */; };
 		9F75C3D229B25476003EE629 /* AdjacencyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F75C3D129B25476003EE629 /* AdjacencyList.swift */; };
 		9F75C3D829B30D25003EE629 /* Room2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F75C3D329B30D25003EE629 /* Room2.sks */; };
@@ -48,7 +47,6 @@
 		9F36CEDB299C218B0024340F /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		9F4B1248299BEBB70039B218 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		9F4B124A299BEEFB0039B218 /* Tilesets.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tilesets.sks; sourceTree = "<group>"; };
-		9F4B124B299BEEFB0039B218 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F5D76A3299D764D00E363CD /* BuildingNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingNode.swift; sourceTree = "<group>"; };
 		9F75C3D129B25476003EE629 /* AdjacencyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjacencyList.swift; sourceTree = "<group>"; };
 		9F75C3D329B30D25003EE629 /* Room2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Room2.sks; sourceTree = "<group>"; };
@@ -206,7 +204,6 @@
 				9F75C3B429B25147003EE629 /* QuestRooms */,
 				9FBBC04C29A0AF3900A12EC5 /* Battle.sks */,
 				9F4B124A299BEEFB0039B218 /* Tilesets.sks */,
-				9F4B124B299BEEFB0039B218 /* Assets.xcassets */,
 			);
 			path = "Scene Files";
 			sourceTree = "<group>";
@@ -288,7 +285,6 @@
 				9FD6AF84299B43EC00E1A5A8 /* Assets.xcassets in Resources */,
 				9F75C3DA29B30D25003EE629 /* Room3.sks in Resources */,
 				9FBBC04B299FD45100A12EC5 /* Idle and Run.sks in Resources */,
-				9F4B124D299BEEFB0039B218 /* Assets.xcassets in Resources */,
 				9F75C3DB29B30D25003EE629 /* Room5.sks in Resources */,
 				9F36CEDC299C218B0024340F /* GameScene.sks in Resources */,
 				9F75C3D829B30D25003EE629 /* Room2.sks in Resources */,
