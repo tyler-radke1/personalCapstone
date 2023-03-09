@@ -29,16 +29,15 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
     
     
     //Generates 1 enemy and appends it into the enemy Array
-    static func generateEnemies(player: PlayerNode) {
+    static func generateEnemies(player: PlayerNode)  {
         guard EnemyNode.enemies.count == 0 else { return }
         
+        var enemies: [EnemyNode] = []
         for _ in 1...5 {
             let enemy: EnemyNode = EnemyNode()
             enemy.configureEnemy()
-            EnemyNode.enemies.append(enemy)
+            enemies.append(enemy)
         }
-        
-        
     }
     
     //Sets enemy to be near the player with the right texture

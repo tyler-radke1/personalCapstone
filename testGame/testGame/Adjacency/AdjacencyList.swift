@@ -16,7 +16,19 @@ enum EdgeType {
 
 struct Vertex<T> {
     var data: T
+    var roomEnemies: [EnemyNode] = []
     var index: Int
+    
+    func generateEnemies(player: PlayerNode)  {
+        guard self.roomEnemies.count == 0 else { return }
+        
+        var enemies: [EnemyNode] = []
+        for _ in 1...5 {
+            let enemy: EnemyNode = EnemyNode()
+            enemy.configureEnemy()
+            enemies.append(enemy)
+        }
+    }
 }
 
 struct Edge<T> {
