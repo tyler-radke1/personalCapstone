@@ -13,14 +13,14 @@ import GameplayKit
 
 
 
-class GameScene: SKScene, BattleSceneDelegate {
+class GameScene: SKScene {
     
     weak var player: PlayerNode? = PlayerNode.player
     
-    weak var leftArrow: ArrowNode? = ArrowNode()
-    weak var rightArrow: ArrowNode? = ArrowNode()
-    weak var downArrow: ArrowNode? = ArrowNode()
-    weak var upArrow: ArrowNode? = ArrowNode()
+    weak var leftArrow: ArrowNode? = nil
+    weak var rightArrow: ArrowNode? = nil
+    weak var downArrow: ArrowNode? = nil
+    weak var upArrow: ArrowNode? = nil
     
     weak var enemyToDelete: EnemyNode?
     var willDelete = false
@@ -30,33 +30,23 @@ class GameScene: SKScene, BattleSceneDelegate {
         self.scaleMode = .aspectFill
         self.camera = cameraNode
         configureNodes()
-        
     }
     
     override func sceneDidLoad() {
-       
+        
     }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         guard let player = self.player else { return }
+        
         if playerCollidesWith(type: BuildingNode()) {
-            
+
             self.player?.isColliding = true
-            
+
             if let node = self.childNode(withName: "questTrigger") {
                 if player.intersects(node) {
-                    let questInstance = Quest()
-                    questInstance.createGraph()
-                    
-                    let quest = questInstance.quest
-                    
-                    player.currentQuest = quest
-                    player.currentRoom = quest.adjacencies.keys.first
-                    
-                    if let name = player.currentRoom?.data.name {
-                        self.presentNewScene(player: player, ofFileName: name, andType: RoomScene())
-                    }
+                    createQuest()
                 }
             }
         }
@@ -70,7 +60,6 @@ class GameScene: SKScene, BattleSceneDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first, let player = self.player else { return }
-        
         
         let location = touch.location(in: self)
         let arrows = [leftArrow,rightArrow,downArrow,upArrow]
@@ -116,14 +105,9 @@ class GameScene: SKScene, BattleSceneDelegate {
         player.actionDoing = .idling
         
         let action = Animations.configureAnimation(action: player.actionDoing, direction: player.directionFacing)
-        
+
         player.run(action)
         
-        
-    }
-    
-    func delete() {
-        self.childNode(withName: "enemy")?.removeFromParent()
         
     }
     
@@ -152,6 +136,16 @@ class GameScene: SKScene, BattleSceneDelegate {
         return false
     }
 
+    func createQuest() {
+        guard let player = self.player else { return }
+        let newQuest = Quest()
+        newQuest.createGraph()
+        PlayerNode.player.currentQuest = newQuest.quest
+        PlayerNode.player.currentRoom = newQuest.quest.adjacencies.first?.key
+
+        presentNewScene(player: player, ofFileName: (player.currentRoom?.data.name)!, andType: RoomScene())
+    }
+    
     func presentNewScene<T>(player: PlayerNode, ofFileName file: String, andType _: T) where T: GameScene  {
         let loadQueue = DispatchQueue(label: "loadingQueue")
         loadQueue.sync {

@@ -15,19 +15,35 @@ enum EdgeType {
 }
 
 struct Vertex<T> {
-    var data: T
-    var roomEnemies: [EnemyNode] = []
+    let data: T
+    private var roomEnemies: [EnemyNode] = []
     var index: Int
+    var roomCleared = false
     
-    func generateEnemies(player: PlayerNode)  {
-        guard self.roomEnemies.count == 0 else { return }
-        
-        var enemies: [EnemyNode] = []
+    init(data: T, index: Int, roomCleared: Bool = false) {
+        self.data = data
+        self.roomEnemies = []
+        self.index = index
+        self.roomCleared = roomCleared
+    }
+    mutating func generateEnemies(player: PlayerNode)  {
+        guard self.roomEnemies.count == 0, roomCleared == false else { return }
         for _ in 1...5 {
             let enemy: EnemyNode = EnemyNode()
             enemy.configureEnemy()
-            enemies.append(enemy)
+            roomEnemies.append(enemy)
         }
+    }
+    
+    func addEnemies(scene: SKScene) {
+        self.roomEnemies.forEach({ node in
+            scene.addChild(node)
+        })
+    }
+    mutating func removeEnemies(with id: UUID) {
+        roomEnemies.removeAll(where: { $0.enemyID == id})
+        //sets room cleared to true if you defeat all enemies, stops spawn
+        roomCleared = (roomEnemies.count != 0) ? true : false
     }
 }
 

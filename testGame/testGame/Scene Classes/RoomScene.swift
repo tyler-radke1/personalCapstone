@@ -19,11 +19,12 @@ enum RoomType {
 
 class RoomScene: GameScene {
     var roomType: RoomType? = nil
-    
+
     override func didMove(to view: SKView) {
-        guard let player = player else { return }
         super.didMove(to: view)
         self.roomType = configureRoomType()
+        print(self.roomType)
+        player?.currentRoom?.addEnemies(scene: self)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -68,19 +69,20 @@ class RoomScene: GameScene {
         for roomExit in roomExits {
             guard player.intersects(roomExit) else { continue }
             let type = roomExit.userData?["exitType"]
+            let quest = Quest()
             switch type as? String {
             case "right":
                 player.positionToMoveTo = CGPoint(x: -700, y: player.position.y)
-                generateRoom(roomsToCheckFor: Quest.roomsExitLeft)
+                generateRoom(roomsToCheckFor: quest.roomsExitLeft)
             case "left":
                 player.positionToMoveTo = CGPoint(x: 3400, y: player.position.y)
-                generateRoom(roomsToCheckFor: Quest.roomsExitRight)
+                generateRoom(roomsToCheckFor: quest.roomsExitRight)
             case "top":
                 player.positionToMoveTo = CGPoint(x: player.position.x, y: -500)
-                generateRoom(roomsToCheckFor: Quest.roomsExitDown)
+                generateRoom(roomsToCheckFor: quest.roomsExitDown)
             case "bottom":
                 player.positionToMoveTo = CGPoint(x: player.position.x, y: 1700)
-                generateRoom(roomsToCheckFor: Quest.roomsExitUp)
+                generateRoom(roomsToCheckFor: quest.roomsExitUp)
             default:
                 print("oof")
             }
@@ -117,8 +119,9 @@ class RoomScene: GameScene {
         }
         
         if let randomRoom = roomsToCheckFor.randomElement() {
-            
-            let newVertex = player.currentQuest?.createVertex(data: randomRoom!)
+            //Generates enemies for a new room
+            var newVertex = player.currentQuest?.createVertex(data: randomRoom!)
+            newVertex?.generateEnemies(player: player)
             player.currentQuest?.addUndirectedEdge(between: newVertex!, and: player.currentRoom!)
             player.currentRoom = newVertex
             self.presentNewScene(player: player, ofFileName: (newVertex?.data.name)!, andType: RoomScene())

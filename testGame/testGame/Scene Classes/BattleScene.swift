@@ -15,12 +15,6 @@ protocol BattleProtocol {
     func removeAllChildren()
 }
 
-protocol BattleSceneDelegate {
-    func delete()
-}
-
-
-
 class BattleScene: GameScene {
     
    // var enemy: EnemyNode = EnemyNode()
@@ -31,8 +25,6 @@ class BattleScene: GameScene {
     var skills: [SkillIconNode] = []
     // var attack: SkillIconNode = SkillIconNode()
     
-    
-    var battleSceneDelegate: BattleSceneDelegate?
     var enemy: EnemyNode = EnemyNode.enemyForBattle
     
     var isPlayersTurn = true
@@ -91,6 +83,7 @@ class BattleScene: GameScene {
     func enemyDied() {
         enemy.health = 0
         enemy.removeFromParent()
+        player?.currentRoom?.removeEnemies(with: enemy.enemyID)
         EnemyNode.enemyForBattle.isAlive = false
         EnemyNode.enemyForBattle.removeFromParent()
     }

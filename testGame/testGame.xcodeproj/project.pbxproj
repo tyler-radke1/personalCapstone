@@ -162,12 +162,12 @@
 			children = (
 				9FD6AF76299B43EB00E1A5A8 /* AppDelegate.swift */,
 				9FD8165529A91D2B0058D103 /* Skills.swift */,
+				9FD6AF90299B4CD400E1A5A8 /* Nodes */,
 				9F75C3F929B6374F003EE629 /* Adjacency */,
 				9FD6AF96299BDC4000E1A5A8 /* Scene Classes */,
 				9FD6AF91299B4CDE00E1A5A8 /* Scene Files */,
 				9FD6AF8F299B4A5700E1A5A8 /* Animations */,
 				9F8F2BAD29A6BFC600B79595 /* EnemyAnimations */,
-				9FD6AF90299B4CD400E1A5A8 /* Nodes */,
 				9FD6AF80299B43EB00E1A5A8 /* Main.storyboard */,
 				9FD6AF83299B43EC00E1A5A8 /* Assets.xcassets */,
 				9FD6AF85299B43EC00E1A5A8 /* LaunchScreen.storyboard */,

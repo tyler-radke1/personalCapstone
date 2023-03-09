@@ -28,18 +28,6 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
     }
     
     
-    //Generates 1 enemy and appends it into the enemy Array
-    static func generateEnemies(player: PlayerNode)  {
-        guard EnemyNode.enemies.count == 0 else { return }
-        
-        var enemies: [EnemyNode] = []
-        for _ in 1...5 {
-            let enemy: EnemyNode = EnemyNode()
-            enemy.configureEnemy()
-            enemies.append(enemy)
-        }
-    }
-    
     //Sets enemy to be near the player with the right texture
     func configureEnemy() {
         let xRange = -1280...3840
@@ -81,8 +69,6 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
             }
         }
     }
-    
-    
     func prepareToChangeScene() {
         self.removeFromParent()
         self.removeAllChildren()

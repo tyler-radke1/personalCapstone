@@ -16,6 +16,7 @@ extension GameScene {
         leftArrow = self.childNode(withName: "leftArrow")! as? ArrowNode
         rightArrow = self.childNode(withName: "rightArrow")! as? ArrowNode
     
+        
         player?.configurePlayer()
         if let player = player {
             self.addChild(player)
