@@ -19,6 +19,7 @@ struct Vertex<T> {
     private var roomEnemies: [EnemyNode] = []
     var index: Int
     var roomCleared = false
+    let id = UUID()
     
     init(data: T, index: Int, roomCleared: Bool = false) {
         self.data = data
@@ -48,9 +49,10 @@ struct Vertex<T> {
 }
 
 struct Edge<T> {
-    var source: Vertex<T>
-    var destination: Vertex<T>
+    let source: Vertex<T>
+    let destination: Vertex<T>
 }
+
 
 extension Vertex: Hashable where T: Hashable {}
 extension Vertex: Equatable where T: Equatable {}

@@ -19,12 +19,13 @@ enum RoomType {
 
 class RoomScene: GameScene {
     var roomType: RoomType? = nil
-
+    var Id = UUID()
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        self.roomType = configureRoomType()
-        print(self.roomType)
-      //  player?.currentRoom?.addEnemies(scene: self)
+        configureRoomType()
+        // print("\(self.roomType!), \(self.name)")
+        player?.currentRoom?.addEnemies(scene: self)
+        print(player?.currentQuest)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -84,6 +85,7 @@ class RoomScene: GameScene {
                 player.positionToMoveTo = CGPoint(x: player.position.x, y: 1700)
                 generateRoom(roomsToCheckFor: quest.roomsExitUp)
             default:
+                fatalError()
                 print("oof")
             }
         }
@@ -107,27 +109,41 @@ class RoomScene: GameScene {
     func generateRoom(roomsToCheckFor: [RoomScene?]) {
         guard let player = player else { return }
         
+        var allRooms: [Vertex<RoomScene>] = []
+        player.currentQuest?.adjacencies.keys.forEach({ allRooms.append($0)})
+        
         let potentialEdges = player.currentQuest?.edges(from: player.currentRoom!)
         //Loops through edges, and if it finds an existing edge in the direction, brings it up
         //Otherwise, generates a new random room and edge
+        //  print(potentialEdges)
+        guard let potentialEdges = potentialEdges else {
+            return
+        }
+        let edge = potentialEdges.first { edge in
+            roomsToCheckFor.contains(edge.destination.data)
+        }
         
-      
-        for edge in potentialEdges! {
-            print(edge.destination.data.name)
-            if roomsToCheckFor.contains(edge.destination.data) {
-                player.currentRoom = edge.destination
-                self.presentNewScene(player: player, ofFileName: edge.destination.data.name!, andType: RoomScene())
-                return
-            }
-        }
-
-        if let randomRoom = roomsToCheckFor.randomElement() {
-            var newVertex = player.currentQuest?.createVertex(data: randomRoom!)
-         //   newVertex?.generateEnemies(player: player)
-            player.currentQuest?.addUndirectedEdge(between: player.currentRoom!, and: newVertex!)
-            player.currentRoom = newVertex
-            self.presentNewRoom(player: player, scene: newVertex!.data)
-        }
+        self.presentNewRoom(player: player, scene: (edge?.destination.data)!)
+        
+//        let roomNames = roomsToCheckFor.map { $0?.name }
+//        for room in allRooms {
+//            for edge in potentialEdges {
+//                if (edge.destination.data == room.data) {
+//                    self.player?.currentRoom = room
+//                    self.presentNewRoom(player: player, scene: room.data)
+//                    return
+//                }
+//            }
+//        }
+//
+//        if let randomRoom = roomsToCheckFor.randomElement() {
+//            let newVertex = player.currentQuest?.createVertex(data: randomRoom!)
+//            //   newVertex?.generateEnemies(player: player)
+//            player.currentQuest?.addUndirectedEdge(between: player.currentRoom!, and: newVertex!)
+//            player.previousRoom = player.currentRoom
+//            player.currentRoom = newVertex
+//            self.presentNewRoom(player: player, scene: newVertex!.data)
+//        }
     }
 }
 

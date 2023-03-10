@@ -14,10 +14,6 @@ enum ExitDirection {
 
 class ExitNode: SKSpriteNode {
     
-//    var exitDirection: ExitDirection {
-//        switch self.userData {
-//        default:
-//            return .bottom
-//        }
-//    }
+ // Look into custom storyboard variables. I think NSHipster has an article on it?
+    // Dangerous using strings in the UserData dictionary
 }

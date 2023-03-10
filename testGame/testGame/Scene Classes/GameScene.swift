@@ -139,7 +139,7 @@ class GameScene: SKScene {
     func createQuest() {
         guard let player = self.player else { return }
         let newQuest = Quest()
-        newQuest.createGraph()
+        newQuest.generateDungeon()
         PlayerNode.player.currentQuest = newQuest.quest
         PlayerNode.player.currentRoom = newQuest.quest.adjacencies.first?.key
         

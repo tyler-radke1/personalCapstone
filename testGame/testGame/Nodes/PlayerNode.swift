@@ -54,6 +54,7 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     
     var currentQuest: AdjacencyList<RoomScene>? = nil
     var currentRoom: Vertex<RoomScene>? = nil
+    var previousRoom: Vertex<RoomScene>? = nil
    
     
     //For if you're colliding with something, it is the direction opposite to the building
