@@ -53,46 +53,62 @@ class Quest {
         if let firstRoom = firstRoom {
             let _ = self.quest.createVertex(data: firstRoom)
         }
+        
+        generateDungeon()
     }
     
     func generateDungeon() {
-        guard !(quest.adjacencies.isEmpty) else {
-            let initialRoom = rooms.randomElement()
-            
-            if let initialRoom {
-                self.quest.createVertex(data: initialRoom)
-            }
-            return
-        }
+//        guard quest.adjacencies.keys.count <= 15 else {
+//            print("hit")
+//            return
+//        }
         
         var rooms = quest.adjacencies.keys
-        
+        print(rooms.count)
         for room in rooms {
-            let edges = quest.edges(from: room)
-            let destinations = edges.map { $0.destination }
+            var arrays: [[RoomScene]] = []
+            var edges = quest.edges(from: room)
             //loops through all destinations from room, checks each exit direction
             switch room.data.roomType {
+                //for each room type, it sets the arrays variable to which directions it needs to check for
             case .upperLeft:
-                if !edges.contains(where: { edgeRoom in
-                    roomsExitLeft.contains(edgeRoom.destination.data)
-                }) {
-                    let newVertex = quest.createVertex(data: roomsExitLeft.randomElement()!)
-                    quest.addUndirectedEdge(between: room, and: newVertex)
-                } else if !edges.contains(where: { edgeRoom in
-                    roomsExitUp.contains(edgeRoom.destination.data)
-                }) {
-                    let newVertex = quest.createVertex(data: roomsExitUp.randomElement()!)
-                    quest.addUndirectedEdge(between: room, and: newVertex)
-                }
-                
+                //If edges does not contain an edge where roomsExitLeft contains it's destination point.
+                arrays = [roomsExitLeft, roomsExitUp]
+            case .forkDown:
+                 arrays = [roomsExitLeft, roomsExitRight, roomsExitUp]
+            case .upperRight:
+                arrays = [roomsExitRight, roomsExitUp]
+            case .lowerLeft:
+                arrays = [roomsExitDown, roomsExitLeft]
+            case .forkUp:
+                arrays = [roomsExitLeft, roomsExitRight, roomsExitDown]
+            case .lowerRight:
+                arrays = [roomsExitRight, roomsExitDown]
             default:
                 print("hello world")
             }
             
+            for array in arrays {
+                edges = quest.edges(from: room)
+                //if edges does NOT contain an edge where the array contains that edges destination
+                //In other words, there isn't yet a room generated for that direction
+                for edge in edges {
+                    if !array.contains(edge.destination.data) {
+                        let newVertex = quest.createVertex(data: array.randomElement()!)
+                        quest.addUndirectedEdge(between: room, and: newVertex)
+                    }
+                }
+                
+//                if !(edges.contains(where: { edge in
+//                    array.contains(edge.destination.data)
+//                })) {
+//                    let newVertex = quest.createVertex(data: array.randomElement()!)
+//                    quest.addUndirectedEdge(between: room, and: newVertex)
+//                }
+            }
+            
+            print(rooms.count)
+            generateDungeon()
         }
-    }
-    
-    private func generateSingleRoom(roomOptions: [RoomScene], from initalRoom: Vertex<RoomScene>) {
-        
     }
 }
