@@ -10,7 +10,7 @@ import SpriteKit
 
 extension SKCameraNode {
     func configureCamera(around player: PlayerNode) {
-        self.position.x = PlayerNode.player.position.x
-        self.position.y = PlayerNode.player.position.y + 350
+        self.position.x = player.position.x
+        self.position.y = player.position.y + 350
     }
 }

@@ -23,9 +23,7 @@ class RoomScene: GameScene {
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         configureRoomType()
-        // print("\(self.roomType!), \(self.name)")
-        player?.currentRoom?.addEnemies(scene: self)
-        print(player?.currentQuest)
+        print("configured room")
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -38,8 +36,19 @@ class RoomScene: GameScene {
         if playerCollidesWith(type: EnemyNode()) {
             configureEnemy()
         }
+        configureButtons()
+
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("Location - \(touches.first!.location(in: self))")
+        print("camera - \(cameraNode.position)")
+        super.touchesBegan(touches, with: event)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+    }
     func configureRoomType() -> RoomType {
         if let player = self.player {
             
@@ -73,16 +82,16 @@ class RoomScene: GameScene {
             let quest = Quest()
             switch type as? String {
             case "right":
-                player.positionToMoveTo = CGPoint(x: -700, y: player.position.y)
+               // player.positionToMoveTo = CGPoint(x: -700, y: player.position.y)
                 generateRoom(roomsToCheckFor: quest.roomsExitLeft)
             case "left":
-                player.positionToMoveTo = CGPoint(x: 3400, y: player.position.y)
+              //  player.positionToMoveTo = CGPoint(x: 3400, y: player.position.y)
                 generateRoom(roomsToCheckFor: quest.roomsExitRight)
             case "top":
-                player.positionToMoveTo = CGPoint(x: player.position.x, y: -500)
+             //   player.positionToMoveTo = CGPoint(x: player.position.x, y: -500)
                 generateRoom(roomsToCheckFor: quest.roomsExitDown)
             case "bottom":
-                player.positionToMoveTo = CGPoint(x: player.position.x, y: 1700)
+              //  player.positionToMoveTo = CGPoint(x: player.position.x, y: 1700)
                 generateRoom(roomsToCheckFor: quest.roomsExitUp)
             default:
                 fatalError()
@@ -107,43 +116,22 @@ class RoomScene: GameScene {
     }
     
     func generateRoom(roomsToCheckFor: [RoomScene?]) {
-        guard let player = player else { return }
-        
-        var allRooms: [Vertex<RoomScene>] = []
-        player.currentQuest?.adjacencies.keys.forEach({ allRooms.append($0)})
-        
-        let potentialEdges = player.currentQuest?.edges(from: player.currentRoom!)
-        //Loops through edges, and if it finds an existing edge in the direction, brings it up
-        //Otherwise, generates a new random room and edge
-        //  print(potentialEdges)
+        guard let player = player, let currentRoom = player.currentRoom else { return }
+        let roomsAsNames = roomsToCheckFor.map { $0?.name }
+        let potentialEdges = player.currentQuest?.edges(from: currentRoom)
         guard let potentialEdges = potentialEdges else {
             return
         }
+        
         let edge = potentialEdges.first { edge in
-            roomsToCheckFor.contains(edge.destination.data)
+            roomsAsNames.contains(edge.destination.data.name)
         }
         
-        self.presentNewRoom(player: player, scene: (edge?.destination.data)!)
-        
-//        let roomNames = roomsToCheckFor.map { $0?.name }
-//        for room in allRooms {
-//            for edge in potentialEdges {
-//                if (edge.destination.data == room.data) {
-//                    self.player?.currentRoom = room
-//                    self.presentNewRoom(player: player, scene: room.data)
-//                    return
-//                }
-//            }
-//        }
-//
-//        if let randomRoom = roomsToCheckFor.randomElement() {
-//            let newVertex = player.currentQuest?.createVertex(data: randomRoom!)
-//            //   newVertex?.generateEnemies(player: player)
-//            player.currentQuest?.addUndirectedEdge(between: player.currentRoom!, and: newVertex!)
-//            player.previousRoom = player.currentRoom
-//            player.currentRoom = newVertex
-//            self.presentNewRoom(player: player, scene: newVertex!.data)
-//        }
+        if let edge = edge {
+            player.prepareForScene()
+            self.presentNewRoom(player: player, scene: (edge.destination.data))
+        } else {
+            print("hit")
+        }
     }
 }
-

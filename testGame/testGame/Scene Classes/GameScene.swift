@@ -29,6 +29,7 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         self.scaleMode = .aspectFill
         self.camera = cameraNode
+        
         configureNodes()
     }
     
@@ -54,20 +55,20 @@ class GameScene: SKScene {
         player.movePlayer()
         
         configureButtons()
-        
-        cameraNode.configureCamera(around: player)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first, let player = self.player else { return }
         
         let location = touch.location(in: self)
-        let arrows = [leftArrow,rightArrow,downArrow,upArrow]
+        
+        
+        let arrows = [self.leftArrow,self.rightArrow,self.downArrow,self.upArrow]
         
         //If user selects an arrow, sets direction according and sets to walking
         for (index, arrow) in arrows.enumerated() {
             guard let arrow = arrow else { return }
-            
+            configureButtons()
             if arrow.contains(location) {
                 player.directionFacing = DirectionFacing(rawValue: index)!
                 player.actionDoing = .walking
@@ -172,17 +173,9 @@ class GameScene: SKScene {
     }
     
     func presentNewRoom(player: PlayerNode, scene: RoomScene) {
-        let loadQueue = DispatchQueue(label: "loadingQueue")
-        loadQueue.sync {
-            
             scene.player = player
-            
-            if let newScene = scene as? BattleScene {
-                newScene.sceneToReturnTo = self
-            }
-            
+    
             scene.scaleMode = .aspectFit
-            
             player.prepareForScene()
             EnemyNode.enemyForBattle.prepareToChangeScene()
             
@@ -194,5 +187,4 @@ class GameScene: SKScene {
             
             self.scene?.view?.presentScene(scene, transition: .moveIn(with: .up, duration: 0.5))
         }
-    }
 }

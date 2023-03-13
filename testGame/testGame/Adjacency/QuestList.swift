@@ -49,19 +49,16 @@ class Quest {
     }
     
     func createGraph() {
-        let firstRoom = rooms.randomElement()
-        if let firstRoom = firstRoom {
-            let _ = self.quest.createVertex(data: firstRoom)
-        }
-        
-        generateDungeon(count: 1)
+        var newScene = RoomScene()
+        newScene = rooms.randomElement()!
+        let newVertex = quest.createVertex(data: newScene)
+        generateDungeon(count: 0)
     }
     
     func generateDungeon(count: Int) {
-        guard count <= 50 else { return }
         print("Loop number: \(count)")
-        var rooms = quest.adjacencies.keys
-        print(rooms.count)
+        let rooms = quest.adjacencies.keys
+        guard count <= 5, quest.adjacencies.keys.count <= 20 else { return }
         for room in rooms {
             var arrays: [[RoomScene]] = []
             var edges = quest.edges(from: room)
@@ -72,7 +69,7 @@ class Quest {
                 //If edges does not contain an edge where roomsExitLeft contains it's destination point.
                 arrays = [roomsExitLeft, roomsExitUp]
             case .forkDown:
-                 arrays = [roomsExitLeft, roomsExitRight, roomsExitUp]
+                arrays = [roomsExitLeft, roomsExitRight, roomsExitUp]
             case .upperRight:
                 arrays = [roomsExitRight, roomsExitUp]
             case .lowerLeft:
@@ -87,18 +84,38 @@ class Quest {
             
             for array in arrays {
                 edges = quest.edges(from: room)
+                guard edges.count > 0 else {
+                    var newScene = RoomScene()
+                    newScene = array.randomElement()!
+                    let newVertex = quest.createVertex(data: newScene)
+                    quest.addUndirectedEdge(between: room, and: newVertex)
+                    continue
+                }
+                for edge in edges {
+                    if !(array.contains(edge.destination.data)) {
+                        var newScene = RoomScene()
+                        newScene = array.randomElement()!
+                        let newVertex = quest.createVertex(data: newScene)
+                        quest.addUndirectedEdge(between: room, and: newVertex)
+                    }
+                }                 //edges = quest.edges(from: room)
                 //if edges does NOT contain an edge where the array contains that edges destination
                 //In other words, there isn't yet a room generated for that direction
                 
-                if !(edges.contains(where: { edge in
-                    array.contains(edge.destination.data)
-                })) {
-                    let newVertex = quest.createVertex(data: array.randomElement()!)
-                    quest.addUndirectedEdge(between: room, and: newVertex)
-                }
+                //                if !(edges.contains(where: { edge in
+                //                    array.contains(edge.destination.data)
+                //                })) {
+                //                    var newScene = RoomScene()
+                //                    newScene = array.randomElement()!
+                //                    let newVertex = quest.createVertex(data: newScene)
+                //                    quest.addUndirectedEdge(between: room, and: newVertex)
+                //                }
+                //            }
+                
             }
+           
             
-            print(rooms.count)
+            print("Generated \(quest.adjacencies.keys.count) rooms")
             generateDungeon(count: count + 1)
         }
     }

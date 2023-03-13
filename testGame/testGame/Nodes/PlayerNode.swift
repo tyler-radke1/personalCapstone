@@ -50,7 +50,7 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     var playerSpeed: CGFloat = 15
     var isColliding = false
     var health = 100
-    var positionToMoveTo: CGPoint = CGPoint(x: 0, y: -300)
+    var positionToMoveTo: CGPoint = CGPoint(x: 0, y: 0)
     
     var currentQuest: AdjacencyList<RoomScene>? = nil
     var currentRoom: Vertex<RoomScene>? = nil
