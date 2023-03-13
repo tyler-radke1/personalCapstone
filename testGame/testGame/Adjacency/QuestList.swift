@@ -54,15 +54,12 @@ class Quest {
             let _ = self.quest.createVertex(data: firstRoom)
         }
         
-        generateDungeon()
+        generateDungeon(count: 1)
     }
     
-    func generateDungeon() {
-//        guard quest.adjacencies.keys.count <= 15 else {
-//            print("hit")
-//            return
-//        }
-        
+    func generateDungeon(count: Int) {
+        guard count <= 50 else { return }
+        print("Loop number: \(count)")
         var rooms = quest.adjacencies.keys
         print(rooms.count)
         for room in rooms {
@@ -92,23 +89,17 @@ class Quest {
                 edges = quest.edges(from: room)
                 //if edges does NOT contain an edge where the array contains that edges destination
                 //In other words, there isn't yet a room generated for that direction
-                for edge in edges {
-                    if !array.contains(edge.destination.data) {
-                        let newVertex = quest.createVertex(data: array.randomElement()!)
-                        quest.addUndirectedEdge(between: room, and: newVertex)
-                    }
-                }
                 
-//                if !(edges.contains(where: { edge in
-//                    array.contains(edge.destination.data)
-//                })) {
-//                    let newVertex = quest.createVertex(data: array.randomElement()!)
-//                    quest.addUndirectedEdge(between: room, and: newVertex)
-//                }
+                if !(edges.contains(where: { edge in
+                    array.contains(edge.destination.data)
+                })) {
+                    let newVertex = quest.createVertex(data: array.randomElement()!)
+                    quest.addUndirectedEdge(between: room, and: newVertex)
+                }
             }
             
             print(rooms.count)
-            generateDungeon()
+            generateDungeon(count: count + 1)
         }
     }
 }
