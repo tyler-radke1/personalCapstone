@@ -29,7 +29,7 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         self.scaleMode = .aspectFill
         self.camera = cameraNode
-        
+        configureButtons()
         configureNodes()
     }
     
@@ -53,7 +53,7 @@ class GameScene: SKScene {
         }
         
         player.movePlayer()
-        
+        cameraNode.configureCamera(around: player)
         configureButtons()
     }
     
@@ -171,20 +171,4 @@ class GameScene: SKScene {
             self.scene?.view?.presentScene(newScene!, transition: .moveIn(with: .up, duration: 0.5))
         }
     }
-    
-    func presentNewRoom(player: PlayerNode, scene: RoomScene) {
-            scene.player = player
-    
-            scene.scaleMode = .aspectFit
-            player.prepareForScene()
-            EnemyNode.enemyForBattle.prepareToChangeScene()
-            
-            for child in self.children {
-                if child is EnemyNode {
-                    child.removeFromParent()
-                }
-            }
-            
-            self.scene?.view?.presentScene(scene, transition: .moveIn(with: .up, duration: 0.5))
-        }
 }

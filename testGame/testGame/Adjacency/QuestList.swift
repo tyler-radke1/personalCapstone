@@ -91,6 +91,7 @@ class Quest {
                     quest.addUndirectedEdge(between: room, and: newVertex)
                     continue
                 }
+                
                 for edge in edges {
                     if !(array.contains(edge.destination.data)) {
                         var newScene = RoomScene()
@@ -98,20 +99,7 @@ class Quest {
                         let newVertex = quest.createVertex(data: newScene)
                         quest.addUndirectedEdge(between: room, and: newVertex)
                     }
-                }                 //edges = quest.edges(from: room)
-                //if edges does NOT contain an edge where the array contains that edges destination
-                //In other words, there isn't yet a room generated for that direction
-                
-                //                if !(edges.contains(where: { edge in
-                //                    array.contains(edge.destination.data)
-                //                })) {
-                //                    var newScene = RoomScene()
-                //                    newScene = array.randomElement()!
-                //                    let newVertex = quest.createVertex(data: newScene)
-                //                    quest.addUndirectedEdge(between: room, and: newVertex)
-                //                }
-                //            }
-                
+                }
             }
            
             

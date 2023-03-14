@@ -22,8 +22,16 @@ class RoomScene: GameScene {
     var Id = UUID()
     override func didMove(to view: SKView) {
         super.didMove(to: view)
+       
+    }
+    
+    override func sceneDidLoad() {
+        print("scene Loaded - \(self.name)")
         configureRoomType()
-        print("configured room")
+        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        self.player?.position = CGPoint(x: 0, y: 0)
+        cameraNode.configureCamera(around: self.player!)
+        print(player!.position)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -84,19 +92,24 @@ class RoomScene: GameScene {
             case "right":
                // player.positionToMoveTo = CGPoint(x: -700, y: player.position.y)
                 generateRoom(roomsToCheckFor: quest.roomsExitLeft)
+                return
             case "left":
               //  player.positionToMoveTo = CGPoint(x: 3400, y: player.position.y)
                 generateRoom(roomsToCheckFor: quest.roomsExitRight)
+                return
             case "top":
              //   player.positionToMoveTo = CGPoint(x: player.position.x, y: -500)
                 generateRoom(roomsToCheckFor: quest.roomsExitDown)
+                return
             case "bottom":
               //  player.positionToMoveTo = CGPoint(x: player.position.x, y: 1700)
                 generateRoom(roomsToCheckFor: quest.roomsExitUp)
+                return
             default:
                 fatalError()
                 print("oof")
             }
+            return
         }
     }
     
@@ -109,29 +122,60 @@ class RoomScene: GameScene {
             guard player.intersects(enemy) else { continue }
             EnemyNode.enemyForBattle = enemy as! EnemyNode
             self.player?.prepareForScene()
-            PlayerNode.player.positionToMoveTo = player.position
+           // PlayerNode.player.positionToMoveTo = player.position
             self.presentNewScene(player: player, ofFileName: "Battle", andType: BattleScene())
         }
         
     }
     
+//    func generateRoom(roomsToCheckFor: [RoomScene?]) {
+//        guard let player = player, let currentRoom = player.currentRoom else { return }
+//        let roomsAsNames = roomsToCheckFor.map { $0?.name }
+//        let potentialEdges = player.currentQuest?.edges(from: currentRoom)
+//        guard let potentialEdges = potentialEdges else {
+//            return
+//        }
+//
+//        var edge: Edge<RoomScene>? = nil
+////        let edge = potentialEdges.first { edge in
+////            print(roomsAsNames.contains(edge.destination.data.name))
+////           return roomsAsNames.contains(edge.destination.data.name)
+////
+////        }
+//
+//        for potentialEdge in potentialEdges {
+//            if roomsAsNames.contains(potentialEdge.destination.data.name) {
+//                edge = potentialEdge
+//                break
+//            }
+//        }
+//
+//        if let edge {
+//            print("about to present")
+//            self.presentNewRoom(player: player, scene: (edge.destination.data))
+//        } else {
+//            print("hit")
+//        }
+//    }
+    
     func generateRoom(roomsToCheckFor: [RoomScene?]) {
-        guard let player = player, let currentRoom = player.currentRoom else { return }
-        let roomsAsNames = roomsToCheckFor.map { $0?.name }
-        let potentialEdges = player.currentQuest?.edges(from: currentRoom)
-        guard let potentialEdges = potentialEdges else {
-            return
+        let newRoom = roomsToCheckFor.randomElement()
+        presentNewRoom(player: player!, scene: newRoom!!)
+    }
+    
+    func presentNewRoom(player: PlayerNode, scene: RoomScene) {
+        //scene.player = player
+        scene.scaleMode = .aspectFit
+        player.prepareForScene()
+        EnemyNode.enemyForBattle.prepareToChangeScene()
+        
+        for child in self.children {
+            if child is EnemyNode {
+                child.removeFromParent()
+            }
         }
         
-        let edge = potentialEdges.first { edge in
-            roomsAsNames.contains(edge.destination.data.name)
-        }
+        self.scene?.view?.presentScene(scene)
         
-        if let edge = edge {
-            player.prepareForScene()
-            self.presentNewRoom(player: player, scene: (edge.destination.data))
-        } else {
-            print("hit")
-        }
     }
 }

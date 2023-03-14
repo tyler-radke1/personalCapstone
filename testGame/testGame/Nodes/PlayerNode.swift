@@ -50,7 +50,7 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     var playerSpeed: CGFloat = 15
     var isColliding = false
     var health = 100
-    var positionToMoveTo: CGPoint = CGPoint(x: 0, y: 0)
+  //  var positionToMoveTo: CGPoint = CGPoint(x: 0, y: 0)
     
     var currentQuest: AdjacencyList<RoomScene>? = nil
     var currentRoom: Vertex<RoomScene>? = nil
@@ -113,7 +113,7 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
         self.texture = SKTexture(imageNamed: "frontWalk00")
         self.zPosition = 2
         self.alpha = 1
-        self.position = self.positionToMoveTo
+        self.position = CGPoint(x: 0, y: -300)
     }
     
     func prepareForScene() {
