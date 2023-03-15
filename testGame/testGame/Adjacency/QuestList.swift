@@ -82,27 +82,34 @@ class Quest {
                 print("hello world")
             }
             
+//            for array in arrays {
+//                edges = quest.edges(from: room)
+//                guard edges.count > 0 else {
+//                    var newScene = RoomScene()
+//                    newScene = array.randomElement()!
+//                    let newVertex = quest.createVertex(data: newScene)
+//                    quest.addUndirectedEdge(between: room, and: newVertex)
+//                    continue
+//                }
+//
+//                for edge in edges {
+//                    if !(array.contains(edge.destination.data)) {
+//                        var newScene = RoomScene()
+//                        newScene = array.randomElement()!
+//                        let newVertex = quest.createVertex(data: newScene)
+//                        quest.addUndirectedEdge(between: room, and: newVertex)
+//                    }
+//                }
+//            }
+            var edgeRooms = edges.map({ $0.destination.data })
             for array in arrays {
-                edges = quest.edges(from: room)
-                guard edges.count > 0 else {
-                    var newScene = RoomScene()
-                    newScene = array.randomElement()!
-                    let newVertex = quest.createVertex(data: newScene)
-                    quest.addUndirectedEdge(between: room, and: newVertex)
-                    continue
-                }
-                
-                for edge in edges {
-                    if !(array.contains(edge.destination.data)) {
-                        var newScene = RoomScene()
-                        newScene = array.randomElement()!
-                        let newVertex = quest.createVertex(data: newScene)
-                        quest.addUndirectedEdge(between: room, and: newVertex)
+                if !(array.contains(where: { edgeRooms.contains($0) })) {
+                    if let newRoom = array.randomElement()  {
+                        let newVertex = quest.createVertex(data: newRoom)
+                        quest.addUndirectedEdge(between: newVertex, and: room)
                     }
                 }
             }
-           
-            
             print("Generated \(quest.adjacencies.keys.count) rooms")
             generateDungeon(count: count + 1)
         }

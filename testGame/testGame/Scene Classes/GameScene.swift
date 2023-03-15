@@ -141,7 +141,7 @@ class GameScene: SKScene {
         guard let player = self.player else { return }
         let newQuest = Quest()
         newQuest.createGraph()
-        PlayerNode.player.currentQuest = newQuest.quest
+        PlayerNode.player.currentQuest = newQuest
         PlayerNode.player.currentRoom = newQuest.quest.adjacencies.first?.key
         
         presentNewScene(player: player, ofFileName: (player.currentRoom?.data.name)!, andType: RoomScene())

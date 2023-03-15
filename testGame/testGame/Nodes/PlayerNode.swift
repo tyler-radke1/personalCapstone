@@ -52,7 +52,7 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     var health = 100
   //  var positionToMoveTo: CGPoint = CGPoint(x: 0, y: 0)
     
-    var currentQuest: AdjacencyList<RoomScene>? = nil
+    var currentQuest: Quest? = nil
     var currentRoom: Vertex<RoomScene>? = nil
     var previousRoom: Vertex<RoomScene>? = nil
    
@@ -118,6 +118,7 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     
     func prepareForScene() {
         PlayerNode.player = self
+        self.zPosition = 2
         self.removeAllActions()
         self.removeFromParent()
         self.actionDoing = .idling

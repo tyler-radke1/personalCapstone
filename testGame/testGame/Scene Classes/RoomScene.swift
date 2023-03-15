@@ -19,7 +19,6 @@ enum RoomType {
 
 class RoomScene: GameScene {
     var roomType: RoomType? = nil
-    var Id = UUID()
     override func didMove(to view: SKView) {
         super.didMove(to: view)
        
@@ -57,6 +56,21 @@ class RoomScene: GameScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
     }
+    
+    func configureEnemy() {
+        guard let player = player else { return }
+        
+        let enemies = self.children.filter({ $0 is EnemyNode })
+        
+        for enemy in enemies {
+            guard player.intersects(enemy) else { continue }
+            EnemyNode.enemyForBattle = enemy as! EnemyNode
+            self.player?.prepareForScene()
+           // PlayerNode.player.positionToMoveTo = player.position
+            self.presentNewScene(player: player, ofFileName: "Battle", andType: BattleScene())
+        }
+        
+    }
     func configureRoomType() -> RoomType {
         if let player = self.player {
             
@@ -81,95 +95,45 @@ class RoomScene: GameScene {
     }
     
     func configureRoomExit() {
-        guard let player = player else { return }
-        
+        guard let player = player, let quest = player.currentQuest else { return }
         let roomExits = self.children.filter { $0 is ExitNode }
-        for roomExit in roomExits {
-            guard player.intersects(roomExit) else { continue }
-            let type = roomExit.userData?["exitType"]
-            let quest = Quest()
-            switch type as? String {
-            case "right":
-               // player.positionToMoveTo = CGPoint(x: -700, y: player.position.y)
-                generateRoom(roomsToCheckFor: quest.roomsExitLeft)
-                return
-            case "left":
-              //  player.positionToMoveTo = CGPoint(x: 3400, y: player.position.y)
-                generateRoom(roomsToCheckFor: quest.roomsExitRight)
-                return
-            case "top":
-             //   player.positionToMoveTo = CGPoint(x: player.position.x, y: -500)
-                generateRoom(roomsToCheckFor: quest.roomsExitDown)
-                return
-            case "bottom":
-              //  player.positionToMoveTo = CGPoint(x: player.position.x, y: 1700)
-                generateRoom(roomsToCheckFor: quest.roomsExitUp)
-                return
-            default:
-                fatalError()
-                print("oof")
-            }
-            return
-        }
-    }
-    
-    func configureEnemy() {
-        guard let player = player else { return }
+        let exit = roomExits.first { player.intersects($0) }
+        let type = exit?.userData?["exitType"]
         
-        let enemies = self.children.filter({ $0 is EnemyNode })
-        
-        for enemy in enemies {
-            guard player.intersects(enemy) else { continue }
-            EnemyNode.enemyForBattle = enemy as! EnemyNode
-            self.player?.prepareForScene()
-           // PlayerNode.player.positionToMoveTo = player.position
-            self.presentNewScene(player: player, ofFileName: "Battle", andType: BattleScene())
+        switch type as? String {
+        case "right":
+            // player.positionToMoveTo = CGPoint(x: -700, y: player.position.y)
+            generateRoom(roomsToCheckFor: quest.roomsExitLeft)
+        case "left":
+            //  player.positionToMoveTo = CGPoint(x: 3400, y: player.position.y)
+            generateRoom(roomsToCheckFor: quest.roomsExitRight)
+        case "top":
+            //   player.positionToMoveTo = CGPoint(x: player.position.x, y: -500)
+            generateRoom(roomsToCheckFor: quest.roomsExitDown)
+        case "bottom":
+            //  player.positionToMoveTo = CGPoint(x: player.position.x, y: 1700)
+            generateRoom(roomsToCheckFor: quest.roomsExitUp)
+        default:
+            print("oof")
         }
         
     }
-    
-//    func generateRoom(roomsToCheckFor: [RoomScene?]) {
-//
-//
-//        for potentialEdge in potentialEdges {
-//            if roomsAsNames.contains(potentialEdge.destination.data.name) {
-//                edge = potentialEdge
-//                break
-//            }
-//        }
-//    let edge = potentialEdges.first { edge in
-//        print(roomsAsNames.contains(edge.destination.data.name))
-//       return roomsAsNames.contains(edge.destination.data.name)
-//
-//    }
-//
-//        if let edge {
-//            print("about to present")
-//            self.presentNewRoom(player: player, scene: (edge.destination.data))
-//        } else {
-//            print("hit")
-//        }
-//    }
+
     
     func generateRoom(roomsToCheckFor: [RoomScene?]) {
-        guard let player = player, let currentRoom = player.currentRoom else { return }
-              let roomsAsNames = roomsToCheckFor.map { $0?.name }
-              let potentialEdges = player.currentQuest?.edges(from: currentRoom)
-              guard let potentialEdges = potentialEdges else {
-                  return
-              }
-      
-            var potentialRooms: [RoomScene] = potentialEdges.map({ $0.destination.data })
-            var edge: Edge<RoomScene>? = nil
+       guard let player = player, let currentRoom = player.currentRoom, let potentialEdges = player.currentQuest?.quest.edges(from: currentRoom) else { return }
+       
+        let roomsAsNames = roomsToCheckFor.map { $0?.name }
+       
+        var potentialRooms: [RoomScene] = potentialEdges.map({ $0.destination.data })
         
+        var possibleRooms: [RoomScene] = []
         for room in potentialRooms {
-            if roomsToCheckFor.contains(room) {
+            if roomsAsNames.contains(room.name) {
                 presentNewRoom(player: player, scene: room)
             }
         }
-            print(potentialEdges.count)
-            let newRoom = roomsToCheckFor.randomElement()
-            
+        print(possibleRooms)
     }
     
     func presentNewRoom(player: PlayerNode, scene: RoomScene) {
