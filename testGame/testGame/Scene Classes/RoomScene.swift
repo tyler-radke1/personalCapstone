@@ -129,19 +129,7 @@ class RoomScene: GameScene {
     }
     
 //    func generateRoom(roomsToCheckFor: [RoomScene?]) {
-//        guard let player = player, let currentRoom = player.currentRoom else { return }
-//        let roomsAsNames = roomsToCheckFor.map { $0?.name }
-//        let potentialEdges = player.currentQuest?.edges(from: currentRoom)
-//        guard let potentialEdges = potentialEdges else {
-//            return
-//        }
 //
-//        var edge: Edge<RoomScene>? = nil
-////        let edge = potentialEdges.first { edge in
-////            print(roomsAsNames.contains(edge.destination.data.name))
-////           return roomsAsNames.contains(edge.destination.data.name)
-////
-////        }
 //
 //        for potentialEdge in potentialEdges {
 //            if roomsAsNames.contains(potentialEdge.destination.data.name) {
@@ -149,6 +137,11 @@ class RoomScene: GameScene {
 //                break
 //            }
 //        }
+//    let edge = potentialEdges.first { edge in
+//        print(roomsAsNames.contains(edge.destination.data.name))
+//       return roomsAsNames.contains(edge.destination.data.name)
+//
+//    }
 //
 //        if let edge {
 //            print("about to present")
@@ -159,8 +152,24 @@ class RoomScene: GameScene {
 //    }
     
     func generateRoom(roomsToCheckFor: [RoomScene?]) {
-        let newRoom = roomsToCheckFor.randomElement()
-        presentNewRoom(player: player!, scene: newRoom!!)
+        guard let player = player, let currentRoom = player.currentRoom else { return }
+              let roomsAsNames = roomsToCheckFor.map { $0?.name }
+              let potentialEdges = player.currentQuest?.edges(from: currentRoom)
+              guard let potentialEdges = potentialEdges else {
+                  return
+              }
+      
+            var potentialRooms: [RoomScene] = potentialEdges.map({ $0.destination.data })
+            var edge: Edge<RoomScene>? = nil
+        
+        for room in potentialRooms {
+            if roomsToCheckFor.contains(room) {
+                presentNewRoom(player: player, scene: room)
+            }
+        }
+            print(potentialEdges.count)
+            let newRoom = roomsToCheckFor.randomElement()
+            
     }
     
     func presentNewRoom(player: PlayerNode, scene: RoomScene) {
