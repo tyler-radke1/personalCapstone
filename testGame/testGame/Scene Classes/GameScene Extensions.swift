@@ -18,9 +18,8 @@ extension GameScene {
     
         
         player?.configurePlayer()
-        if let player = player {
-            self.addChild(player)
-        }
+        PlayerNode.player.removeFromParent()
+        self.addChild(PlayerNode.player)
 
         for child in self.children {
             if let child = child as? EnemyNode {

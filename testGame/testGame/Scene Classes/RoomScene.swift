@@ -21,21 +21,22 @@ class RoomScene: GameScene {
     var roomType: RoomType? = nil
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-       
+        self.player?.position = CGPoint(x: 0, y: 0)
     }
     
     override func sceneDidLoad() {
         print("scene Loaded - \(self.name)")
         configureRoomType()
-        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        self.player?.position = CGPoint(x: 0, y: 0)
+       // self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        
         cameraNode.configureCamera(around: self.player!)
-        print(player!.position)
     }
     
+        
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
-        
+        PlayerNode.player.removeFromParent()
+        self.addChild(PlayerNode.player)
         if playerCollidesWith(type: ExitNode()) {
             configureRoomExit()
         }
@@ -48,8 +49,6 @@ class RoomScene: GameScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("Location - \(touches.first!.location(in: self))")
-        print("camera - \(cameraNode.position)")
         super.touchesBegan(touches, with: event)
     }
     
@@ -124,16 +123,13 @@ class RoomScene: GameScene {
        guard let player = player, let currentRoom = player.currentRoom, let potentialEdges = player.currentQuest?.quest.edges(from: currentRoom) else { return }
        
         let roomsAsNames = roomsToCheckFor.map { $0?.name }
-       
-        var potentialRooms: [RoomScene] = potentialEdges.map({ $0.destination.data })
-        
-        var possibleRooms: [RoomScene] = []
-        for room in potentialRooms {
-            if roomsAsNames.contains(room.name) {
-                presentNewRoom(player: player, scene: room)
+    
+        for edge in potentialEdges {
+            if roomsAsNames.contains(edge.destination.data.name) {
+                player.currentRoom = edge.destination
+                presentNewRoom(player: player, scene: edge.destination.data)
             }
         }
-        print(possibleRooms)
     }
     
     func presentNewRoom(player: PlayerNode, scene: RoomScene) {
@@ -147,8 +143,6 @@ class RoomScene: GameScene {
                 child.removeFromParent()
             }
         }
-        
         self.scene?.view?.presentScene(scene)
-        
     }
 }

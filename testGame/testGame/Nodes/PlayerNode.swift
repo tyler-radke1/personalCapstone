@@ -118,7 +118,7 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     
     func prepareForScene() {
         PlayerNode.player = self
-        self.zPosition = 2
+        self.zPosition = 1
         self.removeAllActions()
         self.removeFromParent()
         self.actionDoing = .idling

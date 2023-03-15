@@ -148,27 +148,24 @@ class GameScene: SKScene {
     }
     
     func presentNewScene<T>(player: PlayerNode, ofFileName file: String, andType _: T) where T: GameScene  {
-        let loadQueue = DispatchQueue(label: "loadingQueue")
-        loadQueue.sync {
-            let newScene = T(fileNamed: file)
-            newScene!.player = player
-            
-            if let newScene = newScene as? BattleScene {
-                newScene.sceneToReturnTo = self
-            }
-            
-            newScene?.scaleMode = .aspectFit
-            
-            player.prepareForScene()
-            EnemyNode.enemyForBattle.prepareToChangeScene()
-            
-            for child in self.children {
-                if child is EnemyNode {
-                    child.removeFromParent()
-                }
-            }
-            
-            self.scene?.view?.presentScene(newScene!, transition: .moveIn(with: .up, duration: 0.5))
+        let newScene = T(fileNamed: file)
+        newScene!.player = player
+        
+        if let newScene = newScene as? BattleScene {
+            newScene.sceneToReturnTo = self
         }
+        
+        newScene?.scaleMode = .aspectFit
+        
+        player.prepareForScene()
+        EnemyNode.enemyForBattle.prepareToChangeScene()
+        
+        for child in self.children {
+            if child is EnemyNode {
+                child.removeFromParent()
+            }
+        }
+        
+        self.scene?.view?.presentScene(newScene!, transition: .moveIn(with: .up, duration: 0.5))
     }
 }
