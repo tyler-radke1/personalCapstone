@@ -40,9 +40,10 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         guard let player = self.player else { return }
+        player.removeFromParent()
+        self.addChild(player)
         
         if playerCollidesWith(type: BuildingNode()) {
-            
             self.player?.isColliding = true
             
             if let node = self.childNode(withName: "questTrigger") {

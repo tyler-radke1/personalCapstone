@@ -18,18 +18,18 @@ struct Vertex<T> {
     let data: T
     private var roomEnemies: [EnemyNode] = []
     var index: Int
-    var roomCleared = false
     let id = UUID()
     
     init(data: T, index: Int, roomCleared: Bool = false) {
         self.data = data
         self.roomEnemies = []
         self.index = index
-        self.roomCleared = roomCleared
+        generateEnemies()
     }
-    mutating func generateEnemies(player: PlayerNode)  {
-        guard self.roomEnemies.count == 0, roomCleared == false else { return }
-        for _ in 1...5 {
+    mutating func generateEnemies()  {
+        guard self.roomEnemies.count == 0 else { return }
+        
+        for _ in 0 ... Int.random(in: 0...5) {
             let enemy: EnemyNode = EnemyNode()
             enemy.configureEnemy()
             roomEnemies.append(enemy)
@@ -37,14 +37,19 @@ struct Vertex<T> {
     }
     
     func addEnemies(scene: SKScene) {
-        self.roomEnemies.forEach({ node in
-            scene.addChild(node)
-        })
+        for child in scene.children {
+            guard child is EnemyNode else { continue }
+            child.removeFromParent()
+        }
+        
+        for enemy in roomEnemies {
+            guard enemy.isAlive else { continue }
+                scene.addChild(enemy)
+        }
     }
     mutating func removeEnemies(with id: UUID) {
-        roomEnemies.removeAll(where: { $0.enemyID == id})
-        //sets room cleared to true if you defeat all enemies, stops spawn
-        roomCleared = (roomEnemies.count != 0) ? true : false
+        let enemy = roomEnemies.first(where: { $0.enemyID == id })
+        enemy?.isAlive = false
     }
 }
 
@@ -109,18 +114,18 @@ class AdjacencyList <T: Hashable>: Graph {
 
 extension AdjacencyList: CustomStringConvertible {
     public var description: String {
-            var result = ""
+        var result = ""
         for (vertex, edges) in adjacencies { // 1
-                var edgeString = ""
-                for (index, edge) in edges.enumerated() { // 2
-                    if index != edges.count - 1 {
-                        edgeString.append("\(edge.destination), ")
-                    } else {
-                        edgeString.append("\(edge.destination)")
-                    }
+            var edgeString = ""
+            for (index, edge) in edges.enumerated() { // 2
+                if index != edges.count - 1 {
+                    edgeString.append("\(edge.destination), ")
+                } else {
+                    edgeString.append("\(edge.destination)")
                 }
-                result.append("\(vertex) ---> [ \(edgeString) ]\n") // 3
             }
-            return result
+            result.append("\(vertex) ---> [ \(edgeString) ]\n") // 3
         }
+        return result
+    }
 }

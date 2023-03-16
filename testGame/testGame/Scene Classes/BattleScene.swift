@@ -74,18 +74,9 @@ class BattleScene: GameScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard isAttacking else { return }
         
-        if isAttacking {
-            playerTurn()
-        }
-        
-    }
-    func enemyDied() {
-        enemy.health = 0
-        enemy.removeFromParent()
-        player?.currentRoom?.removeEnemies(with: enemy.enemyID)
-        EnemyNode.enemyForBattle.isAlive = false
-        EnemyNode.enemyForBattle.removeFromParent()
+        playerTurn()
     }
     
     func playerTurn() {
@@ -97,7 +88,7 @@ class BattleScene: GameScene {
             enemy.health = 0
             enemy.run(EnemyAnimations.scorpionDeath) {
                 self.view?.isUserInteractionEnabled = true
-                self.enemyDied()
+                self.player?.currentRoom?.removeEnemies(with: self.enemy.enemyID)
                 self.returnToGameScene()
                 
             }

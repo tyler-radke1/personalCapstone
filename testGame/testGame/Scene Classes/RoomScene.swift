@@ -19,24 +19,23 @@ enum RoomType {
 
 class RoomScene: GameScene {
     var roomType: RoomType? = nil
+    var roomCleared = false
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         self.player?.position = CGPoint(x: 0, y: 0)
+        
+        self.player?.currentRoom?.addEnemies(scene: self)
     }
     
     override func sceneDidLoad() {
         print("scene Loaded - \(self.name)")
         configureRoomType()
-       // self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        
         cameraNode.configureCamera(around: self.player!)
     }
     
         
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
-        PlayerNode.player.removeFromParent()
-        self.addChild(PlayerNode.player)
         if playerCollidesWith(type: ExitNode()) {
             configureRoomExit()
         }
@@ -50,6 +49,14 @@ class RoomScene: GameScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
+        guard let touch = touches.first else { return }
+        let location = touch.location(in: self)
+        
+        if self.player!.contains(location) {
+            presentNewScene(player: player!, ofFileName: "GameScene", andType: GameScene())
+        }
+        
+        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -65,10 +72,10 @@ class RoomScene: GameScene {
             guard player.intersects(enemy) else { continue }
             EnemyNode.enemyForBattle = enemy as! EnemyNode
             self.player?.prepareForScene()
-           // PlayerNode.player.positionToMoveTo = player.position
-            self.presentNewScene(player: player, ofFileName: "Battle", andType: BattleScene())
+           //PlayerNode.player.positionToMoveTo = player.position
+           self.presentNewScene(player: player, ofFileName: "Battle", andType: BattleScene())
         }
-        
+//
     }
     func configureRoomType() -> RoomType {
         if let player = self.player {
@@ -118,7 +125,6 @@ class RoomScene: GameScene {
         
     }
 
-    
     func generateRoom(roomsToCheckFor: [RoomScene?]) {
        guard let player = player, let currentRoom = player.currentRoom, let potentialEdges = player.currentQuest?.quest.edges(from: currentRoom) else { return }
        

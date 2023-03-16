@@ -30,8 +30,8 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
     
     //Sets enemy to be near the player with the right texture
     func configureEnemy() {
-        let xRange = -1280...3840
-        let yRange = -560...1920
+        let xRange = -2560...2560
+        let yRange = -1280...1280
         
         let x = Int.random(in: xRange)
         let y = Int.random(in: yRange)
