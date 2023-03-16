@@ -19,12 +19,22 @@ enum RoomType {
 
 class RoomScene: GameScene {
     var roomType: RoomType? = nil
-    var roomCleared = false
+    var bossRoom = Bool.random()
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         self.player?.position = CGPoint(x: 0, y: 0)
         
-        self.player?.currentRoom?.addEnemies(scene: self)
+        if bossRoom {
+            self.player?.currentRoom?.addEnemies(scene: self)
+        } else {
+            let boss = EnemyNode()
+            boss.isBoss = true
+            boss.configureEnemy()
+            self.addChild(boss)
+        }
+        
+        
+        
     }
     
     override func sceneDidLoad() {

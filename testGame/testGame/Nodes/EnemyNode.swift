@@ -14,13 +14,12 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
     //Putting this in main class for testing. Ideally would like to create this implementaion in each type of enemies respective subclass.
     var health = 7
     var isAlive = true
+    var isBoss = false
     var enemyID: UUID = UUID()
     
     var idleAnimation = EnemyAnimations.scorpionIdle
     var attackAnimation = EnemyAnimations.scorpionAttack
     
-    
-    static private var enemies: [EnemyNode] = []
     static var enemyForBattle: EnemyNode = EnemyNode()
     
     func skill() -> Int {
@@ -47,28 +46,15 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
         self.alpha = 1
         
         self.size = CGSize(width: 350, height: 350)
+        
+        if self.isBoss {
+            xScale = 3
+            yScale = 3
+            health = 150
+        }
     }
     
-    static func addEnemies(scene: SKScene) {
-        /* First removes all children of type EnemyNode
-         Then loops through enemies array, and if it is a defeated enemyForBattle, skips over it
-         any other enemy gets rerendered on the screen.
-         */
-        for child in scene.children {
-            if child is EnemyNode {
-                child.removeFromParent()
-            }
-        }
-        
-        for (index, enemy) in enemies.enumerated() {
-            if enemy == EnemyNode.enemyForBattle && EnemyNode.enemyForBattle.isAlive == false {
-                EnemyNode.enemies.remove(at: index)
-                continue
-            } else {
-                scene.addChild(enemy)
-            }
-        }
-    }
+    
     func prepareToChangeScene() {
         self.removeFromParent()
         self.removeAllChildren()
