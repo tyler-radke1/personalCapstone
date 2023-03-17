@@ -49,13 +49,15 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
    
     var playerSpeed: CGFloat = 15
     var isColliding = false
+    var level = 1
     var health = 100
+    //Health Formula based on level (x) - x/4 + (100 + x^2)
   //  var positionToMoveTo: CGPoint = CGPoint(x: 0, y: 0)
     
     var currentQuest: Quest? = nil
     var currentRoom: Vertex<RoomScene>? = nil
     var previousRoom: Vertex<RoomScene>? = nil
-   
+    var playerSkills: [SkillProtocol] = [Attack(), BigAttack(), Stun()]
     
     //For if you're colliding with something, it is the direction opposite to the building
     //ShouldbeFacing is the direction you need to be facing to walk away from a collided building
@@ -64,7 +66,7 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     
     var actionDoing: ActionDoing = .idling
     
-    static var player = PlayerNode()
+    static var player: PlayerNode = PlayerNode()
     
     func movePlayer() {
         guard !(self.parent is BattleScene) else { return }

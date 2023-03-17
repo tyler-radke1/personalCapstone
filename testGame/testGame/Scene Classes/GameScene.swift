@@ -40,8 +40,6 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         guard let player = self.player else { return }
-        player.removeFromParent()
-        self.addChild(player)
         
         if playerCollidesWith(type: BuildingNode()) {
             self.player?.isColliding = true
@@ -54,6 +52,13 @@ class GameScene: SKScene {
         }
         
         player.movePlayer()
+        
+    }
+    
+    override func didFinishUpdate() {
+        guard let player = self.player else { return }
+        player.removeFromParent()
+        self.addChild(player)
         cameraNode.configureCamera(around: player)
         configureButtons()
     }

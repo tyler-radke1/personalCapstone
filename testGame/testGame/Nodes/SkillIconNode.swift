@@ -21,5 +21,8 @@ class SkillIconNode: SKSpriteNode {
     
     //Blank skill, to be edited later
     var skill: SkillProtocol = Attack()
-   
+    
+    func reduceCoolDown() {
+        skill.coolDown -= 1
+    }
 }

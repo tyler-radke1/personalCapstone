@@ -16,7 +16,7 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
     var isAlive = true
     var isBoss = false
     var enemyID: UUID = UUID()
-    
+    var stunEffect = [false : 0]
     var idleAnimation = EnemyAnimations.scorpionIdle
     var attackAnimation = EnemyAnimations.scorpionAttack
     
@@ -46,12 +46,13 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
         self.alpha = 1
         
         self.size = CGSize(width: 350, height: 350)
-        
-        if self.isBoss {
-            xScale = 3
-            yScale = 3
-            health = 150
-        }
+    }
+    
+    func configureBoss() {
+        self.configureEnemy()
+        self.health = 150
+        self.xScale *= 3
+        self.yScale *= 3
     }
     
     

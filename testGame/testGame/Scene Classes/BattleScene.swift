@@ -17,21 +17,13 @@ protocol BattleProtocol {
 
 class BattleScene: GameScene {
     
-   // var enemy: EnemyNode = EnemyNode()
-    var attack: SkillIconNode = SkillIconNode()
-    var skill1: SkillIconNode = SkillIconNode()
-    
-    
-    var skills: [SkillIconNode] = []
-    // var attack: SkillIconNode = SkillIconNode()
-    
+    // var enemy: EnemyNode = EnemyNode()
     var enemy: EnemyNode = EnemyNode.enemyForBattle
-    
     var isPlayersTurn = true
     var isAttacking = false
     
     var sceneToReturnTo: GameScene? = nil
-
+    
     var theCamera = SKCameraNode()
     override func didMove(to view: SKView) {
         guard let player = self.player else { return }
@@ -53,17 +45,26 @@ class BattleScene: GameScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //Currently, no touches do anything uness its your turn
         guard let touch = touches.first, isPlayersTurn == true else { return }
-
-        let location = touch.location(in: self)
         
-        skills.forEach({ skillNode in
-            if skillNode.contains(location) {
-                guard skillNode.skill.coolDown == 0 else { return }
-                isAttacking = true
-                skillNode.skill.skill()
-            }
-    
+        let location = touch.location(in: self)
+        self.children.filter({ $0 is SkillIconNode}).forEach({ skill in
+            guard skill.contains(location) && (skill as! SkillIconNode).skill.coolDown == 0 else { return }
+            let skill = skill as! SkillIconNode
+            isAttacking = true
+            skill.skill.skill()
+            
+            
         })
+        //        skills.forEach({ skillNode in
+        //            if skillNode.contains(location) {
+        //                guard skillNode.skill.coolDown == 0 else { return }
+        //                isAttacking = true
+        //                skillNode.skill.skill()
+        //            }
+        //
+        //        })
+        
+        
         
         let flee: SKSpriteNode = self.childNode(withName: "flee") as! SKSpriteNode
         
@@ -84,6 +85,7 @@ class BattleScene: GameScene {
         self.view?.isUserInteractionEnabled = false
         isAttacking = false
         guard enemy.health >= 0 else {
+            //Code to be run when enemy dies
             player.run(Animations.attackRight)
             enemy.health = 0
             enemy.run(EnemyAnimations.scorpionDeath) {
@@ -99,8 +101,12 @@ class BattleScene: GameScene {
             self.enemy.run(EnemyAnimations.scorpionHurt)
         }
         
-        //Lowers cooldown for each skill by 1
-        skills.forEach({ $0.skill.coolDown -= ($0.skill.coolDown != 0 ) ? 1 : 0})
+        //Lowers cooldown for each skill by 1, unless its already 0
+        let allSkillIcons = self.children.filter({ $0 is SkillIconNode })
+        allSkillIcons.forEach({
+            let skillIcon = ($0 as! SkillIconNode)
+            skillIcon.skill.coolDown -= (skillIcon.skill.coolDown) != 0 ? 1 : 0
+        })
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.enemyTurn()
@@ -109,6 +115,23 @@ class BattleScene: GameScene {
     
     func enemyTurn() {
         guard let player = self.player else { return }
+        //Load all pre attack effects here
+        //Stuns
+        if let stun = enemy.stunEffect.first {
+            //guard enemy is stunned
+            guard (!stun.key) else { return }
+            if stun.value == 0 {
+                enemy.stunEffect = [false : 0]
+            } else {
+                if let remaining = enemy.stunEffect[true] {
+                    enemy.stunEffect = [true: remaining - 1]
+                }
+            }
+        }
+        
+        
+        
+        //Other stuff to come later
         enemy.run(EnemyAnimations.scorpionAttack) {
             player.run(Animations.hurtRight) {
                 self.view?.isUserInteractionEnabled = true
@@ -156,30 +179,38 @@ class BattleScene: GameScene {
         player.position = CGPoint(x: -315, y: -222)
         player.run(Animations.idleDown)
         
-       // self.enemy = Enemies.enemy
+        // self.enemy = Enemies.enemy
         enemy.xScale *= -1
         
         enemy.run(enemy.idleAnimation)
         enemy.position = CGPoint(x: 325, y: -222)
         
-        attack = self.childNode(withName: "attack") as! SkillIconNode
-        attack.skill = Attack(player: player, enemy: enemy)
+        let skillIcons = self.children.filter({ $0 is SkillIconNode})
         
-        skill1 = self.childNode(withName: "skill1") as! SkillIconNode
-        skill1.skill = BigAttack(player: player, enemy: enemy)
+        for (index, skillIcon) in skillIcons.enumerated() {
+            (skillIcon as! SkillIconNode).skill = player.playerSkills[index]
+        }
         
-        self.children.forEach({ skill in
-            if skill is SkillIconNode {
-                skills.append(skill as! SkillIconNode)
-            }
-            
-        })
+        //        attack = self.childNode(withName: "skill0") as! SkillIconNode
+        //        attack.skill = Attack(player: player, enemy: enemy)
+        //
+        //        skill1 = self.childNode(withName: "skill1") as! SkillIconNode
+        //        skill1.skill = BigAttack(player: player, enemy: enemy)
+        //
+        //        self.children.forEach({ skill in
+        //            if skill is SkillIconNode {
+        //                skills.append(skill as! SkillIconNode)
+        //            }
+        //
+        //        })
         
     }
     
+    
+    
     ///TODO: Refactor this to just return back to previous screen, rather than specifically the GameScene
     func returnToGameScene() {
-        guard let scene = sceneToReturnTo, let player = self.player else { return }
+        guard let scene = (enemy.isBoss == false) ? sceneToReturnTo : GameScene(fileNamed: "GameScene"), let player = self.player else { return }
         scene.player = player
         scene.scaleMode = .aspectFit
         EnemyNode.enemyForBattle.prepareToChangeScene()

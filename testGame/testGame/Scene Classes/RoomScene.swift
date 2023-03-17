@@ -24,26 +24,21 @@ class RoomScene: GameScene {
         super.didMove(to: view)
         self.player?.position = CGPoint(x: 0, y: 0)
         
-        if bossRoom {
+        if !bossRoom {
             self.player?.currentRoom?.addEnemies(scene: self)
         } else {
             let boss = EnemyNode()
             boss.isBoss = true
-            boss.configureEnemy()
+            boss.configureBoss()
             self.addChild(boss)
         }
-        
-        
-        
     }
     
     override func sceneDidLoad() {
-        print("scene Loaded - \(self.name)")
-        configureRoomType()
+        self.roomType = configureRoomType()
         cameraNode.configureCamera(around: self.player!)
     }
     
-        
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         if playerCollidesWith(type: ExitNode()) {
