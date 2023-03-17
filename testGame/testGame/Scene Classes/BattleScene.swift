@@ -21,9 +21,8 @@ class BattleScene: GameScene {
     var enemy: EnemyNode = EnemyNode.enemyForBattle
     var isPlayersTurn = true
     var isAttacking = false
-    
     var sceneToReturnTo: GameScene? = nil
-    
+    var playerSkills: [SkillProtocol] = [Attack(), BigAttack(), Stun()]
     var theCamera = SKCameraNode()
     override func didMove(to view: SKView) {
         guard let player = self.player else { return }
@@ -51,9 +50,7 @@ class BattleScene: GameScene {
             guard skill.contains(location) && (skill as! SkillIconNode).skill.coolDown == 0 else { return }
             let skill = skill as! SkillIconNode
             isAttacking = true
-            skill.skill.skill()
-            
-            
+            skill.skill.skill()           
         })
         //        skills.forEach({ skillNode in
         //            if skillNode.contains(location) {
@@ -63,8 +60,6 @@ class BattleScene: GameScene {
         //            }
         //
         //        })
-        
-        
         
         let flee: SKSpriteNode = self.childNode(withName: "flee") as! SKSpriteNode
         
@@ -125,11 +120,10 @@ class BattleScene: GameScene {
             } else {
                 if let remaining = enemy.stunEffect[true] {
                     enemy.stunEffect = [true: remaining - 1]
+                    self.isPlayersTurn = true
                 }
             }
         }
-        
-        
         
         //Other stuff to come later
         enemy.run(EnemyAnimations.scorpionAttack) {
@@ -145,7 +139,6 @@ class BattleScene: GameScene {
         }
         
     }
-    
     
     func configureHealthBars(beings: [BattleProtocol]) {
         for being in beings {
@@ -188,9 +181,8 @@ class BattleScene: GameScene {
         let skillIcons = self.children.filter({ $0 is SkillIconNode})
         
         for (index, skillIcon) in skillIcons.enumerated() {
-            (skillIcon as! SkillIconNode).skill = player.playerSkills[index]
+            (skillIcon as? SkillIconNode)?.skill = playerSkills[index]
         }
-        
         //        attack = self.childNode(withName: "skill0") as! SkillIconNode
         //        attack.skill = Attack(player: player, enemy: enemy)
         //
@@ -203,10 +195,7 @@ class BattleScene: GameScene {
         //            }
         //
         //        })
-        
     }
-    
-    
     
     ///TODO: Refactor this to just return back to previous screen, rather than specifically the GameScene
     func returnToGameScene() {

@@ -57,7 +57,6 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     var currentQuest: Quest? = nil
     var currentRoom: Vertex<RoomScene>? = nil
     var previousRoom: Vertex<RoomScene>? = nil
-    var playerSkills: [SkillProtocol] = [Attack(), BigAttack(), Stun()]
     
     //For if you're colliding with something, it is the direction opposite to the building
     //ShouldbeFacing is the direction you need to be facing to walk away from a collided building
