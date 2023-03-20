@@ -16,7 +16,7 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
     var isAlive = true
     var isBoss = false
     var enemyID: UUID = UUID()
-    var stunEffect = [false : 0]
+    var stunEffect: (isStunned: Bool, turnsRemaining: Int) = (false, 0)
     var idleAnimation = EnemyAnimations.scorpionIdle
     var attackAnimation = EnemyAnimations.scorpionAttack
     
@@ -41,7 +41,7 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
         
         self.texture = SKTexture(imageNamed: "scorpion_idle_000")
         
-        self.health = Int(Double(PlayerNode.player.health) * 0.75)
+        self.health = Int(Double(PlayerNode.player.health) * 0.85)
         self.zPosition = 1
         
         self.alpha = 1

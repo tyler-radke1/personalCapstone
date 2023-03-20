@@ -59,8 +59,8 @@ struct Stun: SkillProtocol {
         guard coolDown == 0 else { return }
         let damage = Int.random(in: 25...30)
         enemy.health -= damage
-        enemy.stunEffect = [true : 3]
-        coolDown = 3
+        enemy.stunEffect = (true, 3)
+        coolDown = 4
     }
 }
 

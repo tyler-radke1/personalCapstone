@@ -52,26 +52,17 @@ class BattleScene: GameScene {
             isAttacking = true
             skill.skill.skill()           
         })
-        //        skills.forEach({ skillNode in
-        //            if skillNode.contains(location) {
-        //                guard skillNode.skill.coolDown == 0 else { return }
-        //                isAttacking = true
-        //                skillNode.skill.skill()
-        //            }
-        //
-        //        })
         
         let flee: SKSpriteNode = self.childNode(withName: "flee") as! SKSpriteNode
         
         if flee.contains(location) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: returnToGameScene)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: returnToGameScene)
         }
         
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard isAttacking else { return }
-        
         playerTurn()
     }
     
@@ -109,21 +100,11 @@ class BattleScene: GameScene {
     }
     
     func enemyTurn() {
-        guard let player = self.player else { return }
-        //Load all pre attack effects here
-        //Stuns
-        if let stun = enemy.stunEffect.first {
-            //guard enemy is stunned
-            guard (!stun.key) else { return }
-            if stun.value == 0 {
-                enemy.stunEffect = [false : 0]
-            } else {
-                if let remaining = enemy.stunEffect[true] {
-                    enemy.stunEffect = [true: remaining - 1]
-                    self.isPlayersTurn = true
-                }
-            }
+        guard let player = self.player, !enemy.stunEffect.isStunned else {
+            enemy.stunEffect.isStunned = Bool.random()
+            return
         }
+        //Load all pre attack effects here
         
         //Other stuff to come later
         enemy.run(EnemyAnimations.scorpionAttack) {
@@ -135,9 +116,7 @@ class BattleScene: GameScene {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             player.health -= (self.enemy.skill())
             self.isPlayersTurn = true
-            
         }
-        
     }
     
     func configureHealthBars(beings: [BattleProtocol]) {
