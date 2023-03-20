@@ -48,11 +48,11 @@ class BattleScene: GameScene {
         let location = touch.location(in: self)
         self.children.filter({ $0 is SkillIconNode}).forEach({ skill in
             guard skill.contains(location) && (skill as! SkillIconNode).skill.coolDown == 0 else { return }
-            let skill = skill as! SkillIconNode
+            //let skill = skill as! SkillIconNode
             isAttacking = true
-            skill.skill.skill()           
+           // skill.skill.skill()
         })
-        
+//
         let flee: SKSpriteNode = self.childNode(withName: "flee") as! SKSpriteNode
         
         if flee.contains(location) {
@@ -62,11 +62,20 @@ class BattleScene: GameScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard isAttacking else { return }
-        playerTurn()
+        guard isAttacking, let location = touches.first?.location(in: self) else { return }
+        self.view?.isUserInteractionEnabled = false
+        
+        self.children.filter({ $0 is SkillIconNode}).forEach({ skill in
+            guard skill.contains(location) && (skill as! SkillIconNode).skill.coolDown == 0 else { return }
+            let skill = skill as! SkillIconNode
+            isAttacking = true
+            skill.skill.skill()
+        })
+        
+        self.view?.isUserInteractionEnabled = true
     }
     
-    func playerTurn() {
+    func playerTurn(skill: SkillIconNode) {
         guard let player = self.player else { return }
         self.view?.isUserInteractionEnabled = false
         isAttacking = false
@@ -78,7 +87,6 @@ class BattleScene: GameScene {
                 self.view?.isUserInteractionEnabled = true
                 self.player?.currentRoom?.removeEnemies(with: self.enemy.enemyID)
                 self.returnToGameScene()
-                
             }
             return
         }
@@ -93,15 +101,23 @@ class BattleScene: GameScene {
             let skillIcon = ($0 as! SkillIconNode)
             skillIcon.skill.coolDown -= (skillIcon.skill.coolDown) != 0 ? 1 : 0
         })
+        NotificationCenter.default.post(name: NSNotification.Name("coolDown"), object: nil)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.enemyTurn()
+            self.view?.isUserInteractionEnabled = true
         }
+        
     }
     
     func enemyTurn() {
         guard let player = self.player, !enemy.stunEffect.isStunned else {
-            enemy.stunEffect.isStunned = Bool.random()
+            //If enemy is stunned, either takes 1 from turns remaining or sets the stun to false
+            if enemy.stunEffect.turnsRemaining == 0 {
+                enemy.stunEffect.isStunned = false
+            } else {
+                enemy.stunEffect.turnsRemaining -= 1
+            }
             return
         }
         //Load all pre attack effects here
@@ -116,6 +132,11 @@ class BattleScene: GameScene {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             player.health -= (self.enemy.skill())
             self.isPlayersTurn = true
+            
+            if player.health <= 0 {
+                self.view?.isUserInteractionEnabled = true
+                self.returnToGameScene()
+            }
         }
     }
     
@@ -142,8 +163,18 @@ class BattleScene: GameScene {
         }
     }
     
+    @objc func coolDownChanged( _ notification: Notification) {        
+        let allSkillIcons = self.children.filter({ $0 is SkillIconNode })
+        allSkillIcons.forEach({
+            let labelNode = ($0 as! SkillIconNode).childNode(withName: "coolDownLabel") as? SKLabelNode
+            labelNode?.text = "\(($0 as! SkillIconNode).skill.coolDown)"
+        })
+    }
+    
+    
     func configureBattle() {
         guard let player = self.player else { return }
+        NotificationCenter.default.addObserver(self, selector: #selector(coolDownChanged(_ :)), name: NSNotification.Name("coolDown"), object: nil)
         enemy = EnemyNode.enemyForBattle
         enemy.configureEnemy()
         
@@ -160,20 +191,17 @@ class BattleScene: GameScene {
         let skillIcons = self.children.filter({ $0 is SkillIconNode})
         
         for (index, skillIcon) in skillIcons.enumerated() {
-            (skillIcon as? SkillIconNode)?.skill = playerSkills[index]
+            if let skillIcon = (skillIcon as? SkillIconNode) {
+                skillIcon.skill = playerSkills[index]
+                let label = SKLabelNode(text: "\(skillIcon.skill.coolDown)")
+                label.fontColor = UIColor.white
+                label.fontName = "Arial Bold"
+                label.fontSize = 14
+                label.position = CGPoint(x: -15, y: -20)
+                label.name = "coolDownLabel"
+                skillIcon.addChild(label)
+            }
         }
-        //        attack = self.childNode(withName: "skill0") as! SkillIconNode
-        //        attack.skill = Attack(player: player, enemy: enemy)
-        //
-        //        skill1 = self.childNode(withName: "skill1") as! SkillIconNode
-        //        skill1.skill = BigAttack(player: player, enemy: enemy)
-        //
-        //        self.children.forEach({ skill in
-        //            if skill is SkillIconNode {
-        //                skills.append(skill as! SkillIconNode)
-        //            }
-        //
-        //        })
     }
     
     ///TODO: Refactor this to just return back to previous screen, rather than specifically the GameScene

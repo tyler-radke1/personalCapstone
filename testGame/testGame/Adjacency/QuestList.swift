@@ -51,7 +51,7 @@ class Quest {
     func createGraph() {
         var newScene = RoomScene()
         newScene = rooms.randomElement()!
-        let newVertex = quest.createVertex(data: newScene)
+        let _ = quest.createVertex(data: newScene)
         generateDungeon(count: 0)
     }
     
