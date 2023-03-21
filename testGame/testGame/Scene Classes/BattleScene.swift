@@ -22,7 +22,7 @@ class BattleScene: GameScene {
     var isPlayersTurn = true
     var isAttacking = false
     var sceneToReturnTo: GameScene? = nil
-    var playerSkills: [SkillProtocol] = [Attack(), BigAttack(), Stun()]
+    var playerSkills: [SkillProtocol] = [Attack(), BigAttack(), Stun(), Shield()]
     var theCamera = SKCameraNode()
     override func didMove(to view: SKView) {
         guard let player = self.player else { return }
@@ -70,15 +70,12 @@ class BattleScene: GameScene {
             let skill = skill as! SkillIconNode
             isAttacking = true
             skill.skill.skill()
-            playerTurn(skill: SkillIconNode())
+            playerTurn()
         })
-        
-        self.view?.isUserInteractionEnabled = true
     }
     
-    func playerTurn(skill: SkillIconNode) {
+    func playerTurn() {
         guard let player = self.player else { return }
-        self.view?.isUserInteractionEnabled = false
         isAttacking = false
         guard enemy.health >= 0 else {
             //Code to be run when enemy dies
@@ -106,19 +103,20 @@ class BattleScene: GameScene {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.enemyTurn()
-            self.view?.isUserInteractionEnabled = true
         }
         
     }
     
     func enemyTurn() {
+        print(player!.hasShield ? "Player has shield" : "Player does not have shield")
         guard let player = self.player, !enemy.stunEffect.isStunned else {
             //If enemy is stunned, either takes 1 from turns remaining or sets the stun to false
-            if enemy.stunEffect.turnsRemaining == 0 {
-                enemy.stunEffect.isStunned = false
-            } else {
-                enemy.stunEffect.turnsRemaining -= 1
-            }
+//            if enemy.stunEffect.turnsRemaining == 0 {
+//                enemy.stunEffect.isStunned = false
+//            } else {
+//                enemy.stunEffect.turnsRemaining -= 1
+//            }
+            
             return
         }
         var multiplier: Double = 1
@@ -130,7 +128,7 @@ class BattleScene: GameScene {
         let healthBefore = player.health
         executeEnemyAttack()
         
-        let amountToReturn = Int(Double(healthBefore - player.health) * 0.6)
+//        let amountToReturn = Int(Double(healthBefore - player.health) * 0.6)
     }
     
     func executeEnemyAttack() {
@@ -141,7 +139,7 @@ class BattleScene: GameScene {
             }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            let healthBefore = player.health
+        //    let healthBefore = player.health
             player.health -= (self.enemy.skill())
             self.isPlayersTurn = true
             
@@ -150,6 +148,8 @@ class BattleScene: GameScene {
                 self.returnToGameScene()
             }
         }
+        
+        reduceEffectLength()
     }
     
     func configureHealthBars(beings: [BattleProtocol]) {
@@ -183,6 +183,15 @@ class BattleScene: GameScene {
         })
     }
     
+    func reduceEffectLength() {        
+        playerSkills.filter({ $0 is DefensiveSkillProtocol}).forEach { child in
+            guard var child = (child as? DefensiveSkillProtocol) else { return }
+            print(child.effectLength)
+            child.reduceEffectLength()
+            print(child.effectLength)
+        }
+    }
+    
     
     func configureBattle() {
         guard let player = self.player else { return }
@@ -199,6 +208,7 @@ class BattleScene: GameScene {
         
         enemy.run(enemy.idleAnimation)
         enemy.position = CGPoint(x: 325, y: -222)
+        
         
         let skillIcons = self.children.filter({ $0 is SkillIconNode})
         
