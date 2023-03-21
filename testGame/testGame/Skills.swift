@@ -60,8 +60,26 @@ struct Stun: SkillProtocol {
         let damage = Int.random(in: 25...30)
         enemy.health -= damage
         enemy.stunEffect = (true, 3)
-        coolDown = 4
+        coolDown = 6
     }
+}
+
+struct Shield: SkillProtocol {
+    static var description = "Adds shield to the player, protecting them from 40% of all damage recieved for 3 turns."
+    
+    var texture: SKTexture
+    
+    var player: PlayerNode
+    
+    var enemy: EnemyNode
+    
+    var coolDown: Int
+    
+    mutating func skill() {
+        
+    }
+    
+    
 }
 
 

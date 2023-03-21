@@ -70,6 +70,7 @@ class BattleScene: GameScene {
             let skill = skill as! SkillIconNode
             isAttacking = true
             skill.skill.skill()
+            playerTurn(skill: SkillIconNode())
         })
         
         self.view?.isUserInteractionEnabled = true
@@ -120,16 +121,27 @@ class BattleScene: GameScene {
             }
             return
         }
+        var multiplier: Double = 1
         //Load all pre attack effects here
         
-        //Other stuff to come later
+        //Enemy's effects
+        
+        //Players effects
+        let healthBefore = player.health
+        executeEnemyAttack()
+        
+        let amountToReturn = Int(Double(healthBefore - player.health) * 0.6)
+    }
+    
+    func executeEnemyAttack() {
+        guard let player = player else { return }
         enemy.run(EnemyAnimations.scorpionAttack) {
             player.run(Animations.hurtRight) {
                 self.view?.isUserInteractionEnabled = true
             }
         }
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            let healthBefore = player.health
             player.health -= (self.enemy.skill())
             self.isPlayersTurn = true
             

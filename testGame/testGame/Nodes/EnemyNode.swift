@@ -23,7 +23,7 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
     static var enemyForBattle: EnemyNode = EnemyNode()
     
     func skill() -> Int {
-        return Int.random(in: 1...10)
+        return Int.random(in: 15...20)
     }
     
     
