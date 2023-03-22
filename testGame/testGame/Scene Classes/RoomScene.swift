@@ -32,6 +32,7 @@ class RoomScene: GameScene {
             boss.configureBoss()
             self.addChild(boss)
         }
+        generatePlayerStats()
     }
     
     override func sceneDidLoad() {
@@ -49,23 +50,37 @@ class RoomScene: GameScene {
             configureEnemy()
         }
         configureButtons()
-
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
-        
-        if self.player!.contains(location) {
-            presentNewScene(player: player!, ofFileName: "GameScene", andType: GameScene())
-        }
-        
-        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
+    }
+    
+    func generatePlayerStats() {
+        guard let player = player else { return }
+        let healthBar = SKSpriteNode(imageNamed: "health100")
+        
+        healthBar.xScale = 2.75; healthBar.yScale = 6
+        healthBar.size.width = 250
+        healthBar.position.y += (view?.frame.maxY)! * 2
+        healthBar.position.x -= (view?.frame.maxX)!
+        
+        let textNode = SKLabelNode(text: "\(player.health)")
+        textNode.fontSize = 9
+        
+        textNode.xScale *= 2
+        textNode.fontName = "Arial Bold"
+        textNode.zPosition = 1
+        textNode.position.y -= 4
+        
+        healthBar.addChild(textNode)
+        player.addChild(healthBar)
     }
     
     func configureEnemy() {
@@ -80,8 +95,8 @@ class RoomScene: GameScene {
            //PlayerNode.player.positionToMoveTo = player.position
            self.presentNewScene(player: player, ofFileName: "Battle", andType: BattleScene())
         }
-//
     }
+    
     func configureRoomType() -> RoomType {
         if let player = self.player {
             

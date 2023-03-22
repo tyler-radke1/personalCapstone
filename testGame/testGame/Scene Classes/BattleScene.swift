@@ -56,7 +56,7 @@ class BattleScene: GameScene {
         let flee: SKSpriteNode = self.childNode(withName: "flee") as! SKSpriteNode
         
         if flee.contains(location) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: returnToGameScene)
+           returnToGameScene()
         }
         
     }

@@ -25,7 +25,6 @@ enum ActionDoing {
 }
 
 class PlayerNode: SKSpriteNode, BattleProtocol {
-    
     var directionFacing: DirectionFacing = .other {
         didSet {
             switch self.directionFacing {
@@ -107,9 +106,7 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
         case .other:
             self.position = self.position
         }
-        
         self.isColliding = false
-        
     }
 
     func configurePlayer() {
