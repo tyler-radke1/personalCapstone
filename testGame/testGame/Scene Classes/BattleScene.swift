@@ -108,47 +108,26 @@ class BattleScene: GameScene {
     }
     
     func enemyTurn() {
-        print(player!.hasShield ? "Player has shield" : "Player does not have shield")
-        guard let player = self.player, !enemy.stunEffect.isStunned else {
-            //If enemy is stunned, either takes 1 from turns remaining or sets the stun to false
-//            if enemy.stunEffect.turnsRemaining == 0 {
-//                enemy.stunEffect.isStunned = false
-//            } else {
-//                enemy.stunEffect.turnsRemaining -= 1
-//            }
-            
+        guard let player = player, !enemy.stunEffect.isStunned else {
+            self.view?.isUserInteractionEnabled = true
+            reduceEffectLength()
             return
         }
-        var multiplier: Double = 1
-        //Load all pre attack effects here
         
-        //Enemy's effects
-        
-        //Players effects
-        let healthBefore = player.health
-        executeEnemyAttack()
-        
-//        let amountToReturn = Int(Double(healthBefore - player.health) * 0.6)
-    }
-    
-    func executeEnemyAttack() {
-        guard let player = player else { return }
         enemy.run(EnemyAnimations.scorpionAttack) {
             player.run(Animations.hurtRight) {
                 self.view?.isUserInteractionEnabled = true
             }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-        //    let healthBefore = player.health
-            player.health -= (self.enemy.skill())
+            let reducedAttack = Double((self.enemy.skill())) * 0.6
+            player.health -= (player.hasShield.0) ? Int(reducedAttack) : (self.enemy.skill())
             self.isPlayersTurn = true
-            
             if player.health <= 0 {
                 self.view?.isUserInteractionEnabled = true
                 self.returnToGameScene()
             }
         }
-        
         reduceEffectLength()
     }
     
@@ -183,12 +162,22 @@ class BattleScene: GameScene {
         })
     }
     
-    func reduceEffectLength() {        
-        playerSkills.filter({ $0 is DefensiveSkillProtocol}).forEach { child in
-            guard var child = (child as? DefensiveSkillProtocol) else { return }
-            print(child.effectLength)
-            child.reduceEffectLength()
-            print(child.effectLength)
+    func reduceEffectLength() {
+        guard let player = player else { return }
+        if player.hasShield.hasShield {
+            player.hasShield.turnsRemaining -= 1
+            if player.hasShield.turnsRemaining == 0 {
+                player.hasShield.hasShield = false
+                player.hasShield.turnsRemaining = 3
+            }
+        }
+        
+        if enemy.stunEffect.isStunned {
+            enemy.stunEffect.turnsRemaining -= 1
+            if enemy.stunEffect.turnsRemaining == 0 {
+                enemy.stunEffect.turnsRemaining = 3
+                enemy.stunEffect.isStunned = true
+            }
         }
     }
     

@@ -54,7 +54,7 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     //Health Formula based on level (x) - x/4 + (100 + x^2)
     
     //MARK: Status effect variables, such as stuns, heals, shields, ect.
-    var hasShield = false
+    var hasShield = (hasShield: false, turnsRemaining: 3)
     
   //  var positionToMoveTo: CGPoint = CGPoint(x: 0, y: 0)
     

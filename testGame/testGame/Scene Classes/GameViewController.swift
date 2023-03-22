@@ -30,6 +30,10 @@ class GameViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+    }
+    
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {

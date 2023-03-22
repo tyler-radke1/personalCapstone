@@ -52,7 +52,6 @@ class GameScene: SKScene {
         }
         
         player.movePlayer()
-        
     }
     
     override func didFinishUpdate() {
@@ -71,17 +70,19 @@ class GameScene: SKScene {
         
         let arrows = [self.leftArrow,self.rightArrow,self.downArrow,self.upArrow]
         
-        //If user selects an arrow, sets direction according and sets to walking
-        for (index, arrow) in arrows.enumerated() {
-            guard let arrow = arrow else { return }
-            configureButtons()
-            if arrow.contains(location) {
-                player.directionFacing = DirectionFacing(rawValue: index)!
-                player.actionDoing = .walking
-                
-            }
-            
-        }
+       // If user selects an arrow, sets direction according and sets to walking
+//        for (index, arrow) in arrows.enumerated() {
+//            guard let arrow = arrow else { return }
+//            configureButtons()
+//            if arrow.contains(location) {
+//                player.directionFacing = DirectionFacing(rawValue: index)!
+//                player.actionDoing = .walking
+//
+//            }
+//        }
+        
+        let selectedArrow = arrows.first(where: { $0?.contains(location) })
+        
         
     }
     

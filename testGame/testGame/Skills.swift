@@ -92,8 +92,8 @@ struct Shield: SkillProtocol, DefensiveSkillProtocol {
     var effectLength: Int = 3
     
     mutating func reduceEffectLength() {
-        guard PlayerNode.player.hasShield else { return }
-       // print(self.effectLength)
+        guard PlayerNode.player.hasShield.0 else { return }
+
         self.effectLength -= 1
        // print(self.effectLength)
 //        if effectLength == 0 {
@@ -103,7 +103,7 @@ struct Shield: SkillProtocol, DefensiveSkillProtocol {
     }
     
     mutating func skill() {
-        PlayerNode.player.hasShield = true
+        PlayerNode.player.hasShield.0 = true
         coolDown = 6
     }
 }
