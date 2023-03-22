@@ -22,7 +22,7 @@ class BattleScene: GameScene {
     var isPlayersTurn = true
     var isAttacking = false
     var sceneToReturnTo: GameScene? = nil
-    var playerSkills: [SkillProtocol] = [Attack(), BigAttack(), Stun(), Shield()]
+    var playerSkills: [SkillProtocol] = [Attack(), BigAttack(), Stun(), Shield(), Heal()]
     var theCamera = SKCameraNode()
     override func didMove(to view: SKView) {
         guard let player = self.player else { return }
@@ -174,9 +174,10 @@ class BattleScene: GameScene {
         
         if enemy.stunEffect.isStunned {
             enemy.stunEffect.turnsRemaining -= 1
+            
             if enemy.stunEffect.turnsRemaining == 0 {
                 enemy.stunEffect.turnsRemaining = 3
-                enemy.stunEffect.isStunned = true
+                enemy.stunEffect.isStunned = false
             }
         }
     }

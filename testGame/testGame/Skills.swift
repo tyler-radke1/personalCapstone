@@ -18,10 +18,6 @@ protocol SkillProtocol {
     mutating func skill()
 }
 
-protocol DefensiveSkillProtocol: SkillProtocol {
-    var effectLength: Int { get set }
-    mutating func reduceEffectLength()
-}
 struct Attack: SkillProtocol {
     let texture = SKTexture(imageNamed: "SwordIcon")
     static var description = "Does 1-10 damage to enemy"
@@ -52,7 +48,7 @@ struct BigAttack: SkillProtocol {
     }
 }
 
-struct Stun: SkillProtocol, DefensiveSkillProtocol {
+struct Stun: SkillProtocol {
     let texture = SKTexture(imageNamed: "Daze")
     static var description = "Does 25-30 damage and stuns enemy for 3 turns"
     var player: PlayerNode = PlayerNode()
@@ -67,19 +63,9 @@ struct Stun: SkillProtocol, DefensiveSkillProtocol {
         enemy.stunEffect = (true, 3)
         coolDown = 6
     }
-    
-   mutating func reduceEffectLength() {
-       guard enemy.stunEffect.isStunned else { return }
-       
-        effectLength -= 1
-       if effectLength == 0 {
-           enemy.stunEffect.isStunned = false
-           effectLength = 3
-       }
-    }
 }
 
-struct Shield: SkillProtocol, DefensiveSkillProtocol {
+struct Shield: SkillProtocol {
     static var description = "Adds shield to the player, protecting them from 40% of all damage recieved for 3 turns."
     
     var texture: SKTexture = SKTexture(imageNamed: "Shield")
@@ -89,23 +75,31 @@ struct Shield: SkillProtocol, DefensiveSkillProtocol {
     var enemy: EnemyNode = EnemyNode()
     
     var coolDown: Int = 0
-    var effectLength: Int = 3
-    
-    mutating func reduceEffectLength() {
-        guard PlayerNode.player.hasShield.0 else { return }
-
-        self.effectLength -= 1
-       // print(self.effectLength)
-//        if effectLength == 0 {
-//            PlayerNode.player.hasShield = false
-//            effectLength = 3
-//        }
-    }
     
     mutating func skill() {
         PlayerNode.player.hasShield.0 = true
         coolDown = 6
     }
+}
+
+struct Heal: SkillProtocol {
+    static var description: String = "Heals the player for between 10 - 30 health."
+    
+    var texture: SKTexture = SKTexture(imageNamed: "HealthPotion")
+    
+    var player: PlayerNode = PlayerNode()
+    
+    var enemy: EnemyNode = EnemyNode()
+    
+    var coolDown: Int = 0
+    
+    mutating func skill() {
+        let amount = Int.random(in: 10...30)
+        PlayerNode.player.health += amount
+        coolDown = 7
+    }
+    
+    
 }
 
 
