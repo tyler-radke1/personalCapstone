@@ -112,7 +112,7 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     func configurePlayer() {
         self.size = CGSize(width: 330, height: 330)
         self.name = "player"
-        self.texture = SKTexture(imageNamed: "frontWalk00")
+        self.texture = SKTexture(image: UIImage(named: "frontWalk00")!)
         self.zPosition = 2
         self.alpha = 1
         self.position = CGPoint(x: 0, y: -300)

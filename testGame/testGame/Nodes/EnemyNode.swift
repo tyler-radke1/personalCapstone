@@ -39,7 +39,7 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
         
         self.name = "enemy"
         
-        self.texture = SKTexture(imageNamed: "scorpion_idle_000")
+        self.texture = SKTexture(image: UIImage(named: "scorpion_idle_000")!)
         
         self.health = Int(Double(PlayerNode.player.health) * 0.05)
         self.zPosition = 1

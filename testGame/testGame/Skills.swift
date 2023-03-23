@@ -19,7 +19,7 @@ protocol SkillProtocol {
 }
 
 struct Attack: SkillProtocol {
-    let texture = SKTexture(imageNamed: "SwordIcon")
+    let texture = SKTexture(image: UIImage(named: "SwordIcon")!)
     var description = "Does 1-10 damage to enemy"
     var player: PlayerNode = PlayerNode()
     var enemy: EnemyNode = EnemyNode.enemyForBattle
@@ -32,7 +32,7 @@ struct Attack: SkillProtocol {
 }
 
 struct BigAttack: SkillProtocol {
-    let texture = SKTexture(imageNamed: "axeShadow")
+    let texture = SKTexture(image: UIImage(named: "axeShadow")!)
     var description = "Does 50-60 damage to enemy. For testing."
     
     var player: PlayerNode = PlayerNode()
@@ -49,7 +49,7 @@ struct BigAttack: SkillProtocol {
 }
 
 struct Stun: SkillProtocol {
-    let texture = SKTexture(imageNamed: "Daze")
+    let texture = SKTexture(image: UIImage(named: "Daze")!)
     var description = "Does 25-30 damage and stuns enemy for 3 turns"
     var player: PlayerNode = PlayerNode()
     var enemy: EnemyNode = EnemyNode.enemyForBattle
@@ -68,7 +68,7 @@ struct Stun: SkillProtocol {
 struct Shield: SkillProtocol {
     var description = "Protects player from 40% of all damage recieved for 3 turns."
     
-    var texture: SKTexture = SKTexture(imageNamed: "Shield")
+    var texture = SKTexture(image: UIImage(named: "Shield")!)
     
     var player: PlayerNode = PlayerNode()
 
@@ -85,7 +85,7 @@ struct Shield: SkillProtocol {
 struct Heal: SkillProtocol {
     var description: String = "Heals the player for between 10 - 30 health."
     
-    var texture: SKTexture = SKTexture(imageNamed: "HealthPotion")
+    var texture = SKTexture(image: UIImage(named: "HealthPotion")!)
     
     var player: PlayerNode = PlayerNode()
     

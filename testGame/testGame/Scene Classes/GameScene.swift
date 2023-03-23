@@ -68,17 +68,23 @@ class GameScene: SKScene {
         let location = touch.location(in: self)
         
         let arrows = [self.leftArrow,self.rightArrow,self.downArrow,self.upArrow]
-        let arrow = arrows.first(where: {$0!.contains(location)})
         
         //  If user selects an arrow, sets direction according and sets to walking
-//        for (index, arrow) in arrows.enumerated() {
-//            guard let arrow = arrow, arrow.contains(location) else { continue }
-//            player.directionFacing = DirectionFacing(rawValue: index)!
-//            player.actionDoing = .walking
-//            configureButtons()
-//            return
-//        }
+        for (index, arrow) in arrows.enumerated() {
+            guard let arrow = arrow, arrow.contains(location) else { continue }
+            player.directionFacing = DirectionFacing(rawValue: index)!
+            player.actionDoing = .walking
+            return
+        }
     }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let player = self.player else { return }
+        //Halts the player if they're walking. Allows for other inputs such as attacks to persist.
+        
+        player.actionDoing = .idling
+    }
+    
     
     //    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     //        guard let touch = touches.first else { return }
@@ -100,18 +106,7 @@ class GameScene: SKScene {
     //    }
     //
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let player = self.player else { return }
-        //Halts the player if they're walking. Allows for other inputs such as attacks to persist.
-        
-        player.actionDoing = .idling
-        
-        let action = Animations.configureAnimation(action: player.actionDoing, direction: player.directionFacing)
-        
-        player.run(action)
-        
-    }
-    
+ 
     func configureButtons() {
         guard let player = self.player else { return }
         let arrows = [self.rightArrow, self.leftArrow, self.upArrow, self.downArrow]
