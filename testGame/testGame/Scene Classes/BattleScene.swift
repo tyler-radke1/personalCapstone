@@ -48,11 +48,12 @@ class BattleScene: GameScene {
         let location = touch.location(in: self)
         self.children.filter({ $0 is SkillIconNode}).forEach({ skill in
             guard skill.contains(location) && (skill as! SkillIconNode).skill.coolDown == 0 else { return }
-            //let skill = skill as! SkillIconNode
+            let skill = skill as! SkillIconNode
             isAttacking = true
+            createPopup(text: skill.skill.description)
            // skill.skill.skill()
         })
-//
+
         let flee: SKSpriteNode = self.childNode(withName: "flee") as! SKSpriteNode
         
         if flee.contains(location) {
@@ -61,12 +62,39 @@ class BattleScene: GameScene {
         
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard isAttacking, let location = touches.first?.location(in: self) else { return }
-        self.view?.isUserInteractionEnabled = false
+    func createPopup(text: String) {
+        guard let player else { return }
+        let text = SKLabelNode(text: text)
+        text.name = "popUp"
+        text.fontName = "Arial Bold"
+        text.fontSize = 30
+        text.fontColor = UIColor.white
         
+        
+        let shape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: text.frame.width, height: 100))
+        shape.name = "popUpRect"
+        shape.fillColor = UIColor.darkGray
+        shape.addChild(text)
+        text.verticalAlignmentMode = .center
+        text.horizontalAlignmentMode = .center
+        text.position = CGPoint(x: shape.frame.width / 2, y: shape.frame.height / 2)
+        
+        self.addChild(shape)
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.childNode(withName: "popUpRect")?.removeFromParent()
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard isAttacking, let location = touches.first?.location(in: self), let player else { return }
+        self.childNode(withName: "popUpRect")?.removeFromParent()
+        
+        
+    
         self.children.filter({ $0 is SkillIconNode}).forEach({ skill in
             guard skill.contains(location) && (skill as! SkillIconNode).skill.coolDown == 0 else { return }
+            self.view?.isUserInteractionEnabled = false
             let skill = skill as! SkillIconNode
             isAttacking = true
             skill.skill.skill()

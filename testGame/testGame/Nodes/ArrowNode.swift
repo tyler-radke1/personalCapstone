@@ -9,7 +9,7 @@ import UIKit
 import SpriteKit
 
 class ArrowNode: SKSpriteNode {
-    
+    var directionFacing: DirectionFacing = .other
     
     //Function takes an array of arrows and sets them appropriately around a player.
     static func configureArrows(arrows: [ArrowNode?], player: PlayerNode) {
@@ -30,9 +30,10 @@ class ArrowNode: SKSpriteNode {
 
         arrows[2]?.position = CGPoint(x: playerX - 815, y: playerY - 170)
         arrows[3]?.position = CGPoint(x: playerX - 815, y: playerY - 430)
-        
-      
-        
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        PlayerNode.player.directionFacing = self.directionFacing
     }
     
     static func disableArrows(arrows: [ArrowNode]) {

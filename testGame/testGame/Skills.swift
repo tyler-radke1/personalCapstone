@@ -9,7 +9,7 @@ import Foundation
 import SpriteKit
 
 protocol SkillProtocol {
-    static var description: String { get set }
+    var description: String { get set }
     var texture: SKTexture { get }
     var player: PlayerNode { get set }
     var enemy: EnemyNode { get set }
@@ -20,7 +20,7 @@ protocol SkillProtocol {
 
 struct Attack: SkillProtocol {
     let texture = SKTexture(imageNamed: "SwordIcon")
-    static var description = "Does 1-10 damage to enemy"
+    var description = "Does 1-10 damage to enemy"
     var player: PlayerNode = PlayerNode()
     var enemy: EnemyNode = EnemyNode.enemyForBattle
     var coolDown = 0
@@ -33,7 +33,7 @@ struct Attack: SkillProtocol {
 
 struct BigAttack: SkillProtocol {
     let texture = SKTexture(imageNamed: "axeShadow")
-    static var description = "Does 50-60 damage to enemy. For testing."
+    var description = "Does 50-60 damage to enemy. For testing."
     
     var player: PlayerNode = PlayerNode()
     var enemy: EnemyNode = EnemyNode.enemyForBattle
@@ -50,7 +50,7 @@ struct BigAttack: SkillProtocol {
 
 struct Stun: SkillProtocol {
     let texture = SKTexture(imageNamed: "Daze")
-    static var description = "Does 25-30 damage and stuns enemy for 3 turns"
+    var description = "Does 25-30 damage and stuns enemy for 3 turns"
     var player: PlayerNode = PlayerNode()
     var enemy: EnemyNode = EnemyNode.enemyForBattle
     var coolDown = 0
@@ -66,7 +66,7 @@ struct Stun: SkillProtocol {
 }
 
 struct Shield: SkillProtocol {
-    static var description = "Adds shield to the player, protecting them from 40% of all damage recieved for 3 turns."
+    var description = "Protects player from 40% of all damage recieved for 3 turns."
     
     var texture: SKTexture = SKTexture(imageNamed: "Shield")
     
@@ -83,7 +83,7 @@ struct Shield: SkillProtocol {
 }
 
 struct Heal: SkillProtocol {
-    static var description: String = "Heals the player for between 10 - 30 health."
+    var description: String = "Heals the player for between 10 - 30 health."
     
     var texture: SKTexture = SKTexture(imageNamed: "HealthPotion")
     

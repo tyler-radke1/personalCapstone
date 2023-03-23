@@ -68,15 +68,16 @@ class GameScene: SKScene {
         let location = touch.location(in: self)
         
         let arrows = [self.leftArrow,self.rightArrow,self.downArrow,self.upArrow]
+        let arrow = arrows.first(where: {$0!.contains(location)})
         
         //  If user selects an arrow, sets direction according and sets to walking
-        for (index, arrow) in arrows.enumerated() {
-            guard let arrow = arrow, arrow.contains(location) else { continue }
-            player.directionFacing = DirectionFacing(rawValue: index)!
-            player.actionDoing = .walking
-            configureButtons()
-            return
-        }
+//        for (index, arrow) in arrows.enumerated() {
+//            guard let arrow = arrow, arrow.contains(location) else { continue }
+//            player.directionFacing = DirectionFacing(rawValue: index)!
+//            player.actionDoing = .walking
+//            configureButtons()
+//            return
+//        }
     }
     
     //    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
