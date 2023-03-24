@@ -61,6 +61,5 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
         self.removeFromParent()
         self.removeAllChildren()
     }
-    
 }
 

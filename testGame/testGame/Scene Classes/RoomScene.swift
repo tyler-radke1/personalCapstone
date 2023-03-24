@@ -19,7 +19,10 @@ enum RoomType {
 
 class RoomScene: GameScene {
     var roomType: RoomType? = nil
-    var bossRoom = Bool.random()
+    var bossRoom: Bool {
+        let chance = Int.random(in: 1...10)
+        return chance == 5
+    }
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         self.player?.position = CGPoint(x: 0, y: 0)

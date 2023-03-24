@@ -30,19 +30,14 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
             switch self.directionFacing {
             case .left:
                 self.oppositeDirection = .right
-             //   self.run(Animations.walkLeft)
             case .right:
                 self.oppositeDirection = .left
-               // self.run(Animations.walkRight)
             case .up:
                 self.oppositeDirection = .down
-              //  self.run(Animations.walkUp)
             case .down:
                 self.oppositeDirection = .up
-             //   self.run(Animations.walkDown)
             case .other:
                 PlayerNode()
-            //    self.run(Animations.idleDown)
             }
         }
     }
