@@ -58,7 +58,7 @@ class Quest {
     func generateDungeon(count: Int) {
         print("Loop number: \(count)")
         let rooms = quest.adjacencies.keys
-      //  guard /*count <= 5*/ quest.adjacencies.keys.count <= 20 else { return }
+        guard count <= 60  else { return }
         for room in rooms {
             var arrays: [[RoomScene]] = []
             var edges = quest.edges(from: room)
@@ -102,11 +102,11 @@ class Quest {
                 }
             }
         }
-        
         print("Generated \(quest.adjacencies.keys.count) rooms")
+        
         if quest.adjacencies.keys.count <= 20 {
             generateDungeon(count: count + 1)
-        } else {
+        } else if count == 60 {
             return
         }
     }

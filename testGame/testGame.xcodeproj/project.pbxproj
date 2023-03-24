@@ -29,6 +29,7 @@
 		9FBBC04B299FD45100A12EC5 /* Idle and Run.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9FBBC04A299FD45100A12EC5 /* Idle and Run.sks */; };
 		9FBBC04D29A0AF3900A12EC5 /* Battle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9FBBC04C29A0AF3900A12EC5 /* Battle.sks */; };
 		9FBBC04F29A13C9000A12EC5 /* BattleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBBC04E29A13C9000A12EC5 /* BattleScene.swift */; };
+		9FD5086C29CDEE3E00D80AE1 /* EnemySkills.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5086B29CDEE3E00D80AE1 /* EnemySkills.swift */; };
 		9FD6AF77299B43EB00E1A5A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD6AF76299B43EB00E1A5A8 /* AppDelegate.swift */; };
 		9FD6AF7B299B43EB00E1A5A8 /* Attack and Walk.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9FD6AF7A299B43EB00E1A5A8 /* Attack and Walk.sks */; };
 		9FD6AF7D299B43EB00E1A5A8 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD6AF7C299B43EB00E1A5A8 /* GameScene.swift */; };
@@ -38,7 +39,7 @@
 		9FD6AF87299B43EC00E1A5A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FD6AF85299B43EC00E1A5A8 /* LaunchScreen.storyboard */; };
 		9FD6AF8E299B49A300E1A5A8 /* PlayerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD6AF8D299B49A300E1A5A8 /* PlayerNode.swift */; };
 		9FD6AF93299BDC1800E1A5A8 /* GameScene Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD6AF92299BDC1800E1A5A8 /* GameScene Extensions.swift */; };
-		9FD8165629A91D2B0058D103 /* Skills.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD8165529A91D2B0058D103 /* Skills.swift */; };
+		9FD8165629A91D2B0058D103 /* PlayerSkills.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD8165529A91D2B0058D103 /* PlayerSkills.swift */; };
 		9FD8165C29AC6CA20058D103 /* Room1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9FD8165B29AC6CA20058D103 /* Room1.sks */; };
 		9FD8165E29AC76BE0058D103 /* RoomScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD8165D29AC76BE0058D103 /* RoomScene.swift */; };
 /* End PBXBuildFile section */
@@ -66,6 +67,7 @@
 		9FBBC04A299FD45100A12EC5 /* Idle and Run.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = "Idle and Run.sks"; sourceTree = "<group>"; };
 		9FBBC04C29A0AF3900A12EC5 /* Battle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Battle.sks; sourceTree = "<group>"; };
 		9FBBC04E29A13C9000A12EC5 /* BattleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleScene.swift; sourceTree = "<group>"; };
+		9FD5086B29CDEE3E00D80AE1 /* EnemySkills.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemySkills.swift; sourceTree = "<group>"; };
 		9FD6AF73299B43EB00E1A5A8 /* testGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FD6AF76299B43EB00E1A5A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9FD6AF7A299B43EB00E1A5A8 /* Attack and Walk.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = "Attack and Walk.sks"; sourceTree = "<group>"; };
@@ -76,7 +78,7 @@
 		9FD6AF86299B43EC00E1A5A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9FD6AF8D299B49A300E1A5A8 /* PlayerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerNode.swift; sourceTree = "<group>"; };
 		9FD6AF92299BDC1800E1A5A8 /* GameScene Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameScene Extensions.swift"; sourceTree = "<group>"; };
-		9FD8165529A91D2B0058D103 /* Skills.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skills.swift; sourceTree = "<group>"; };
+		9FD8165529A91D2B0058D103 /* PlayerSkills.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSkills.swift; sourceTree = "<group>"; };
 		9FD8165B29AC6CA20058D103 /* Room1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Room1.sks; sourceTree = "<group>"; };
 		9FD8165D29AC76BE0058D103 /* RoomScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +143,15 @@
 			path = "Player Animations";
 			sourceTree = "<group>";
 		};
+		9FD5086E29CDEE5500D80AE1 /* Skills */ = {
+			isa = PBXGroup;
+			children = (
+				9FD8165529A91D2B0058D103 /* PlayerSkills.swift */,
+				9FD5086B29CDEE3E00D80AE1 /* EnemySkills.swift */,
+			);
+			path = Skills;
+			sourceTree = "<group>";
+		};
 		9FD6AF6A299B43EB00E1A5A8 = {
 			isa = PBXGroup;
 			children = (
@@ -161,7 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				9FD6AF76299B43EB00E1A5A8 /* AppDelegate.swift */,
-				9FD8165529A91D2B0058D103 /* Skills.swift */,
+				9FD5086E29CDEE5500D80AE1 /* Skills */,
 				9FD6AF90299B4CD400E1A5A8 /* Nodes */,
 				9F75C3F929B6374F003EE629 /* Adjacency */,
 				9FD6AF96299BDC4000E1A5A8 /* Scene Classes */,
@@ -312,11 +323,12 @@
 				9FAB8372299EAE8000459A92 /* ArrowNode.swift in Sources */,
 				9F4B1249299BEBB70039B218 /* Animations.swift in Sources */,
 				9FBBC04F29A13C9000A12EC5 /* BattleScene.swift in Sources */,
+				9FD5086C29CDEE3E00D80AE1 /* EnemySkills.swift in Sources */,
 				9FD6AF7F299B43EB00E1A5A8 /* GameViewController.swift in Sources */,
 				9FD6AF8E299B49A300E1A5A8 /* PlayerNode.swift in Sources */,
 				9F75C3D229B25476003EE629 /* AdjacencyList.swift in Sources */,
 				9FAB8370299EAD8F00459A92 /* CameraNode Extension.swift in Sources */,
-				9FD8165629A91D2B0058D103 /* Skills.swift in Sources */,
+				9FD8165629A91D2B0058D103 /* PlayerSkills.swift in Sources */,
 				9FD8165E29AC76BE0058D103 /* RoomScene.swift in Sources */,
 				9F8F2BB929A6CE2F00B79595 /* ScoriponNode.swift in Sources */,
 				9F8F2BAF29A6BFE500B79595 /* EnemyAnimations.swift in Sources */,

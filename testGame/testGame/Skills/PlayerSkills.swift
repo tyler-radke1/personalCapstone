@@ -20,7 +20,7 @@ protocol SkillProtocol {
 
 struct Attack: SkillProtocol {
     let texture = SKTexture(image: UIImage(named: "SwordIcon")!)
-    var description = "Does 1-10 damage to enemy"
+    var description = "Attack: Does 1-10 damage to enemy"
     var player: PlayerNode = PlayerNode()
     var enemy: EnemyNode = EnemyNode.enemyForBattle
     var coolDown = 0
@@ -33,7 +33,7 @@ struct Attack: SkillProtocol {
 
 struct BigAttack: SkillProtocol {
     let texture = SKTexture(image: UIImage(named: "axeShadow")!)
-    var description = "Does 50-60 damage to enemy. For testing."
+    var description = "Tyler's Super Attack: Does 500-600 damage to enemy. For testing."
     
     var player: PlayerNode = PlayerNode()
     var enemy: EnemyNode = EnemyNode.enemyForBattle
@@ -42,7 +42,7 @@ struct BigAttack: SkillProtocol {
     
     mutating func skill() {
         guard coolDown == 0 else { return }
-        let damage = Int.random(in: 50...60)
+        let damage = Int.random(in: 500...600)
         enemy.health -= damage
         coolDown = 3
     }
@@ -98,8 +98,6 @@ struct Heal: SkillProtocol {
         PlayerNode.player.health += amount
         coolDown = 7
     }
-    
-    
 }
 
 

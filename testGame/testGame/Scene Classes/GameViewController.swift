@@ -105,9 +105,7 @@ extension GameViewController {
                 return GameViewController.walkDown
 
             }
-
         }
-
         return GameViewController.walkDown
     }
     

@@ -62,6 +62,7 @@ class BattleScene: GameScene {
         
     }
     
+    //Creates a popup to detail the skill
     func createPopup(text: String) {
         guard let player else { return }
         let text = SKLabelNode(text: text)
@@ -105,8 +106,8 @@ class BattleScene: GameScene {
     func playerTurn() {
         guard let player = self.player else { return }
         isAttacking = false
+        //Code to be run when enemy dies
         guard enemy.health >= 0 else {
-            //Code to be run when enemy dies
             player.run(Animations.attackRight)
             enemy.health = 0
             enemy.run(EnemyAnimations.scorpionDeath) {
@@ -121,7 +122,7 @@ class BattleScene: GameScene {
             self.enemy.run(EnemyAnimations.scorpionHurt)
         }
         
-        //Lowers cooldown for each skill by 1, unless its already 0
+        //Lowers cooldown for each skill by 1, unless its already 0, then sends a notification to update the cooldown label
         let allSkillIcons = self.children.filter({ $0 is SkillIconNode })
         allSkillIcons.forEach({
             let skillIcon = ($0 as! SkillIconNode)
@@ -148,8 +149,10 @@ class BattleScene: GameScene {
             }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            let reducedAttack = Double((self.enemy.skill())) * 0.6
-            player.health -= (player.hasShield.0) ? Int(reducedAttack) : (self.enemy.skill())
+//            let reducedAttack = Double((self.enemy.skill())) * 0.6
+//            player.health -= (player.hasShield.0) ? Int(reducedAttack) : (self.enemy.skill())
+            let attack = WeakEnemyAttack()
+            attack.skill()
             self.isPlayersTurn = true
             if player.health <= 0 {
                 self.view?.isUserInteractionEnabled = true

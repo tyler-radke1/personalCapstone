@@ -50,6 +50,7 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     //MARK: Status effect variables, such as stuns, heals, shields, ect.
     var hasShield = (hasShield: false, turnsRemaining: 3)
     
+    
   //  var positionToMoveTo: CGPoint = CGPoint(x: 0, y: 0)
     
     var currentQuest: Quest? = nil
