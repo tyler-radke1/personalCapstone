@@ -59,10 +59,10 @@ extension GameViewController {
     //private let walks = [walkLeft, walkRight, walkDown, walkUp]
     
     //Idling Animations
-    static let idleDown = (SKAction(named: "idleDown")!)
-    static let idleLeft = (SKAction(named: "idleLeft")!)
-    static let idleRight = (SKAction(named: "idleRight")!)
-    static let idleUp = (SKAction(named: "idleUp")!)
+    static let idleDown = SKAction.repeatForever(SKAction(named: "idleDown")!)
+    static let idleLeft = SKAction.repeatForever(SKAction(named: "idleLeft")!)
+    static let idleRight = SKAction.repeatForever(SKAction(named: "idleRight")!)
+    static let idleUp = SKAction.repeatForever(SKAction(named: "idleUp")!)
     
     
     //Attacking Animations

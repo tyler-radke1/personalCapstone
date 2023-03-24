@@ -64,24 +64,32 @@ class GameScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first, let player = self.player else { return }
-        
+
         let location = touch.location(in: self)
-        
+
         let arrows = [self.leftArrow,self.rightArrow,self.downArrow,self.upArrow]
-        
+
         //  If user selects an arrow, sets direction according and sets to walking
         for (index, arrow) in arrows.enumerated() {
             guard let arrow = arrow, arrow.contains(location) else { continue }
             player.directionFacing = DirectionFacing(rawValue: index)!
             player.actionDoing = .walking
+            
+            let backgroundQueue = DispatchQueue(label: "animation")
+            
+            backgroundQueue.async {
+                player.run(GameViewController.configureAnimation(action: .walking, direction: player.directionFacing))
+            }
+            
             return
         }
+        
+        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let player = self.player else { return }
         //Halts the player if they're walking. Allows for other inputs such as attacks to persist.
-        
         player.actionDoing = .idling
     }
     
@@ -106,6 +114,26 @@ class GameScene: SKScene {
     //    }
     //
     
+    func runAnimation() {
+        guard let player else { return }
+        switch player.directionFacing {
+        case .left:
+            player.oppositeDirection = .right
+            player.run(Animations.walkLeft)
+        case .right:
+            player.oppositeDirection = .left
+            player.run(Animations.walkRight)
+        case .up:
+            player.oppositeDirection = .down
+            PlayerNode.player.run(Animations.walkUp)
+        case .down:
+            player.oppositeDirection = .up
+            player.run(Animations.walkDown)
+        case .other:
+            PlayerNode()
+            player.run(Animations.idleDown)
+        }
+    }
  
     func configureButtons() {
         guard let player = self.player else { return }

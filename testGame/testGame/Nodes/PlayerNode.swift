@@ -30,22 +30,22 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
             switch self.directionFacing {
             case .left:
                 self.oppositeDirection = .right
-                self.run(Animations.walkLeft)
+             //   self.run(Animations.walkLeft)
             case .right:
                 self.oppositeDirection = .left
-                self.run(Animations.walkRight)
+               // self.run(Animations.walkRight)
             case .up:
                 self.oppositeDirection = .down
-                self.run(Animations.walkUp)
+              //  self.run(Animations.walkUp)
             case .down:
                 self.oppositeDirection = .up
-                self.run(Animations.walkDown)
+             //   self.run(Animations.walkDown)
             case .other:
-                self.run(Animations.idleDown)
+                PlayerNode()
+            //    self.run(Animations.idleDown)
             }
         }
     }
-   
     var playerSpeed: CGFloat = 15
     var isColliding = false
     var level = 1
@@ -67,23 +67,29 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     var oppositeDirection: DirectionFacing = .other
     
     var actionDoing: ActionDoing = .idling
+    {
+        didSet {
+            runIdleAnimation()
+        }
+    }
     
     static var player: PlayerNode = PlayerNode()
     
+    private func runIdleAnimation() {
+        self.run(GameViewController.configureAnimation(action: .idling, direction: self.directionFacing))
+    }
+    
     func movePlayer() {
-        guard !(self.parent is BattleScene) else { return }
-        
-        //Whole function will be skipped if the player isn't walking (or running in future)
-        guard self.actionDoing == .walking else { return }
-       
+        guard !(self.parent is BattleScene), self.actionDoing == .walking else { return }
+    
         self.playerSpeed = self.isColliding ? 0 : 15
         
         //If player is collidng with a building, this will get run if they're facing away from the building so they can walk away from it.
         //TODO; make it so walking up and down the building is allowed
+        
         if self.directionFacing == directionShouldBeFacingIf {
             self.playerSpeed = 15
         }
-        
         //if player is colliding and not going approved direction, sets direction to other
         //This prevents clipping through walls.
         if self.isColliding && self.directionFacing != directionShouldBeFacingIf {
@@ -92,18 +98,23 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
         
         switch self.directionFacing {
         case .left:
+            //self.run(GameViewController.walkLeft)
             self.directionShouldBeFacingIf = .right
             self.position.x -= playerSpeed
         case .right:
+            //self.run(GameViewController.walkRight)
             self.directionShouldBeFacingIf = .left
             self.position.x += playerSpeed
         case .up:
+           // self.run(GameViewController.walkUp)
             self.directionShouldBeFacingIf = .down
             self.position.y += playerSpeed
         case .down:
+         //   self.run(GameViewController.walkDown)
             self.directionShouldBeFacingIf = .up
             self.position.y -= playerSpeed
         case .other:
+       //     self.run(GameViewController.idleDown)
             self.position = self.position
         }
         self.isColliding = false

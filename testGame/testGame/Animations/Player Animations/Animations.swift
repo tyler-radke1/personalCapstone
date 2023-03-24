@@ -38,5 +38,43 @@ struct Animations {
 extension Animations {
     //For configuring animations
     
+    static func configureAnimation(action: ActionDoing, direction: DirectionFacing) -> SKAction {
+
+        if action == .idling {
+            switch direction {
+            case .up:
+                return Animations.idleUp
+            case .down:
+                return Animations.idleDown
+            case .left:
+                return Animations.idleLeft
+            case .right:
+                return Animations.idleRight
+            case .other:
+                return Animations.idleDown
+
+            }
+
+        }
+
+        if action == .walking {
+            switch direction {
+            case .up:
+                return Animations.walkUp
+            case .down:
+                return Animations.walkDown
+            case .left:
+                return Animations.walkLeft
+            case .right:
+                return Animations.walkRight
+            case .other:
+                return Animations.walkDown
+
+            }
+
+        }
+
+        return Animations.walkDown
+    }
  
 }
