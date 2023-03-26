@@ -3,8 +3,6 @@
 //  testGame
 //
 //  Created by Tyler Radke on 2/16/23.
-//
-
 import Foundation
 import SpriteKit
 

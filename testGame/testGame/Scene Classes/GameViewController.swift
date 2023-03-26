@@ -3,8 +3,6 @@
 //  testGame
 //
 //  Created by Tyler Radke on 2/13/23.
-//
-
 import UIKit
 import SpriteKit
 import GameplayKit
@@ -86,9 +84,7 @@ extension GameViewController {
                 return GameViewController.idleRight
             case .other:
                 return GameViewController.idleDown
-
             }
-
         }
 
         if action == .walking {
@@ -103,10 +99,8 @@ extension GameViewController {
                 return GameViewController.walkRight
             case .other:
                 return GameViewController.walkDown
-
             }
         }
         return GameViewController.walkDown
     }
-    
 }
