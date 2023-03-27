@@ -5,7 +5,6 @@
 //  Created by Tyler Radke on 2/13/23.
 //
 
-import UIKit
 import SpriteKit
 import GameplayKit
 
@@ -37,16 +36,17 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
             case .down:
                 self.oppositeDirection = .up
             case .other:
-                PlayerNode()
+                print()
             }
         }
     }
     var playerSpeed: CGFloat = 15
     var isColliding = false
     var level = 1
+    var exp = 0
     var health = 100
     //Health Formula based on level (x) - x/4 + (100 + x^2)
-    
+
     //MARK: Status effect variables, such as stuns, heals, shields, ect.
     var hasShield = (hasShield: false, turnsRemaining: 3)
     var isPoisoned = (isPoisoned: false, turnsRemaining: 4)

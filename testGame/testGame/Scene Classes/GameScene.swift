@@ -80,7 +80,6 @@ class GameScene: SKScene {
             backgroundQueue.async {
                 player.run(GameViewController.configureAnimation(action: .walking, direction: player.directionFacing))
             }
-            
             return
         }
         

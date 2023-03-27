@@ -43,7 +43,6 @@ struct BigAttack: SkillProtocol {
     mutating func skill() {
         guard coolDown == 0 else { return }
         let damage = Int.random(in: 500...600)
-        //let damage = 100
         enemy.health -= !(PlayerNode.player.isPoisoned.isPoisoned) ? damage : Int(Double(damage) * 0.25)
         coolDown = 3
     }

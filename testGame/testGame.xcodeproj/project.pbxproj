@@ -42,6 +42,7 @@
 		9FD8165629A91D2B0058D103 /* PlayerSkills.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD8165529A91D2B0058D103 /* PlayerSkills.swift */; };
 		9FD8165C29AC6CA20058D103 /* Room1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9FD8165B29AC6CA20058D103 /* Room1.sks */; };
 		9FD8165E29AC76BE0058D103 /* RoomScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD8165D29AC76BE0058D103 /* RoomScene.swift */; };
+		9FDFD0F829D1F56C0089087E /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDFD0F729D1F56C0089087E /* GameData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +82,7 @@
 		9FD8165529A91D2B0058D103 /* PlayerSkills.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSkills.swift; sourceTree = "<group>"; };
 		9FD8165B29AC6CA20058D103 /* Room1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Room1.sks; sourceTree = "<group>"; };
 		9FD8165D29AC76BE0058D103 /* RoomScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomScene.swift; sourceTree = "<group>"; };
+		9FDFD0F729D1F56C0089087E /* GameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 		9FD6AF75299B43EB00E1A5A8 /* testGame */ = {
 			isa = PBXGroup;
 			children = (
+				9FDFD0F729D1F56C0089087E /* GameData.swift */,
 				9FD6AF76299B43EB00E1A5A8 /* AppDelegate.swift */,
 				9FD5086E29CDEE5500D80AE1 /* Skills */,
 				9FD6AF90299B4CD400E1A5A8 /* Nodes */,
@@ -331,6 +334,7 @@
 				9FD8165629A91D2B0058D103 /* PlayerSkills.swift in Sources */,
 				9FD8165E29AC76BE0058D103 /* RoomScene.swift in Sources */,
 				9F8F2BB929A6CE2F00B79595 /* ScoriponNode.swift in Sources */,
+				9FDFD0F829D1F56C0089087E /* GameData.swift in Sources */,
 				9F8F2BAF29A6BFE500B79595 /* EnemyAnimations.swift in Sources */,
 				9FD6AF77299B43EB00E1A5A8 /* AppDelegate.swift in Sources */,
 				9FBBC048299FCC2800A12EC5 /* EnemyNode.swift in Sources */,
