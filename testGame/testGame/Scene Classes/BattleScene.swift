@@ -151,7 +151,8 @@ class BattleScene: GameScene {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
 //            let reducedAttack = Double((self.enemy.skill())) * 0.6
 //            player.health -= (player.hasShield.0) ? Int(reducedAttack) : (self.enemy.skill())
-            let attack = WeakEnemyAttack()
+            let attack = EnemyAttack(attackType: AllEnemySkills.allCases.randomElement()!)
+            print(attack.description)
             attack.skill()
             self.isPlayersTurn = true
             if player.health <= 0 {

@@ -43,7 +43,8 @@ struct BigAttack: SkillProtocol {
     mutating func skill() {
         guard coolDown == 0 else { return }
         let damage = Int.random(in: 500...600)
-        enemy.health -= damage
+        //let damage = 100
+        enemy.health -= !(PlayerNode.player.isPoisoned.isPoisoned) ? damage : Int(Double(damage) * 0.25)
         coolDown = 3
     }
 }
@@ -59,7 +60,7 @@ struct Stun: SkillProtocol {
     mutating func skill() {
         guard coolDown == 0 else { return }
         let damage = Int.random(in: 25...30)
-        enemy.health -= damage
+        enemy.health -= !(PlayerNode.player.isPoisoned.isPoisoned) ? damage : Int(Double(damage) * 0.25)
         enemy.stunEffect = (true, 3)
         coolDown = 6
     }
