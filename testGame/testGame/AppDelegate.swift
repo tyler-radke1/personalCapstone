@@ -15,6 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        if GameData.sharedInstance.loadGame(saveFile: "One") {
+            print("does exist")
+        } else {
+            GameData.sharedInstance.save()
+            print("doesn't exist")
+        }
         return true
     }
 
