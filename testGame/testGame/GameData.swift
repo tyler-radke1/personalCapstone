@@ -13,7 +13,9 @@ enum SaveGameKeys: String {
     case level = "level"
 }
 
-class GameData: NSObject, NSCoding {
+class GameData: NSObject, NSCoding, NSSecureCoding {
+    static var supportsSecureCoding: Bool = true
+    
     var currentSaveFile: String? = nil
     var exp = 0
     var level = 5
@@ -70,7 +72,7 @@ class GameData: NSObject, NSCoding {
                         return data
                     }
                 } catch {
-                    print("failed")
+                    print("failed to get raw data")
                     return nil
                 }
             }
@@ -83,7 +85,7 @@ class GameData: NSObject, NSCoding {
         
         DispatchQueue.global(qos: .background).async {
             do {
-                let saveData = try NSKeyedArchiver.archivedData(withRootObject: GameData.sharedInstance, requiringSecureCoding: false)
+                let saveData = try NSKeyedArchiver.archivedData(withRootObject: GameData.sharedInstance, requiringSecureCoding: true)
                 let path = GameData.getFilePathName(name: saveFile)
                 
                 do {
