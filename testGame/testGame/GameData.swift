@@ -18,7 +18,7 @@ class GameData: NSObject, NSCoding, NSSecureCoding {
     
     var currentSaveFile: String? = nil
     var exp = 0
-    var level = 5
+    var level = 1
     
     internal static let sharedInstance = GameData()
     

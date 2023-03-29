@@ -49,10 +49,10 @@ class GameViewController: UIViewController {
 extension GameViewController {
     
     //Walking Animations
-    static let walkDown = (SKAction(named: "walkFront")!)
-    static let walkUp = (SKAction(named: "walkBack")!)
-    static let walkLeft = (SKAction(named: "walkLeft")!)
-    static let walkRight = (SKAction(named: "walkRight")!)
+    static let walkDown = SKAction.repeatForever(SKAction(named: "walkFront")!)
+    static let walkUp = SKAction.repeatForever(SKAction(named: "walkBack")!)
+    static let walkLeft = SKAction.repeatForever(SKAction(named: "walkLeft")!)
+    static let walkRight = SKAction.repeatForever(SKAction(named: "walkRight")!)
     
     //private let walks = [walkLeft, walkRight, walkDown, walkUp]
     
@@ -70,37 +70,53 @@ extension GameViewController {
     //Damage taken animations
     static let hurtRight =  SKAction.repeat(SKAction(named: "hurtRight", duration: 0.5)!, count: 1)
     
-    static func configureAnimation(action: ActionDoing, direction: DirectionFacing) -> SKAction {
-
-        if action == .idling {
-            switch direction {
-            case .up:
-                return GameViewController.idleUp
-            case .down:
-                return GameViewController.idleDown
-            case .left:
-                return GameViewController.idleLeft
-            case .right:
-                return GameViewController.idleRight
-            case .other:
-                return GameViewController.idleDown
-            }
-        }
-
-        if action == .walking {
-            switch direction {
-            case .up:
-                return GameViewController.walkUp
-            case .down:
-                return GameViewController.walkDown
-            case .left:
-                return GameViewController.walkLeft
-            case .right:
-                return GameViewController.walkRight
-            case .other:
-                return GameViewController.walkDown
-            }
-        }
-        return GameViewController.walkDown
-    }
+    static let idleActions: [DirectionFacing: SKAction] = [
+        .up: GameViewController.idleUp,
+        .down: GameViewController.idleDown,
+        .left: GameViewController.idleLeft,
+        .right: GameViewController.idleRight,
+        .other: GameViewController.idleDown
+    ]
+    
+    static let walkActions: [DirectionFacing: SKAction] = [
+        .up: GameViewController.walkUp,
+        .down: GameViewController.walkDown,
+        .left: GameViewController.walkLeft,
+        .right: GameViewController.walkRight,
+        .other: GameViewController.idleDown
+    ]
+    
+    
+//    static func configureAnimation(action: ActionDoing, direction: DirectionFacing) -> SKAction {
+//        if action == .idling {
+//            switch direction {
+//            case .up:
+//                return GameViewController.idleUp
+//            case .down:
+//                return GameViewController.idleDown
+//            case .left:
+//                return GameViewController.idleLeft
+//            case .right:
+//                return GameViewController.idleRight
+//            case .other:
+//                return GameViewController.idleDown
+//            }
+//        }
+//
+//        if action == .walking {
+//            switch direction {
+//            case .up:
+//                return GameViewController.walkUp
+//            case .down:
+//                return GameViewController.walkDown
+//            case .left:
+//                return GameViewController.walkLeft
+//            case .right:
+//                return GameViewController.walkRight
+//            case .other:
+//                return GameViewController.walkDown
+//            }
+//        }
+//        return GameViewController.walkDown
+//    }
 }

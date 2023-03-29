@@ -24,7 +24,16 @@ enum ActionDoing {
 }
 
 class PlayerNode: SKSpriteNode, BattleProtocol {
-    var directionFacing: DirectionFacing = .other {
+    
+//    init() {
+//        super.init()
+//        self.health = level/4 + (100 + level^2)
+//    }
+//    
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    var directionFacing: DirectionFacing = .down {
         didSet {
             switch self.directionFacing {
             case .left:
@@ -42,9 +51,9 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     }
     var playerSpeed: CGFloat = 15
     var isColliding = false
-    var level = 1
-    var exp = 0
-    var health = 100
+    var level = GameData.sharedInstance.level
+    var exp = GameData.sharedInstance.exp
+    var health = 0
     //Health Formula based on level (x) - x/4 + (100 + x^2)
 
     //MARK: Status effect variables, such as stuns, heals, shields, ect.
@@ -63,58 +72,55 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     var directionShouldBeFacingIf: DirectionFacing = .other
     var oppositeDirection: DirectionFacing = .other
     
-    var actionDoing: ActionDoing = .idling
-    {
+    var actionDoing: ActionDoing = .idling {
         didSet {
-            runIdleAnimation()
+            if self.actionDoing == .idling {
+                self.run(GameViewController.idleActions[self.directionFacing]!)
+            }
         }
     }
     
     static var player: PlayerNode = PlayerNode()
     
-    private func runIdleAnimation() {
-        self.run(GameViewController.configureAnimation(action: .idling, direction: self.directionFacing))
-    }
-    
     func movePlayer() {
         guard !(self.parent is BattleScene), self.actionDoing == .walking else { return }
-    
-        self.playerSpeed = self.isColliding ? 0 : 15
+            self.playerSpeed = self.isColliding ? 0 : 15
+            
+            //If player is collidng with a building, this will get run if they're facing away from the building so they can walk away from it.
+            //TODO; make it so walking up and down the building is allowed
+            
+            if self.directionFacing == self.directionShouldBeFacingIf {
+                self.playerSpeed = 15
+            }
+            //if player is colliding and not going approved direction, sets direction to other
+            //This prevents clipping through walls.
+            if self.isColliding && self.directionFacing != directionShouldBeFacingIf {
+                self.directionFacing = .other
+            }
+            
+            switch self.directionFacing {
+            case .left:
+                //self.run(GameViewController.walkLeft)
+                self.directionShouldBeFacingIf = .right
+                self.position.x -= playerSpeed
+            case .right:
+                //self.run(GameViewController.walkRight)
+                self.directionShouldBeFacingIf = .left
+                self.position.x += playerSpeed
+            case .up:
+                // self.run(GameViewController.walkUp)
+                self.directionShouldBeFacingIf = .down
+                self.position.y += playerSpeed
+            case .down:
+                //   self.run(GameViewController.walkDown)
+                self.directionShouldBeFacingIf = .up
+                self.position.y -= playerSpeed
+            case .other:
+                //     self.run(GameViewController.idleDown)
+                self.position = self.position
+            }
+            self.isColliding = false
         
-        //If player is collidng with a building, this will get run if they're facing away from the building so they can walk away from it.
-        //TODO; make it so walking up and down the building is allowed
-        
-        if self.directionFacing == directionShouldBeFacingIf {
-            self.playerSpeed = 15
-        }
-        //if player is colliding and not going approved direction, sets direction to other
-        //This prevents clipping through walls.
-        if self.isColliding && self.directionFacing != directionShouldBeFacingIf {
-            self.directionFacing = .other
-        }
-        
-        switch self.directionFacing {
-        case .left:
-            //self.run(GameViewController.walkLeft)
-            self.directionShouldBeFacingIf = .right
-            self.position.x -= playerSpeed
-        case .right:
-            //self.run(GameViewController.walkRight)
-            self.directionShouldBeFacingIf = .left
-            self.position.x += playerSpeed
-        case .up:
-           // self.run(GameViewController.walkUp)
-            self.directionShouldBeFacingIf = .down
-            self.position.y += playerSpeed
-        case .down:
-         //   self.run(GameViewController.walkDown)
-            self.directionShouldBeFacingIf = .up
-            self.position.y -= playerSpeed
-        case .other:
-       //     self.run(GameViewController.idleDown)
-            self.position = self.position
-        }
-        self.isColliding = false
     }
 
     func configurePlayer() {
