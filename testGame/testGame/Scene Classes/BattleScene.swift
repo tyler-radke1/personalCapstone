@@ -47,11 +47,16 @@ class BattleScene: GameScene {
         
         let location = touch.location(in: self)
         self.children.filter({ $0 is SkillIconNode}).forEach({ skill in
-            guard skill.contains(location) && (skill as! SkillIconNode).skill.coolDown == 0 else { return }
+            guard skill.contains(location) && (skill as! SkillIconNode).skill.coolDown == 0 else {
+                //allows player read skill descriptions at any time
+                if skill.contains(location) {
+                    createSkillInfoPopup(text: (skill as! SkillIconNode).skill.description)
+                }
+                return
+            }
             let skill = skill as! SkillIconNode
             isAttacking = true
-            createPopup(text: skill.skill.description)
-           // skill.skill.skill()
+            createSkillInfoPopup(text: skill.skill.description)
         })
 
         let flee: SKSpriteNode = self.childNode(withName: "flee") as! SKSpriteNode
@@ -62,37 +67,15 @@ class BattleScene: GameScene {
         
     }
     
-    //Creates a popup to detail the skill
-    func createPopup(text: String) {
-        guard let player else { return }
-        let text = SKLabelNode(text: text)
-        text.name = "popUp"
-        text.fontName = "Arial Bold"
-        text.fontSize = 30
-        text.fontColor = UIColor.white
-        
-        
-        let shape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: text.frame.width, height: 100))
-        shape.name = "popUpRect"
-        shape.fillColor = UIColor.darkGray
-        shape.addChild(text)
-        text.verticalAlignmentMode = .center
-        text.horizontalAlignmentMode = .center
-        text.position = CGPoint(x: shape.frame.width / 2, y: shape.frame.height / 2)
-        
-        self.addChild(shape)
-    }
-    
+
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.childNode(withName: "popUpRect")?.removeFromParent()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard isAttacking, let location = touches.first?.location(in: self), let player else { return }
+        guard isAttacking, let location = touches.first?.location(in: self) else { return }
         self.childNode(withName: "popUpRect")?.removeFromParent()
-        
-        
-    
+        //Disables input until the turn is over, executes player skill & turn
         self.children.filter({ $0 is SkillIconNode}).forEach({ skill in
             guard skill.contains(location) && (skill as! SkillIconNode).skill.coolDown == 0 else { return }
             self.view?.isUserInteractionEnabled = false
@@ -107,10 +90,14 @@ class BattleScene: GameScene {
         guard let player = self.player else { return }
         isAttacking = false
         //Code to be run when enemy dies
+        
         guard enemy.health >= 0 else {
             player.run(Animations.attackRight)
             enemy.health = 0
             enemy.run(EnemyAnimations.scorpionDeath) {
+                self.createBattleWonPopup()
+                //create popup detailing xp given
+                //wait 1 second
                 self.view?.isUserInteractionEnabled = true
                 self.player?.currentRoom?.removeEnemies(with: self.enemy.enemyID)
                 self.returnToGameScene()
@@ -149,8 +136,6 @@ class BattleScene: GameScene {
             }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-//            let reducedAttack = Double((self.enemy.skill())) * 0.6
-//            player.health -= (player.hasShield.0) ? Int(reducedAttack) : (self.enemy.skill())
             let attack = EnemyAttack(attackType: AllEnemySkills.allCases.randomElement()!)
             print(attack.description)
             attack.skill()
@@ -163,28 +148,7 @@ class BattleScene: GameScene {
         reduceEffectLength()
     }
     
-    func configureHealthBars(beings: [BattleProtocol]) {
-        for being in beings {
-            being.removeAllChildren()
-            let healthBar = SKSpriteNode(imageNamed: "health100")
-            
-            healthBar.xScale = 2.75; healthBar.yScale = 6
-            healthBar.size.width = 250
-            healthBar.position.y += 150
-            
-            let textNode = SKLabelNode(text: "\(being.health)")
-            textNode.fontSize = 9
-            
-            textNode.xScale *= (being is EnemyNode) ?  -2 : 2
-            textNode.fontName = "Arial Bold"
-            textNode.zPosition = 1
-            textNode.position.y -= 4
-            
-            healthBar.addChild(textNode)
-            being.addChild(healthBar)
-            
-        }
-    }
+
     
     @objc func coolDownChanged( _ notification: Notification) {        
         let allSkillIcons = self.children.filter({ $0 is SkillIconNode })
@@ -195,26 +159,80 @@ class BattleScene: GameScene {
     }
     
     func reduceEffectLength() {
+        //Any turns remaining on the player or enemy, lowers by 1
         guard let player = player else { return }
+        
         if player.hasShield.hasShield {
-            player.hasShield.turnsRemaining -= 1
-            if player.hasShield.turnsRemaining == 0 {
+            guard player.hasShield.turnsRemaining >= 1 else {
                 player.hasShield.hasShield = false
                 player.hasShield.turnsRemaining = 3
+                return
             }
+            player.hasShield.turnsRemaining -= 1
         }
         
         if enemy.stunEffect.isStunned {
-            enemy.stunEffect.turnsRemaining -= 1
-            
-            if enemy.stunEffect.turnsRemaining == 0 {
+            guard enemy.stunEffect.turnsRemaining >= 1 else {
                 enemy.stunEffect.turnsRemaining = 3
                 enemy.stunEffect.isStunned = false
+                return
             }
+            enemy.stunEffect.turnsRemaining -= 1
         }
     }
     
+    //MARK: Configuration Functions
     
+    //Creates a popup to detail the skill
+    func createSkillInfoPopup(text: String) {
+        let text = SKLabelNode(text: text)
+        text.name = "popUp"
+        text.fontName = "Arial Bold"
+        text.fontSize = 30
+        text.fontColor = UIColor.white
+        
+        let shape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: text.frame.width, height: 100))
+        shape.name = "popUpRect"
+        shape.fillColor = UIColor.darkGray
+        shape.addChild(text)
+        text.verticalAlignmentMode = .center
+        text.horizontalAlignmentMode = .center
+        text.position = CGPoint(x: shape.frame.width / 2, y: shape.frame.height / 2)
+        
+        self.addChild(shape)
+        
+        
+    }
+    
+    //Creates a popup to detail results of a battle won
+    func createBattleWonPopup() {
+        guard let player else { return }
+        let saveFile = GameData.sharedInstance
+        let maxExp = player.level * 100
+        let expRange = 3...maxExp / 10
+        
+        let expToGive = Int.random(in: expRange)
+        saveFile.exp += expToGive
+        
+        let text = "Congratulations! You earned \(expToGive) experience."
+        let textNode = SKLabelNode(text: text)
+        textNode.name = "popUp"
+        textNode.fontName = "Arial Bold"
+        textNode.fontSize = 30
+        textNode.fontColor = UIColor.white
+        
+        let shape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: textNode.frame.width, height: 100))
+        shape.name = "popUpRect"
+        shape.fillColor = UIColor.darkGray
+        shape.addChild(textNode)
+        textNode.verticalAlignmentMode = .center
+        textNode.horizontalAlignmentMode = .center
+        textNode.position = CGPoint(x: shape.frame.width / 2, y: shape.frame.height / 2)
+        
+        self.addChild(shape)
+    }
+    
+    //Run when battle is first loaded up
     func configureBattle() {
         guard let player = self.player else { return }
         NotificationCenter.default.addObserver(self, selector: #selector(coolDownChanged(_ :)), name: NSNotification.Name("coolDown"), object: nil)
@@ -245,6 +263,29 @@ class BattleScene: GameScene {
                 label.name = "coolDownLabel"
                 skillIcon.addChild(label)
             }
+        }
+    }
+    
+    func configureHealthBars(beings: [BattleProtocol]) {
+        for being in beings {
+            being.removeAllChildren()
+            let healthBar = SKSpriteNode(imageNamed: "health100")
+            
+            healthBar.xScale = 2.75; healthBar.yScale = 6
+            healthBar.size.width = 250
+            healthBar.position.y += 150
+            
+            let textNode = SKLabelNode(text: "\(being.health)")
+            textNode.fontSize = 9
+            
+            textNode.xScale *= (being is EnemyNode) ?  -2 : 2
+            textNode.fontName = "Arial Bold"
+            textNode.zPosition = 1
+            textNode.position.y -= 4
+            
+            healthBar.addChild(textNode)
+            being.addChild(healthBar)
+            
         }
     }
     

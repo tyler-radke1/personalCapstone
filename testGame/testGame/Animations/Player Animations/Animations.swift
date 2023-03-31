@@ -119,4 +119,9 @@ class AnimationsClass {
         .other: GameViewController.idleDown
     ]
     
+    func loadAnimations() {
+        idleActions.values.forEach { SKAction in
+            SKAction
+        }
+    }
 }

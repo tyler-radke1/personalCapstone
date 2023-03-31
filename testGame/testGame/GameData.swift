@@ -60,7 +60,7 @@ class GameData: NSObject, NSCoding, NSSecureCoding {
     }
     
     //actually loads file
-    private func loadGameData(file: String) ->GameData? {
+    private func loadGameData(file: String) -> GameData? {
         
         let path = GameData.getFilePathName(name: file)
         print(path)

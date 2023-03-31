@@ -25,14 +25,17 @@ enum ActionDoing {
 
 class PlayerNode: SKSpriteNode, BattleProtocol {
     
-//    init() {
-//        super.init()
-//        self.health = level/4 + (100 + level^2)
-//    }
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
+        super.init(texture: texture, color: color, size: size)
+        
+        let saveFile = GameData.sharedInstance
+        
+        self.health = saveFile.level/4 + (100 + saveFile.level^2)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     var directionFacing: DirectionFacing = .down {
         didSet {
             switch self.directionFacing {
@@ -51,9 +54,11 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     }
     var playerSpeed: CGFloat = 15
     var isColliding = false
-    var level = GameData.sharedInstance.level
-    var exp = GameData.sharedInstance.exp
-    var health = 0
+    
+    
+    var level = 1
+    var exp = 0
+    var health = 100
     //Health Formula based on level (x) - x/4 + (100 + x^2)
 
     //MARK: Status effect variables, such as stuns, heals, shields, ect.
@@ -81,6 +86,16 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     }
     
     static var player: PlayerNode = PlayerNode()
+    
+    func updatePlayerStats() {
+        //In other classes, events read/write directly to the GameData class, so this function pulls them into the players stats
+         let saveFile = GameData.sharedInstance
+        
+        saveFile.save()
+        
+        self.level = saveFile.level
+        self.exp = saveFile.exp
+    }
     
     func movePlayer() {
         guard !(self.parent is BattleScene), self.actionDoing == .walking else { return }

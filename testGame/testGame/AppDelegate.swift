@@ -15,14 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-        let loadingQueue = DispatchQueue(label: "loading")
+        let loadingQueue = DispatchQueue(label: "loadingQueue")
         
         loadingQueue.async {
-            GameViewController.walkUp
-            GameViewController.walkRight
-            GameViewController.walkDown
-            GameViewController.walkLeft
+           // AnimationsClass.sharedInstance.
+            AnimationsClass.sharedInstance.loadAnimations()
         }
         
         if GameData.sharedInstance.loadGame(saveFile: "One") {
