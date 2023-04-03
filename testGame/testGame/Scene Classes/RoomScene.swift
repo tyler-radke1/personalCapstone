@@ -20,8 +20,9 @@ enum RoomType {
 class RoomScene: GameScene {
     var roomType: RoomType? = nil
     var bossRoom: Bool {
-        let chance = Int.random(in: 1...10)
-        return chance == 5
+//        let chance = Int.random(in: 1...10)
+//        return chance == 5
+        return Bool.random()
     }
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -32,8 +33,9 @@ class RoomScene: GameScene {
         } else {
             let boss = EnemyNode()
             boss.isBoss = true
-            boss.configureBoss()
+            boss.configureEnemy()
             self.addChild(boss)
+            print("is a boss room")
         }
         generatePlayerStats()
     }
@@ -69,7 +71,7 @@ class RoomScene: GameScene {
         guard let player = player else { return }
         let healthBar = SKSpriteNode(imageNamed: "health100")
         
-        healthBar.xScale = 2.75; healthBar.yScale = 6
+        healthBar.xScale = 3; healthBar.yScale = 2.75
         healthBar.size.width = 250
         healthBar.position.y += (view?.frame.maxY)! * 2
         healthBar.position.x -= (view?.frame.maxX)!
@@ -77,7 +79,7 @@ class RoomScene: GameScene {
         let textNode = SKLabelNode(text: "\(player.health)")
         textNode.fontSize = 9
         
-        textNode.xScale *= 2
+        textNode.xScale *= 1.2
         textNode.fontName = "Arial Bold"
         textNode.zPosition = 1
         textNode.position.y -= 4

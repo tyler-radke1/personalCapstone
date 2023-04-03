@@ -47,13 +47,17 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
         self.alpha = 1
         
         self.size = CGSize(width: 350, height: 350)
+        
+        if self.isBoss {
+            self.configureBoss()
+        }
     }
     
     func configureBoss() {
-        self.configureEnemy()
+        //self.configureEnemy()
         self.health = Int(Double(PlayerNode.player.health) * 1.75)
-        self.xScale *= 3
-        self.yScale *= 3
+        self.xScale *= 2
+        self.yScale *= 2
     }
     
     

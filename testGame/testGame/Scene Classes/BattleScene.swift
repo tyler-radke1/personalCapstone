@@ -195,6 +195,8 @@ class BattleScene: GameScene {
         shape.name = "popUpRect"
         shape.fillColor = UIColor.darkGray
         shape.addChild(text)
+        shape.zPosition = 2
+        text.zPosition = 2
         text.verticalAlignmentMode = .center
         text.horizontalAlignmentMode = .center
         text.position = CGPoint(x: shape.frame.width / 2, y: shape.frame.height / 2)
@@ -271,14 +273,16 @@ class BattleScene: GameScene {
             being.removeAllChildren()
             let healthBar = SKSpriteNode(imageNamed: "health100")
             
-            healthBar.xScale = 2.75; healthBar.yScale = 6
+            healthBar.xScale = 3; healthBar.yScale = 2.75
             healthBar.size.width = 250
-            healthBar.position.y += 150
+            healthBar.position.y += (being is EnemyNode && (being as! EnemyNode).isBoss) ? 90 : 150
+            healthBar.zPosition = 1
             
             let textNode = SKLabelNode(text: "\(being.health)")
             textNode.fontSize = 9
             
-            textNode.xScale *= (being is EnemyNode) ?  -2 : 2
+            textNode.xScale *= (being is EnemyNode) ?  -1.2 : 1.2
+            textNode.fontSize = 15
             textNode.fontName = "Arial Bold"
             textNode.zPosition = 1
             textNode.position.y -= 4
