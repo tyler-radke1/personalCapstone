@@ -202,8 +202,6 @@ class BattleScene: GameScene {
         text.position = CGPoint(x: shape.frame.width / 2, y: shape.frame.height / 2)
         
         self.addChild(shape)
-        
-        
     }
     
     //Creates a popup to detail results of a battle won
@@ -214,8 +212,10 @@ class BattleScene: GameScene {
         let expRange = 3...maxExp / 10
         
         let expToGive = Int.random(in: expRange)
-        saveFile.exp += expToGive
-        
+        //saveFile.exp += expToGive
+        player.exp += expToGive
+        GameData.sharedInstance.exp = player.exp
+        GameData.sharedInstance.save()
         let text = "Congratulations! You earned \(expToGive) experience."
         let textNode = SKLabelNode(text: text)
         textNode.name = "popUp"

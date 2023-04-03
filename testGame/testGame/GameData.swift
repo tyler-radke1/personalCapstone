@@ -91,6 +91,7 @@ class GameData: NSObject, NSCoding, NSSecureCoding {
                 do {
                     let location = URL(filePath: path)
                     try saveData.write(to: location, options: .atomic)
+                    print("saved successfully")
                 } catch {
                     print("failed to save data")
                 }

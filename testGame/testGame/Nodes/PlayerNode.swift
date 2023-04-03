@@ -31,6 +31,7 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
         let saveFile = GameData.sharedInstance
         
         self.health = saveFile.level/4 + (100 + saveFile.level^2)
+        self.exp = saveFile.exp
     }
     
     required init?(coder aDecoder: NSCoder) {

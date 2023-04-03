@@ -30,6 +30,7 @@ class RoomScene: GameScene {
         
         if !bossRoom {
             self.player?.currentRoom?.addEnemies(scene: self)
+            print("is not a boss room")
         } else {
             let boss = EnemyNode()
             boss.isBoss = true
@@ -69,6 +70,7 @@ class RoomScene: GameScene {
     
     func generatePlayerStats() {
         guard let player = player else { return }
+        //Health Bar
         let healthBar = SKSpriteNode(imageNamed: "health100")
         
         healthBar.xScale = 3; healthBar.yScale = 2.75
@@ -86,6 +88,16 @@ class RoomScene: GameScene {
         
         healthBar.addChild(textNode)
         player.addChild(healthBar)
+        
+        //Level & Experience
+        let levelBar = SKShapeNode(rect: CGRect(x: -100, y: 400, width: 100, height: 100))
+        levelBar.fillColor = UIColor.green
+        
+        let levelText = SKLabelNode(text: "Level: \(player.level) EXP: \(player.exp)")
+        levelText.fontName = "Arial Bold"
+       // levelBar.addChild(levelText)
+        levelText.position = CGPoint(x: -500, y: view!.frame.maxY * 2)
+        player.addChild(levelText)
     }
     
     func configureEnemy() {
