@@ -204,18 +204,36 @@ class BattleScene: GameScene {
         self.addChild(shape)
     }
     
+    func updateGameDataStats() {
+        guard let player = self.player, player.exp >= GameData.sharedInstance.expNeeded else {
+            GameData.sharedInstance.exp = player!.exp
+            GameData.sharedInstance.save()
+            
+            return
+        }
+        let saveFile = GameData.sharedInstance
+        player.level += 1
+        player.exp = 0
+        player.health = player.level / 4 + (100 + player.level^2)
+        
+        saveFile.level = player.level
+        saveFile.expNeeded = player.level * (100 + player.level * 10)
+        saveFile.save()
+        
+        print("exp needed - \(GameData.sharedInstance.expNeeded)")
+    }
     //Creates a popup to detail results of a battle won
     func createBattleWonPopup() {
         guard let player else { return }
         let saveFile = GameData.sharedInstance
-        let maxExp = player.level * 100
-        let expRange = 3...maxExp / 10
+        let maxExp = saveFile.level * (saveFile.level + 100)
+        let minExp = saveFile.level * (saveFile.level + 100)
+        let expRange = minExp...maxExp
         
         let expToGive = Int.random(in: expRange)
         //saveFile.exp += expToGive
         player.exp += expToGive
-        GameData.sharedInstance.exp = player.exp
-        GameData.sharedInstance.save()
+        updateGameDataStats()
         let text = "Congratulations! You earned \(expToGive) experience."
         let textNode = SKLabelNode(text: text)
         textNode.name = "popUp"

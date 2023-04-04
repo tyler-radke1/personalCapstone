@@ -83,7 +83,7 @@ class RoomScene: GameScene {
         
         textNode.xScale *= 1.2
         textNode.fontName = "Arial Bold"
-        textNode.zPosition = 1
+        textNode.zPosition = 1.5
         textNode.position.y -= 4
         
         healthBar.addChild(textNode)

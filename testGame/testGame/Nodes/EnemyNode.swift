@@ -31,6 +31,9 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
     func configureEnemy() {
         let xRange = -2560...2560
         let yRange = -1280...1280
+        let saveFile = GameData.sharedInstance
+        
+        let playerMaxHealth = saveFile.level/4 + (100 + saveFile.level^2)
         
         let x = Int.random(in: xRange)
         let y = Int.random(in: yRange)
@@ -41,7 +44,8 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
         
         self.texture = SKTexture(image: UIImage(named: "scorpion_idle_000")!)
         
-        self.health = Int(Double(PlayerNode.player.health) * 1)
+        let baseHealthMultiplier = Int.random(in: 60...70)
+        self.health = Int(Double(playerMaxHealth) * (Double(baseHealthMultiplier) / 100))
         self.zPosition = 1
         
         self.alpha = 1
@@ -55,7 +59,9 @@ class EnemyNode: SKSpriteNode, BattleProtocol {
     
     func configureBoss() {
         //self.configureEnemy()
-        self.health = Int(Double(PlayerNode.player.health) * 1.75)
+        let saveFile = GameData.sharedInstance
+        let playerMaxHealth = saveFile.level/4 + (100 + saveFile.level^2)
+        self.health = Int(Double(playerMaxHealth) * 1.75)
         self.xScale *= 2
         self.yScale *= 2
     }

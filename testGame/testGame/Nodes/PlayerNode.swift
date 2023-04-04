@@ -30,7 +30,8 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
         
         let saveFile = GameData.sharedInstance
         
-        self.health = saveFile.level/4 + (100 + saveFile.level^2)
+        self.level = saveFile.level
+        self.health = saveFile.level/3 + (100 + saveFile.level * saveFile.level)
         self.exp = saveFile.exp
     }
     
