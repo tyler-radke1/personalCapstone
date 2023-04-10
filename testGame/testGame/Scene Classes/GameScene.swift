@@ -76,7 +76,7 @@ class GameScene: SKScene {
                     guard let arrow = arrow, arrow.contains(location) else { continue }
                     player.directionFacing = directionDict[arrow]!
                     player.actionDoing = .walking
-                    player.run(AnimationsClass.sharedInstance.walkActions[player.directionFacing]!)
+                    player.run(Animations.walkActions[player.directionFacing]!)
                     return
                 }
             }

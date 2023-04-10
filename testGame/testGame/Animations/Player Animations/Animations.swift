@@ -76,52 +76,74 @@ extension Animations {
 
         return Animations.walkDown
     }
+    
+    static let idleActions: [DirectionFacing: SKAction] = [
+       .up: GameViewController.idleUp,
+       .down: GameViewController.idleDown,
+       .left: GameViewController.idleLeft,
+       .right: GameViewController.idleRight,
+       .other: GameViewController.idleDown
+   ]
+   
+    static let walkActions: [DirectionFacing: SKAction] = [
+       .up: GameViewController.walkUp,
+       .down: GameViewController.walkDown,
+       .left: GameViewController.walkLeft,
+       .right: GameViewController.walkRight,
+       .other: GameViewController.idleDown
+   ]
+    
+    static func loadAnimations() {
+        for action in Animations.idleActions {
+            
+        }
+    }
  
 }
 
-class AnimationsClass {
-    static let sharedInstance = AnimationsClass()
-    //Walking Animations
-     let walkDown = SKAction.repeatForever(SKAction(named: "walkFront")!)
-     let walkUp = SKAction.repeatForever(SKAction(named: "walkBack")!)
-     let walkLeft = SKAction.repeatForever(SKAction(named: "walkLeft")!)
-     let walkRight = SKAction.repeatForever(SKAction(named: "walkRight")!)
-    
-  //  private let walks = [walkLeft, walkRight, walkDown, walkUp]
-    
-    //Idling Animations
-     let idleDown = SKAction.repeatForever(SKAction(named: "idleDown")!)
-     let idleLeft = SKAction.repeatForever(SKAction(named: "idleLeft")!)
-     let idleRight = SKAction.repeatForever(SKAction(named: "idleRight")!)
-     let idleUp = SKAction.repeatForever(SKAction(named: "idleUp")!)
-    
-    
-    //Attacking Animations
-     let attackRight = SKAction.repeat(SKAction(named: "attackRight", duration: 0.5)!, count: 1)
-    
-    
-    //Damage taken animations
-     let hurtRight =  SKAction.repeat(SKAction(named: "hurtRight", duration: 0.5)!, count: 1)
-    
-     let idleActions: [DirectionFacing: SKAction] = [
-        .up: GameViewController.idleUp,
-        .down: GameViewController.idleDown,
-        .left: GameViewController.idleLeft,
-        .right: GameViewController.idleRight,
-        .other: GameViewController.idleDown
-    ]
-    
-     let walkActions: [DirectionFacing: SKAction] = [
-        .up: GameViewController.walkUp,
-        .down: GameViewController.walkDown,
-        .left: GameViewController.walkLeft,
-        .right: GameViewController.walkRight,
-        .other: GameViewController.idleDown
-    ]
-    
-    func loadAnimations() {
-        idleActions.values.forEach { SKAction in
-            SKAction
-        }
-    }
-}
+//class AnimationsClass {
+//    static let sharedInstance = AnimationsClass()
+//    //Walking Animations
+//     let walkDown = SKAction.repeatForever(SKAction(named: "walkFront")!)
+//     let walkUp = SKAction.repeatForever(SKAction(named: "walkBack")!)
+//     let walkLeft = SKAction.repeatForever(SKAction(named: "walkLeft")!)
+//     let walkRight = SKAction.repeatForever(SKAction(named: "walkRight")!)
+//
+//  //  private let walks = [walkLeft, walkRight, walkDown, walkUp]
+//
+//    //Idling Animations
+//     let idleDown = SKAction.repeatForever(SKAction(named: "idleDown")!)
+//     let idleLeft = SKAction.repeatForever(SKAction(named: "idleLeft")!)
+//     let idleRight = SKAction.repeatForever(SKAction(named: "idleRight")!)
+//     let idleUp = SKAction.repeatForever(SKAction(named: "idleUp")!)
+//
+//    
+//    //Attacking Animations
+//     let attackRight = SKAction.repeat(SKAction(named: "attackRight", duration: 0.5)!, count: 1)
+//
+//
+//    //Damage taken animations
+//     let hurtRight =  SKAction.repeat(SKAction(named: "hurtRight", duration: 0.5)!, count: 1)
+//
+//     let idleActions: [DirectionFacing: SKAction] = [
+//        .up: GameViewController.idleUp,
+//        .down: GameViewController.idleDown,
+//        .left: GameViewController.idleLeft,
+//        .right: GameViewController.idleRight,
+//        .other: GameViewController.idleDown
+//    ]
+//
+//     let walkActions: [DirectionFacing: SKAction] = [
+//        .up: GameViewController.walkUp,
+//        .down: GameViewController.walkDown,
+//        .left: GameViewController.walkLeft,
+//        .right: GameViewController.walkRight,
+//        .other: GameViewController.idleDown
+//    ]
+//
+//    func loadAnimations() {
+//        idleActions.values.forEach { SKAction in
+//            SKAction
+//        }
+//    }
+//}

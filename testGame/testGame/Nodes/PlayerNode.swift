@@ -33,6 +33,7 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
         self.level = saveFile.level
         self.health = saveFile.level/3 + (100 + saveFile.level * saveFile.level)
         self.exp = saveFile.exp
+        self.expNeeded = level * (100 + level * 10)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,6 +61,8 @@ class PlayerNode: SKSpriteNode, BattleProtocol {
     
     var level = 1
     var exp = 0
+    var expNeeded = 0
+
     var health = 100
     //Health Formula based on level (x) - x/4 + (100 + x^2)
 

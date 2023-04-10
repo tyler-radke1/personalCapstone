@@ -101,6 +101,11 @@ class BattleScene: GameScene {
                 self.view?.isUserInteractionEnabled = true
                 self.player?.currentRoom?.removeEnemies(with: self.enemy.enemyID)
                 self.returnToGameScene()
+                
+                let saveFile = GameData.sharedInstance
+                saveFile.exp = player.exp
+                saveFile.level = player.level
+                saveFile.save()
             }
             return
         }
@@ -205,29 +210,25 @@ class BattleScene: GameScene {
     }
     
     func updateGameDataStats() {
-        guard let player = self.player, player.exp >= GameData.sharedInstance.expNeeded else {
-            GameData.sharedInstance.exp = player!.exp
-            GameData.sharedInstance.save()
-            
+        guard let player = self.player, player.exp >= player.expNeeded else {
             return
         }
-        let saveFile = GameData.sharedInstance
+        
         player.level += 1
         player.exp = 0
         player.health = player.level / 4 + (100 + player.level^2)
-        
-        saveFile.level = player.level
-        saveFile.expNeeded = player.level * (100 + player.level * 10)
-        saveFile.save()
-        
-        print("exp needed - \(GameData.sharedInstance.expNeeded)")
+        player.expNeeded = player.level * (100 + player.level * 10)
+        //saveFile.expNeeded = player.level * (100 + player.level * 10)
+
+        print("exp needed - \(player.expNeeded)")
+    
     }
     //Creates a popup to detail results of a battle won
     func createBattleWonPopup() {
         guard let player else { return }
         let saveFile = GameData.sharedInstance
-        let maxExp = saveFile.level * (saveFile.level + 100)
-        let minExp = saveFile.level * (saveFile.level + 100)
+        let maxExp = saveFile.level * (saveFile.level + 20)
+        let minExp = saveFile.level * (saveFile.level + 10)
         let expRange = minExp...maxExp
         
         let expToGive = Int.random(in: expRange)

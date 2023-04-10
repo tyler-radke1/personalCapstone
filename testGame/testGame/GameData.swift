@@ -19,24 +19,19 @@ class GameData: NSObject, NSCoding, NSSecureCoding {
     var currentSaveFile: String? = nil
     var exp = 0 
     var level = 1
-    
-    var expNeeded: Int
-    //Formula to calculate exp needed for level: level * (100 + level * 10)
     //Formula used to calculate exp rewarded in game: level * (100 + level)
     
     internal static let sharedInstance = GameData()
     
     override init() {
-        self.expNeeded = level * (100 + level * 10)
         super.init()
     }
     
     required init?(coder: NSCoder) {
-        self.expNeeded = level * (100 + level * 10)
         super.init()
         self.exp = coder.decodeInteger(forKey: "exp")
         self.level = coder.decodeInteger(forKey: "level")
-    }
+            }
     
     func encode(with coder: NSCoder) {
         coder.encode(exp, forKey: SaveGameKeys.exp.rawValue)

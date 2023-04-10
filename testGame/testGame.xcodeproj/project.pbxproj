@@ -19,6 +19,7 @@
 		9F75C3DC29B30D25003EE629 /* Room6.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F75C3D729B30D25003EE629 /* Room6.sks */; };
 		9F75C3FB29B63766003EE629 /* QuestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F75C3FA29B63766003EE629 /* QuestList.swift */; };
 		9F75C3FD29B64F2E003EE629 /* ExitNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F75C3FC29B64F2E003EE629 /* ExitNode.swift */; };
+		9F83F52D29E46C3D001ED785 /* MyActions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F83F52C29E46C3D001ED785 /* MyActions.sks */; };
 		9F8F2BA929A6BF6B00B79595 /* Enemy Animations.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F8F2BA829A6BF6B00B79595 /* Enemy Animations.sks */; };
 		9F8F2BAF29A6BFE500B79595 /* EnemyAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F2BAE29A6BFE500B79595 /* EnemyAnimations.swift */; };
 		9F8F2BB929A6CE2F00B79595 /* ScoriponNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8F2BB829A6CE2F00B79595 /* ScoriponNode.swift */; };
@@ -58,6 +59,7 @@
 		9F75C3D729B30D25003EE629 /* Room6.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Room6.sks; sourceTree = "<group>"; };
 		9F75C3FA29B63766003EE629 /* QuestList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestList.swift; sourceTree = "<group>"; };
 		9F75C3FC29B64F2E003EE629 /* ExitNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExitNode.swift; path = testGame/Nodes/ExitNode.swift; sourceTree = SOURCE_ROOT; };
+		9F83F52C29E46C3D001ED785 /* MyActions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyActions.sks; sourceTree = "<group>"; };
 		9F8F2BA829A6BF6B00B79595 /* Enemy Animations.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = "Enemy Animations.sks"; sourceTree = "<group>"; };
 		9F8F2BAE29A6BFE500B79595 /* EnemyAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyAnimations.swift; sourceTree = "<group>"; };
 		9F8F2BB829A6CE2F00B79595 /* ScoriponNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoriponNode.swift; sourceTree = "<group>"; };
@@ -116,6 +118,14 @@
 				9F75C3FA29B63766003EE629 /* QuestList.swift */,
 			);
 			path = Adjacency;
+			sourceTree = "<group>";
+		};
+		9F83F52929E46BBA001ED785 /* NPC Animations */ = {
+			isa = PBXGroup;
+			children = (
+				9F83F52C29E46C3D001ED785 /* MyActions.sks */,
+			);
+			path = "NPC Animations";
 			sourceTree = "<group>";
 		};
 		9F8F2BAD29A6BFC600B79595 /* EnemyAnimations */ = {
@@ -192,6 +202,7 @@
 		9FD6AF8F299B4A5700E1A5A8 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				9F83F52929E46BBA001ED785 /* NPC Animations */,
 				9FBBC049299FD3EA00A12EC5 /* Player Animations */,
 			);
 			path = Animations;
@@ -296,6 +307,7 @@
 				9F8F2BA929A6BF6B00B79595 /* Enemy Animations.sks in Resources */,
 				9F4B124C299BEEFB0039B218 /* Tilesets.sks in Resources */,
 				9FD6AF82299B43EB00E1A5A8 /* Main.storyboard in Resources */,
+				9F83F52D29E46C3D001ED785 /* MyActions.sks in Resources */,
 				9FD6AF84299B43EC00E1A5A8 /* Assets.xcassets in Resources */,
 				9F75C3DA29B30D25003EE629 /* Room3.sks in Resources */,
 				9FBBC04B299FD45100A12EC5 /* Idle and Run.sks in Resources */,

@@ -20,9 +20,8 @@ enum RoomType {
 class RoomScene: GameScene {
     var roomType: RoomType? = nil
     var bossRoom: Bool {
-//        let chance = Int.random(in: 1...10)
-//        return chance == 5
-        return Bool.random()
+        let chance = Int.random(in: 1...8)
+        return chance == 5
     }
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -93,7 +92,7 @@ class RoomScene: GameScene {
         let levelBar = SKShapeNode(rect: CGRect(x: -100, y: 400, width: 100, height: 100))
         levelBar.fillColor = UIColor.green
         
-        let levelText = SKLabelNode(text: "Level: \(player.level) EXP: \(player.exp)")
+        let levelText = SKLabelNode(text: "Level: \(player.level) EXP: \(player.exp)/\(player.expNeeded)")
         levelText.fontName = "Arial Bold"
        // levelBar.addChild(levelText)
         levelText.position = CGPoint(x: -500, y: view!.frame.maxY * 2)
