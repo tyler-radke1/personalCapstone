@@ -139,7 +139,7 @@ class GameData: NSObject, NSCoding, NSSecureCoding {
         do {
             try fileManager.removeItem(atPath: path)
         } catch _ {
-            
+            print("failed to delete file")
         }
     }
 }

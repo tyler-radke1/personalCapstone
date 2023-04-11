@@ -95,7 +95,6 @@ class BattleScene: GameScene {
             player.run(Animations.attackRight)
             enemy.health = 0
             enemy.run(EnemyAnimations.scorpionDeath) {
-                self.createBattleWonPopup()
                 //create popup detailing xp given
                 //wait 1 second
                 self.view?.isUserInteractionEnabled = true
@@ -107,6 +106,8 @@ class BattleScene: GameScene {
                 saveFile.level = player.level
                 saveFile.save()
             }
+            
+            self.createBattleWonPopup()
             return
         }
         
@@ -242,15 +243,14 @@ class BattleScene: GameScene {
         textNode.fontSize = 30
         textNode.fontColor = UIColor.white
         
-        let shape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: textNode.frame.width, height: 100))
-        shape.name = "popUpRect"
-        shape.fillColor = UIColor.darkGray
-        shape.addChild(textNode)
+//        let shape = SKShapeNode(rect: CGRect(x: (view?.frame.width ?? 0) / 2, y: (view?.frame.height ?? 0) / 3, width: textNode.frame.width, height: 100))
+//        shape.name = "popUpRect"
+//        shape.fillColor = UIColor.darkGray
+//        shape.addChild(textNode)
         textNode.verticalAlignmentMode = .center
         textNode.horizontalAlignmentMode = .center
-        textNode.position = CGPoint(x: shape.frame.width / 2, y: shape.frame.height / 2)
-        
-        self.addChild(shape)
+
+        self.addChild(textNode)
     }
     
     //Run when battle is first loaded up
